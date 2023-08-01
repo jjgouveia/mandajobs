@@ -15,11 +15,11 @@ class MyDocument extends Document {
             property="og:description"
             content="Search smarter, boost your chances with our LinkedIn assistant."
           />
-          <meta property="og:title" content="Exercita ai" />
-          <meta name="exercitaai:card" content="summary_large_image" />
-          <meta name="exercitaai:title" content="Exercita ai" />
+          <meta property="og:title" content="Linkesearch" />
+          <meta name="linkesearch:card" content="summary_large_image" />
+          <meta name="linkesearch:title" content="Linkesearch" />
           <meta
-            name="exercitaai:description"
+            name="Linkesearch:description"
             content="Search smarter, boost your chances with our LinkedIn assistant."
           />
           <meta
