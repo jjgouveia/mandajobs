@@ -4,9 +4,6 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
-import Footer from "../components/Footer";
-import Github from "../components/GitHub";
-import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import {
   createParser,
@@ -19,7 +16,7 @@ const Home: NextPage = () => {
   const [title, setTitle] = useState("");
   const [tools, setTools] = useState("");
   const [boringTools, setBoringTools] = useState("");
-  const [level, setLevel] = useState<levelType>("Do not especify");
+  const [level, setLevel] = useState<levelType>("Do not specify");
   const [generatedBios, setGeneratedBios] = useState<String>("");
 
   const bioRef = useRef<null | HTMLDivElement>(null);
@@ -32,7 +29,7 @@ const Home: NextPage = () => {
 
   const switchLevel = () => {
     switch (level) {
-      case "Do not especify":
+      case "Do not specify":
         return "";
         break;
       case "Senior":
@@ -181,7 +178,7 @@ const Home: NextPage = () => {
             <p className="text-left font-medium">
               Your level{" "}
               <span className="text-slate-500">
-                ( mid-levels do not especify )
+                ( mid-levels do not specify )
               </span>
             </p>
           </div>

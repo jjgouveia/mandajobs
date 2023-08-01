@@ -10,14 +10,14 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export type levelType = "Senior" | "Junior" | "Do not especify";
+export type levelType = "Senior" | "Junior" | "Do not specify";
 
 interface DropDownProps {
   level: levelType;
   setLevel: (level: levelType) => void;
 }
 
-let levels: levelType[] = ["Senior", "Junior", "Do not especify"];
+let levels: levelType[] = ["Senior", "Junior", "Do not specify"];
 
 export default function DropDown({ level, setLevel }: DropDownProps) {
   return (
