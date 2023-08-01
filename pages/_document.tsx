@@ -8,27 +8,27 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
           <meta
             name="description"
-            content="Responda suas questões em segundos."
+            content="Search smarter, boost your chances with our LinkedIn assistant."
           />
-          <meta property="og:site_name" content="exercita.ai" />
+          <meta property="og:site_name" content="linkesearch" />
           <meta
             property="og:description"
-            content="Responda suas questões em segundos."
+            content="Search smarter, boost your chances with our LinkedIn assistant."
           />
           <meta property="og:title" content="Exercita ai" />
           <meta name="exercitaai:card" content="summary_large_image" />
           <meta name="exercitaai:title" content="Exercita ai" />
           <meta
             name="exercitaai:description"
-            content="Responda suas questões em segundos."
+            content="Search smarter, boost your chances with our LinkedIn assistant."
           />
           <meta
             property="og:image"
-            content="https://cdn.discordapp.com/attachments/1082297301072105544/1126360787150184458/jsajsja.png"
+            content="/searchbar.png"
           />
           <meta
-            name="exercitaai:image"
-            content="https://cdn.discordapp.com/attachments/1082297301072105544/1126360787150184458/jsajsja.png"
+            name="linkesearch:image"
+            content="/searchbar.png"
           />
         </Head>
         <body>
