@@ -105,28 +105,14 @@ const Home: NextPage = () => {
       <Header />
 
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
-        <a
-          className="flex max-w-fit items-center justify-center space-x-2 rounded-full bg-blue-600 px-4 py-2 text-sm text-white shadow-md transition-colors hover:bg-blue-500 mb-5"
-          href="https://www.linkedin.com/in/daniellimae/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <p>by @jrgouveia</p>
-        </a>
-        <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
+        {/* <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
           Manda Jobs 💼
-        </h1>
+        </h1> */}
         <br />
-        <Image
-          src="/searchbar.png"
-          width={400}
-          height={400}
-          alt="1 icon"
-          className="mb-5 sm:mb-0"
-        />
-        <p className="text-slate-500 mt-5">
-          Busque de forma inteligente e encontre vagas que se encaixam no seu
-          perfil de acordo com o algoritmo do LinkedIn.
+
+        <p className="text-slate-500 -mt-5">
+          Otimize suas buscas no Linkedin através da consulta booleana e garanta
+          as melhores oportunidades para o seu perfil.
         </p>
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
@@ -182,7 +168,7 @@ const Home: NextPage = () => {
               className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-blue-500 w-full"
               onClick={(e) => generateBio(e)}
             >
-              Melhore as minhas buscas ✨
+              Gerar consulta ✨
             </button>
           )}
           {loading && (
@@ -236,6 +222,21 @@ const Home: NextPage = () => {
           )}
         </div>
       </main>
+      <Image
+        src="/searchbar.png"
+        width={400}
+        height={400}
+        alt="1 icon"
+        className="mb-5 sm:mb-0"
+      />
+      <a
+        className="flex max-w-fit items-center justify-center space-x-2 rounded-full bg-blue-600 px-4 py-2 text-sm text-white shadow-md transition-colors hover:bg-blue-500 mb-5"
+        href="https://www.linkedin.com/in/daniellimae/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <p>by @jrgouveia</p>
+      </a>
       {/* <Footer /> */}
     </div>
   );
