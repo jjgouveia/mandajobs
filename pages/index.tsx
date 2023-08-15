@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
+import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 
 const Home: NextPage = () => {
@@ -98,9 +99,10 @@ const Home: NextPage = () => {
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
-        <title>Explorador de Vagas</title>
+        <title>Manda Jobs</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
 
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
         <a
@@ -112,7 +114,7 @@ const Home: NextPage = () => {
           <p>by @jrgouveia</p>
         </a>
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-          Radar de Vagas
+          Manda Jobs 💼
         </h1>
         <br />
         <Image
@@ -139,7 +141,9 @@ const Home: NextPage = () => {
           />
           <div className="flex mt-10 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">2</p>
-            <p className="text-left font-medium">Tecnologias que você usa:</p>
+            <p className="text-left font-medium">
+              Tecnologias que você utiliza:
+            </p>
           </div>
           <input
             value={tools}
@@ -150,7 +154,7 @@ const Home: NextPage = () => {
           <div className="flex mt-10 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">3</p>
             <p className="text-left font-medium">
-              Tecnologias que você NÃO usa:
+              Tecnologias que você NÃO utiliza:
             </p>
           </div>
           <input
@@ -162,7 +166,7 @@ const Home: NextPage = () => {
           <div className="flex mb-5 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">4</p>
             <p className="text-left font-medium">
-              Seu nível de senioridade
+              Seu nível de senioridade:
               <span className="text-slate-500"> (Padrão: Junior)</span>
             </p>
           </div>
@@ -178,7 +182,7 @@ const Home: NextPage = () => {
               className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-blue-500 w-full"
               onClick={(e) => generateBio(e)}
             >
-              Melhore as minhas buscas
+              Melhore as minhas buscas ✨
             </button>
           )}
           {loading && (
@@ -218,7 +222,7 @@ const Home: NextPage = () => {
                         onClick={() => {
                           navigator.clipboard.writeText(generatedBio);
                           toast("Consulta copiada!", {
-                            icon: "✂️",
+                            icon: "🚀",
                           });
                         }}
                         key={generatedBio}
