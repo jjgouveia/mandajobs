@@ -10,14 +10,14 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export type levelType = "Senior" | "Junior" | "Do not specify";
+export type levelType = "Junior" | "Pleno" | "Senior";
 
 interface DropDownProps {
   level: levelType;
   setLevel: (level: levelType) => void;
 }
 
-let levels: levelType[] = ["Senior", "Junior", "Do not specify"];
+let levels: levelType[] = ["Junior", "Pleno", "Senior"];
 
 export default function DropDown({ level, setLevel }: DropDownProps) {
   return (
@@ -43,10 +43,12 @@ export default function DropDown({ level, setLevel }: DropDownProps) {
         enterTo="transform opacity-100 scale-100"
         leave="transition ease-in duration-75"
         leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95">
+        leaveTo="transform opacity-0 scale-95"
+      >
         <Menu.Items
           className="absolute left-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-          key={level}>
+          key={level}
+        >
           <div className="">
             {levels.map((levelItem) => (
               <Menu.Item key={levelItem}>
@@ -57,7 +59,8 @@ export default function DropDown({ level, setLevel }: DropDownProps) {
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                       level === levelItem ? "bg-gray-200" : "",
                       "px-4 py-2 text-sm w-full text-left flex items-center space-x-2 justify-between"
-                    )}>
+                    )}
+                  >
                     <span>{levelItem}</span>
                     {level === levelItem ? (
                       <CheckIcon className="w-4 h-4 text-bold" />
