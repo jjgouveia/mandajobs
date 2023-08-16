@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import {
   ParsedEvent,
   ReconnectInterval,
@@ -236,6 +237,7 @@ const Home: NextPage = () => {
         </div>
       </main>
       <Footer />
+      <Analytics />
     </div>
   );
 };
