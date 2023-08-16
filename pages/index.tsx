@@ -43,8 +43,8 @@ const Home: NextPage = () => {
     }
   };
 
-  const prompt = `Create a perfect query for I use in linkedin jobs searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
-  I'm a ${title} professional that uses ${tools} and don't like to use ${boringTools}. , ${switchLevel()}
+  const prompt = `Create a query for I use in linkedin searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
+  I'm a ${title} developer that uses ${tools} and don't like to use ${boringTools}. , ${switchLevel()}
   `;
 
   const generateBio = async (e: any) => {
@@ -255,7 +255,7 @@ const Home: NextPage = () => {
             <>
               <div>
                 <h2
-                  className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
+                  className="sm:text-4xl text-3xl font-bold mx-auto"
                   ref={bioRef}
                 >
                   Sua consulta personalizada
@@ -269,7 +269,9 @@ const Home: NextPage = () => {
                     return (
                       <>
                         <div
-                          className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
+                          className={
+                            "bg-gray-50 rounded-xl text-black font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-gray-200 w-full"
+                          }
                           onClick={() => {
                             navigator.clipboard.writeText(generatedBio);
                             toast("Consulta copiada!", {

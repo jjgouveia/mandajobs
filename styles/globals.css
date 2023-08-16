@@ -4,7 +4,7 @@
 
 @layer components {
   html {
-    @apply bg-gray-100 transition-all;
+    @apply bg-gray-100 text-dark-backgroundColor transition-all;
   }
   .dark {
     @apply bg-gray-900 text-white;
