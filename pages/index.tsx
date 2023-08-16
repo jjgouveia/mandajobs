@@ -43,7 +43,7 @@ const Home: NextPage = () => {
     }
   };
 
-  const prompt = `Create a perfect query for I use in linkedin searchbar, use the opperators AND, OR, NOT e () for that. Just give me the code, without explanation.
+  const prompt = `Create a perfect query for I use in linkedin jobs searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
   I'm a ${title} professional that uses ${tools} and don't like to use ${boringTools}. , ${switchLevel()}
   `;
 
