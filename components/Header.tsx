@@ -8,7 +8,7 @@ export default function Header() {
         <Image
           alt="header text"
           src="/manda_jobs_logo.svg"
-          className="sm:w-12 sm:h-12 w-8 h-8 ml-5"
+          className="sm:w-12 sm:h-12 w-8 h-8 ml-0"
           width={32}
           height={32}
         />
@@ -16,19 +16,6 @@ export default function Header() {
           Manda Jobs <span className="text-sm text-slate-400">beta</span>
         </h1>
       </Link>
-      {/* <a
-        href="https://linkesearch.vercel.app/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <Image
-          alt="Vercel Icon"
-          src="/vercelLogo.png"
-          className="sm:w-8 sm:h-[27px] w-8 h-[28px]"
-          width={32}
-          height={28}
-        />
-      </a> */}
     </header>
   );
 }

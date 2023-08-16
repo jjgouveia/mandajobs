@@ -108,7 +108,6 @@ const Home: NextPage = () => {
 
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-8 sm:mt-12">
         <br />
-
         <p className="text-slate-500 -mt-5">
           Otimize a sua busca por vagas no LinkedIn através da consulta booleana
           e garanta as melhores oportunidades para o seu perfil
@@ -116,13 +115,13 @@ const Home: NextPage = () => {
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">1</p>
-            <p className="text-left font-medium">Sua profissão:</p>
+            <p className="text-left font-medium">Em qual posição você atua:</p>
           </div>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: Frontend, Backend, Fullstack ..."}
+            placeholder={"Ex.: front-end, back-end, fullstack..."}
           />
           <div className="flex mt-10 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">2</p>
@@ -134,7 +133,7 @@ const Home: NextPage = () => {
             value={tools}
             onChange={(e) => setTools(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: Angular, Next.js, React, Java, Node..."}
+            placeholder={"Ex.: Angular, Next.js, React, Java, Node, Fé..."}
           />
           <div className="flex mt-10 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">3</p>
@@ -146,13 +145,16 @@ const Home: NextPage = () => {
             value={boringTools}
             onChange={(e) => setBoringTools(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: PHP, Ruby, Magic"}
+            placeholder={"Ex.: PHP, Ruby, Olho de Agamoto..."}
           />
           <div className="flex mb-5 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">4</p>
             <p className="text-left font-medium">
-              Seu nível de senioridade:
-              <span className="text-slate-500"> (Padrão: Junior)</span>
+              Nível de senioridade:
+              <span className="text-sm text-slate-500">
+                {" "}
+                (Junior por padrão)
+              </span>
             </p>
           </div>
           <div className="block">
@@ -193,7 +195,7 @@ const Home: NextPage = () => {
                   className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
                   ref={bioRef}
                 >
-                  Sua consulta personalizada:
+                  Sua consulta personalizada
                 </h2>
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
