@@ -5,10 +5,11 @@ import {
 } from "eventsource-parser";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 
@@ -100,18 +101,15 @@ const Home: NextPage = () => {
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
         <title>Manda Jobs</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/manda_jobs_logo.svg" />
       </Head>
       <Header />
 
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-6 sm:mt-12">
-        {/* <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-          Manda Jobs 💼
-        </h1> */}
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-8 sm:mt-12">
         <br />
 
         <p className="text-slate-500 -mt-5">
-          Otimize suas buscas no Linkedin através da consulta booleana e garanta
+          Otimize suas buscas no LinkedIn através da consulta booleana e garanta
           as melhores oportunidades para o seu perfil.
         </p>
         <div className="max-w-xl w-full">
@@ -203,18 +201,33 @@ const Home: NextPage = () => {
                   .split("2.")
                   .map((generatedBio) => {
                     return (
-                      <div
-                        className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
-                        onClick={() => {
-                          navigator.clipboard.writeText(generatedBio);
-                          toast("Consulta copiada!", {
-                            icon: "🚀",
-                          });
-                        }}
-                        key={generatedBio}
-                      >
-                        <p>{generatedBio}</p>
-                      </div>
+                      <>
+                        <div
+                          className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
+                          onClick={() => {
+                            navigator.clipboard.writeText(generatedBio);
+                            toast("Consulta copiada!", {
+                              icon: "🚀",
+                            });
+                          }}
+                          key={generatedBio}
+                        >
+                          <p className="text-sm text-slate-400">
+                            (Clique para copiar)
+                          </p>
+
+                          <p className="query">{generatedBio}</p>
+                        </div>
+                        <p className="text-sm text-slate-400 -pb-5">- ou -</p>
+                        <Link
+                          href={`https://www.linkedin.com/jobs/search/?currentJobId=3644169029&geoId=106057199&keywords=${generatedBio}&location=Brasil&refresh=true`}
+                          target="_blank"
+                        >
+                          <button className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-blue-500 w-full">
+                            Explorar vagas no LinkedIn🚀
+                          </button>
+                        </Link>
+                      </>
                     );
                   })}
               </div>
@@ -222,22 +235,7 @@ const Home: NextPage = () => {
           )}
         </div>
       </main>
-      <Image
-        src="/searchbar.png"
-        width={400}
-        height={400}
-        alt="1 icon"
-        className="mb-5 sm:mb-0"
-      />
-      <a
-        className="flex max-w-fit items-center justify-center space-x-2 rounded-full bg-blue-600 px-4 py-2 text-sm text-white shadow-md transition-colors hover:bg-blue-500 mb-5"
-        href="https://www.linkedin.com/in/daniellimae/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <p>by @jrgouveia</p>
-      </a>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

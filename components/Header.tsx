@@ -13,10 +13,10 @@ export default function Header() {
           height={32}
         />
         <h1 className="sm:text-4xl text-2xl font-bold ml-2 tracking-tight">
-          Manda Jobs
+          Manda Jobs <span className="text-sm text-slate-400">beta</span>
         </h1>
       </Link>
-      <a
+      {/* <a
         href="https://linkesearch.vercel.app/"
         target="_blank"
         rel="noreferrer"
@@ -28,7 +28,7 @@ export default function Header() {
           width={32}
           height={28}
         />
-      </a>
+      </a> */}
     </header>
   );
 }
