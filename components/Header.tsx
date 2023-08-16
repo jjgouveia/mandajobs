@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import DarkModeToggle from "./DarkModeToggle";
 
 export default function Header() {
   return (
@@ -16,6 +17,7 @@ export default function Header() {
           Manda Jobs <span className="text-sm text-slate-400">beta</span>
         </h1>
       </Link>
+      <DarkModeToggle />
     </header>
   );
 }

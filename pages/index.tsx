@@ -7,7 +7,7 @@ import {
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
 import Footer from "../components/Footer";
@@ -97,6 +97,18 @@ const Home: NextPage = () => {
     scrollToBios();
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("mandaJobsFirst") !== "false") {
+      toast("Bem vindo ao Manda Jobs! 🚀", {
+        icon: "🚀",
+      });
+      localStorage.setItem("mandaJobsFirst", "false");
+    }
+    if (localStorage.getItem("mandaJobsTheme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
