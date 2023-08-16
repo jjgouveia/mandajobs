@@ -109,8 +109,8 @@ const Home: NextPage = () => {
         <br />
 
         <p className="text-slate-500 -mt-5">
-          Otimize suas buscas no LinkedIn através da consulta booleana e garanta
-          as melhores oportunidades para o seu perfil
+          Otimize a sua busca por vagas no LinkedIn através da consulta booleana
+          e garanta as melhores oportunidades para o seu perfil
         </p>
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
