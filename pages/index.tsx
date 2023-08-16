@@ -108,6 +108,57 @@ const Home: NextPage = () => {
     if (localStorage.getItem("mandaJobsTheme") === "dark") {
       document.documentElement.classList.add("dark");
     }
+
+    const themePreference = () => {
+      const hasLocalStorage = localStorage.getItem("mandaJobsTheme");
+
+      let supports = false;
+      let theme = undefined;
+
+      if (hasLocalStorage === "light") {
+        theme = "light";
+      }
+      if (hasLocalStorage === "dark") {
+        theme = "dark";
+      }
+
+      if (window.matchMedia(`(prefers-color-scheme: dark)`).matches) {
+        theme = hasLocalStorage ? hasLocalStorage : "dark";
+        supports = true;
+      }
+      if (window.matchMedia(`(prefers-color-scheme: light)`).matches) {
+        theme = hasLocalStorage ? hasLocalStorage : "light";
+        supports = true;
+      }
+      if (window.matchMedia(`(prefers-color-scheme: no-preference)`).matches) {
+        theme = hasLocalStorage ? hasLocalStorage : "none";
+        supports = true;
+      }
+
+      return { supports, theme };
+    };
+
+    const setTheme = () => {
+      const userThemePreference = themePreference();
+
+      console.log("====================================");
+      console.log(userThemePreference.theme);
+      console.log("====================================");
+
+      switch (userThemePreference.theme) {
+        case "dark":
+          document.documentElement.classList.remove("light");
+          document.documentElement.classList.add("dark");
+
+          break;
+        case "light":
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+          break;
+      }
+    };
+
+    setTheme();
   }, []);
 
   return (
