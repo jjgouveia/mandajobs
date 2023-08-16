@@ -8,25 +8,22 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
           <meta
             name="description"
-            content="Busque vagas de forma melhorada e aumente as suas chances de conseguir o seu tão sonhado emprego."
+            content="Otimize suas buscas no LinkedIn através da consulta booleana e garanta as melhores oportunidades para o seu perfil."
           />
-          <meta property="og:site_name" content="Explorador de Vagas" />
+          <meta property="og:site_name" content="Manda Jobs" />
           <meta
             property="og:description"
-            content="Busque vagas de forma melhorada e aumente as suas chances de conseguir o seu tão sonhado emprego."
+            content="Otimize suas buscas no LinkedIn através da consulta booleana e garanta as melhores oportunidades para o seu perfil."
           />
-          <meta property="og:title" content="Explorador de Vagas" />
-          <meta name="Explorador de Vagas:card" content="summary_large_image" />
+          <meta property="og:title" content="Manda Jobs" />
+          <meta name="Manda Jobs:card" content="summary_large_image" />
+          <meta name="Manda Jobs:title" content="Manda Jobs" />
           <meta
-            name="Explorador de Vagas:title"
-            content="Explorador de Vagas"
-          />
-          <meta
-            name="Explorador de Vagas:description"
-            content="Search smarter, boost your chances with our LinkedIn assistant."
+            name="Manda Jobs:description"
+            content="Otimize suas buscas no LinkedIn através da consulta booleana e garanta as melhores oportunidades para o seu perfil."
           />
           <meta property="og:image" content="/searchbar.png" />
-          <meta name="Explorador de Vagas:image" content="/searchbar.png" />
+          <meta name="Manda Jobs:image" content="/searchbar.png" />
         </Head>
         <body>
           <Main />
