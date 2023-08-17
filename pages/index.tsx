@@ -164,7 +164,7 @@ const Home: NextPage = () => {
       </Head>
       <Header />
 
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-8 sm:mt-12">
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-5 -mb-10 sm:mt-12">
         <br />
         <p className="text-slate-500 -mt-5">
           Otimize a sua busca por vagas no LinkedIn através da consulta booleana
@@ -179,9 +179,9 @@ const Home: NextPage = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: front-end, back-end, fullstack..."}
+            placeholder={"Ex.: front-end, back-end, fullstack, deitado..."}
           />
-          <div className="flex mt-10 items-center space-x-3">
+          <div className="flex mt-6 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">2</p>
             <p className="text-left font-medium">
               Tecnologias que você utiliza:
@@ -193,7 +193,7 @@ const Home: NextPage = () => {
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder={"Ex.: Angular, Next.js, React, Java, Node, Fé..."}
           />
-          <div className="flex mt-10 items-center space-x-3">
+          <div className="flex mt-6 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">3</p>
             <p className="text-left font-medium">
               Tecnologias que você NÃO utiliza:
@@ -242,7 +242,7 @@ const Home: NextPage = () => {
         <Toaster
           position="top-center"
           reverseOrder={false}
-          toastOptions={{ duration: 2000 }}
+          toastOptions={{ duration: 2500 }}
         />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
