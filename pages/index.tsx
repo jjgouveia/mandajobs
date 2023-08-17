@@ -288,6 +288,7 @@ const Home: NextPage = () => {
                         <Link
                           href={`https://www.linkedin.com/jobs/search/?currentJobId=3644169029&geoId=106057199&keywords=${generatedBio}&location=Brasil&refresh=true`}
                           target="_blank"
+                          title="Explorar vagas no LinkedIn"
                         >
                           <button className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-blue-500 w-full">
                             Explorar vagas no LinkedIn🚀

@@ -22,7 +22,7 @@ export default function RepoStarsCount({ user, repo }: Props) {
 
   return (
     <div>
-      <Link href={`https://github.com/${user}/${repo}`}>
+      <Link href={`https://github.com/${user}/${repo}`} title="Stars on GitHub">
         <div id="raiz" className="flex sm:pb-0 b">
           <div className="w-auto h-5" id="star-container">
             <svg
