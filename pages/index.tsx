@@ -164,14 +164,14 @@ const Home: NextPage = () => {
       </Head>
       <Header />
 
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-5 -mb-10 sm:mt-12">
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-5 sm:mt-6 sm:-mb-10">
         <br />
-        <p className="text-slate-500 -mt-5">
+        <p className="text-slate-500 -mt-6">
           Otimize a sua busca por vagas no LinkedIn através da consulta booleana
           e garanta as melhores oportunidades para o seu perfil
         </p>
         <div className="max-w-xl w-full">
-          <div className="flex mt-10 items-center space-x-3">
+          <div className="flex mt-7 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">1</p>
             <p className="text-left font-medium">Em qual posição você atua:</p>
           </div>
@@ -224,7 +224,7 @@ const Home: NextPage = () => {
 
           {!loading && (
             <button
-              className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-blue-500 w-full"
+              className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full"
               onClick={(e) => generateBio(e)}
             >
               Gerar consulta ✨
