@@ -140,11 +140,6 @@ const Home: NextPage = () => {
 
     const setTheme = () => {
       const userThemePreference = themePreference();
-
-      console.log("====================================");
-      console.log(userThemePreference.theme);
-      console.log("====================================");
-
       switch (userThemePreference.theme) {
         case "dark":
           document.documentElement.classList.remove("light");
@@ -280,7 +275,10 @@ const Home: NextPage = () => {
                           }}
                           key={generatedBio}
                         >
-                          <p className="text-sm text-slate-400">
+                          <p
+                            key={generatedBio + "1"}
+                            className="text-sm text-slate-400"
+                          >
                             (Clique para copiar)
                           </p>
 
