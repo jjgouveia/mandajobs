@@ -1,4 +1,5 @@
 import Link from "next/link";
+import RepoStarsCount from "./RepoStarsCount";
 
 export default function Footer() {
   return (
@@ -48,6 +49,8 @@ export default function Footer() {
             </g>
           </svg>
         </Link>
+        <RepoStarsCount user="jjgouveia" repo="mandajobs" />
+
         <Link
           href="https://github.com/jjgouveia"
           className="group"
