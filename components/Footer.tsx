@@ -50,7 +50,6 @@ export default function Footer() {
           </svg>
         </Link>
         <RepoStarsCount user="jjgouveia" repo="mandajobs" />
-
         <Link
           href="https://github.com/jjgouveia"
           className="group"

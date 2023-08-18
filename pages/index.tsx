@@ -18,15 +18,15 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [tools, setTools] = useState("");
-  const [boringTools, setBoringTools] = useState("");
+  const [toolsIdontUse, setToolsIdontUse] = useState("");
   const [level, setLevel] = useState<levelType>("Junior");
-  const [generatedBios, setGeneratedBios] = useState<String>("");
+  const [generatedQuery, setgeneratedQuery] = useState<String>("");
 
-  const bioRef = useRef<null | HTMLDivElement>(null);
+  const query = useRef<null | HTMLDivElement>(null);
 
   const scrollToBios = () => {
-    if (bioRef.current !== null) {
-      bioRef.current.scrollIntoView({ behavior: "smooth" });
+    if (query.current !== null) {
+      query.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -44,12 +44,12 @@ const Home: NextPage = () => {
   };
 
   const prompt = `Create a query for I use in linkedin searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
-  I'm a ${title} developer that uses ${tools} and don't like to use ${boringTools}. , ${switchLevel()}
+  I'm a ${title} developer that uses ${tools} and don't like to use ${toolsIdontUse}. , ${switchLevel()}
   `;
 
-  const generateBio = async (e: any) => {
+  const generateQuery = async (e: any) => {
     e.preventDefault();
-    setGeneratedBios("");
+    setgeneratedQuery("");
     setLoading(true);
     const response = await fetch("/api/generate", {
       method: "POST",
@@ -65,7 +65,6 @@ const Home: NextPage = () => {
       throw new Error(response.statusText);
     }
 
-    // This data is a ReadableStream
     const data = response.body;
     if (!data) {
       return;
@@ -76,14 +75,13 @@ const Home: NextPage = () => {
         const data = event.data;
         try {
           const text = JSON.parse(data).text ?? "";
-          setGeneratedBios((prev) => prev + text);
+          setgeneratedQuery((prev) => prev + text);
         } catch (e) {
           console.error(e);
         }
       }
     };
 
-    // https://web.dev/streams/#the-getreader-and-read-methods
     const reader = data.getReader();
     const decoder = new TextDecoder();
     const parser = createParser(onParse);
@@ -179,7 +177,7 @@ const Home: NextPage = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: front-end, back-end, fullstack, deitado..."}
+            placeholder={`Ex.: front-end, back-end, fullstack...`}
           />
           <div className="flex mt-6 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">2</p>
@@ -200,10 +198,10 @@ const Home: NextPage = () => {
             </p>
           </div>
           <input
-            value={boringTools}
-            onChange={(e) => setBoringTools(e.target.value)}
+            value={toolsIdontUse}
+            onChange={(e) => setToolsIdontUse(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: PHP, Ruby, Olho de Agamoto..."}
+            placeholder={"Ex.: PHP, Ruby.."}
           />
           <div className="flex mb-5 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">4</p>
@@ -225,7 +223,7 @@ const Home: NextPage = () => {
           {!loading && (
             <button
               className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full"
-              onClick={(e) => generateBio(e)}
+              onClick={(e) => generateQuery(e)}
             >
               Gerar consulta ✨
             </button>
@@ -246,21 +244,21 @@ const Home: NextPage = () => {
         />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
-          {generatedBios && (
+          {generatedQuery && (
             <>
               <div>
                 <h2
                   className="sm:text-4xl text-3xl font-bold mx-auto"
-                  ref={bioRef}
+                  ref={query}
                 >
                   Sua consulta personalizada
                 </h2>
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-                {generatedBios
-                  .substring(generatedBios.indexOf("1") + 0)
+                {generatedQuery
+                  .substring(generatedQuery.indexOf("1") + 0)
                   .split("2.")
-                  .map((generatedBio) => {
+                  .map((q) => {
                     return (
                       <>
                         <div
@@ -268,30 +266,30 @@ const Home: NextPage = () => {
                             "bg-gray-50 rounded-xl text-black font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-gray-200 w-full"
                           }
                           onClick={() => {
-                            navigator.clipboard.writeText(generatedBio);
+                            navigator.clipboard.writeText(q);
                             toast("Consulta copiada!", {
                               icon: "🚀",
                             });
                           }}
-                          key={generatedBio}
+                          key={q}
                         >
                           <p
-                            key={generatedBio + "1"}
+                            key={q + q.split("2")}
                             className="text-sm text-slate-400"
                           >
                             (Clique para copiar)
                           </p>
 
-                          <p className="query">{generatedBio}</p>
+                          <p className="query">{q}</p>
                         </div>
                         <p className="text-sm text-slate-400 -pb-5">- ou -</p>
                         <Link
-                          href={`https://www.linkedin.com/jobs/search/?currentJobId=3644169029&geoId=106057199&keywords=${generatedBio}&location=Brasil&refresh=true`}
+                          href={`https://www.linkedin.com/jobs/search/?currentJobId=3644169029&geoId=106057199&keywords=${generatedQuery}&location=Brasil&refresh=true`}
                           target="_blank"
-                          title="Explorar vagas no LinkedIn"
+                          title="Consultar vagas no LinkedIn"
                         >
                           <button className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-blue-500 w-full">
-                            Explorar vagas no LinkedIn🚀
+                            Consultar vagas no LinkedIn 🚀
                           </button>
                         </Link>
                       </>

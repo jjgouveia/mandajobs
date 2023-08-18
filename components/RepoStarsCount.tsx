@@ -11,8 +11,8 @@ export default function RepoStarsCount({ user, repo }: Props) {
   const [stars, setStars] = useState(0);
 
   const fetchStarsCount = async (user: String, repo: String) => {
-    let novaConsulta = new fetchStars(user, repo);
-    let response = await novaConsulta.getStars();
+    let query = new fetchStars(user, repo);
+    let response = await query.getStars();
     return response;
   };
 
@@ -31,7 +31,7 @@ export default function RepoStarsCount({ user, repo }: Props) {
               className="ml-1 h-5 w-5 fill-slate-500 group-hover:fill-slate-"
               xmlns="http://www.w3.org/2000/svg"
               style={{
-                filter: "drop-shadow(0px 0px 1px rgba(0, 0, 0, .7))",
+                filter: "drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.9))",
               }}
             >
               <path
@@ -44,9 +44,11 @@ export default function RepoStarsCount({ user, repo }: Props) {
                 fill="#ffff1a"
               />
             </svg>
-            <div className="flex ml-1 mr-1 mt-1">
+            <div className="flex ml-1 mr-1 mt-1 font-medium">
               <span>Stars:</span>
-              <p id="h2">{stars}</p>
+              <p className="font-semibold" id="h2">
+                {stars}
+              </p>
             </div>
           </div>
         </div>

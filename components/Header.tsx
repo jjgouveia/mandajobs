@@ -13,7 +13,7 @@ export default function Header() {
           width={32}
           height={32}
         />
-        <h1 className="sm:text-4xl text-2xl font-bold ml-2 tracking-tight">
+        <h1 className="sm:text-4xl text-2xl font-semibold ml-2 tracking-tight">
           Manda Jobs <span className="text-sm text-slate-400">beta</span>
         </h1>
       </Link>
