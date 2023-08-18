@@ -18,7 +18,7 @@ O <b>Manda Jobs</b> é um projeto que visa facilitar a busca por vagas de empreg
 
 ## Como funciona?
 
-A partir de um conjunto de palavras-chave relacionadas ao perfil da vaga desejada pela pessoa usuária, o sistema gera uma query booleana (AND, OR, NOT e ()) para o LinkedIn, utilizando a API da OpenAI. A partir dessa query, é possível copiar a query e colar no campo de busca de vagas do LinkedIn, ou clicar no botão "Consultar vagas no LinkedIn 🚀" para ser redirecionado para a página de vagas com a query já preenchida.
+A partir de um conjunto de palavras-chave relacionadas ao perfil da vaga desejada pela pessoa usuária, o sistema gera uma query booleana (AND, OR, NOT e ()) para o LinkedIn, utilizando a API da OpenAI. A partir dessa query, é possível copiá-la e colar no campo de busca de vagas do LinkedIn, ou clicar no botão "Consultar vagas no LinkedIn 🚀" para ser redirecionado para a página de vagas com a query já preenchida de forma automágica.
 
 ## Tecnologias
 
