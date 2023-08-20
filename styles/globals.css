@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* styles/globals.css */
 
 @layer components {
   html {
@@ -8,6 +9,15 @@
   }
   .dark {
     @apply bg-gray-900 text-white;
+  }
+
+  main {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 400;
+  }
+
+  h1 {
+    font-family: "Montserrat", sans-serif;
   }
 
   #star-container {
@@ -22,8 +32,6 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 5px;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     font-size: 13px;
   }
 

@@ -44,7 +44,7 @@ const Home: NextPage = () => {
   };
 
   const prompt = `Create a query for I use in linkedin searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
-  I'm a ${title} developer that uses ${tools} and don't like to use ${toolsIdontUse}. , ${switchLevel()}
+  I'm a ${title} developer that uses ${tools} and don't work with ${toolsIdontUse}. ${switchLevel()}
   `;
 
   const generateQuery = async (e: any) => {
@@ -222,10 +222,12 @@ const Home: NextPage = () => {
 
           {!loading && (
             <button
-              className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full"
+              className="bg-blue-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full"
               onClick={(e) => generateQuery(e)}
             >
-              Gerar consulta ✨
+              <span style={{ letterSpacing: "0.05rem" }}>
+                Gerar consulta ✨
+              </span>
             </button>
           )}
           {loading && (
@@ -262,9 +264,14 @@ const Home: NextPage = () => {
                     return (
                       <>
                         <div
+                          id="query"
                           className={
                             "bg-gray-50 rounded-xl text-black font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-gray-200 w-full"
                           }
+                          style={{
+                            cursor: "pointer",
+                            border: "1px solid #e5e7eb",
+                          }}
                           onClick={() => {
                             navigator.clipboard.writeText(q);
                             toast("Consulta copiada!", {
@@ -287,9 +294,12 @@ const Home: NextPage = () => {
                           href={`https://www.linkedin.com/jobs/search/?currentJobId=3644169029&geoId=106057199&keywords=${generatedQuery}&location=Brasil&refresh=true`}
                           target="_blank"
                           title="Consultar vagas no LinkedIn"
+                          className="w-full"
                         >
-                          <button className="bg-blue-600 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-blue-500 w-full">
-                            Consultar vagas no LinkedIn 🚀
+                          <button className="bg-green-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-green-500 w-full">
+                            <span style={{ letterSpacing: "0.05rem" }}>
+                              Consultar vagas no LinkedIn 🚀
+                            </span>
                           </button>
                         </Link>
                       </>
