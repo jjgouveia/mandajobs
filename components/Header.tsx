@@ -8,8 +8,8 @@ export default function Header() {
       <Link href="/" className="flex space-x-3">
         <Image
           alt="header text"
-          src="/manda_jobs_logo.svg"
-          className="sm:w-12 sm:h-12 w-8 h-8 ml-0"
+          src="/handshake.svg"
+          className="sm:w-12 sm:h-12 w-10 h-10 ml-0"
           width={32}
           height={32}
         />

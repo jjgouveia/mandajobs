@@ -13,6 +13,7 @@ import DropDown, { levelType } from "../components/DropDown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
+import Modal from "../components/Modal";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,14 @@ const Home: NextPage = () => {
   const [toolsIdontUse, setToolsIdontUse] = useState("");
   const [level, setLevel] = useState<levelType>("Junior");
   const [generatedQuery, setgeneratedQuery] = useState<String>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const query = useRef<null | HTMLDivElement>(null);
 
@@ -230,6 +239,15 @@ const Home: NextPage = () => {
               </span>
             </button>
           )}
+          <div>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+              onClick={openModal}
+            >
+              Abrir Modal
+            </button>
+            <Modal isOpen={isModalOpen} onClose={closeModal} />
+          </div>
           {loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"

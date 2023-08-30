@@ -1,10 +1,7 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import RepoStarsCount from "./RepoStarsCount";
 
 export default function Footer() {
-  const router = useRouter();
-  const { pathname } = router;
   return (
     <>
       <footer className="text-center h-15 sm:h-18 w-full sm:pt-2 pt-4 border-t mt-3 flex sm:flex-row flex-col justify-between items-center px-3 space-y-3 sm:mb-0 mb-1">
