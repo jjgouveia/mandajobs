@@ -14,6 +14,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import { PartnerCompanies } from "../components/PartnerCompanies";
+import { supabase } from "../utils/supabase";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,9 @@ const Home: NextPage = () => {
   const [tools, setTools] = useState("");
   const [toolsIdontUse, setToolsIdontUse] = useState("");
   const [level, setLevel] = useState<levelType>("Junior");
-  const [generatedQuery, setgeneratedQuery] = useState<String>("");
+  const [generatedQuery, setgeneratedQuery] = useState<string | undefined>(
+    undefined
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
@@ -49,6 +52,16 @@ const Home: NextPage = () => {
         return "only Junior titles";
       default:
         return "";
+    }
+  };
+
+  const insertQueryOnSupabase = async (
+    consult: string
+  ): Promise<void | null> => {
+    const { error } = await supabase.from("consult").insert({ link: consult });
+    if (error) {
+      console.log(error);
+      return null;
     }
   };
 
@@ -101,9 +114,16 @@ const Home: NextPage = () => {
       const chunkValue = decoder.decode(value);
       parser.feed(chunkValue);
     }
+
     scrollToBios();
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (generatedQuery && loading === false) {
+      insertQueryOnSupabase(generatedQuery);
+    }
+  }, [loading]);
 
   useEffect(() => {
     if (localStorage.getItem("mandaJobsFirst") !== "false") {
@@ -163,6 +183,15 @@ const Home: NextPage = () => {
     setTheme();
   }, []);
 
+  const getSubscriberCount = async (): Promise<void | null> => {
+    const { data, error } = await supabase.from("consult").select();
+    console.log(data);
+    if (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
@@ -181,6 +210,7 @@ const Home: NextPage = () => {
           Conectamos você com as melhores oportunidas do LinkedIn de acordo com
           o seu perfil
         </p>
+        {/* <SubscribersCount /> */}
         <div className="max-w-xl w-full">
           <div className="flex mt-7 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">1</p>

@@ -38,7 +38,7 @@ const companies: Company[] = [
     name: "Programador.TV",
     url: "https://programador.tv/",
     description: "Página especializa na produção de conteúdo de tecnologia.",
-    imagePath: "/images/companies/programadortv.png",
+    imagePath: "/images/companies/progtv.png",
   },
 ];
 
@@ -59,7 +59,7 @@ export const PartnerCompanies = () => {
   return (
     <section className="mt-8">
       <p className="text-sm font-semibold text-gray-500">
-        Empresas que apoiam o projeto
+        Parceiros que apoiam o projeto
       </p>
       <div className="w-full overflow-hidden">
         <span
