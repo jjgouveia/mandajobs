@@ -13,7 +13,7 @@ import DropDown, { levelType } from "../components/DropDown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
-import Modal from "../components/Modal";
+import { PartnerCompanies } from "../components/PartnerCompanies";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -171,11 +171,15 @@ const Home: NextPage = () => {
       </Head>
       <Header />
 
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-5 sm:mt-6 sm:-mb-10">
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-0 sm:mt-0 sm:-mb-10">
         <br />
-        <p className="text-slate-500 -mt-6">
+        {/* <p className="text-slate-500 -mt-6">
           Otimize a sua busca por vagas no LinkedIn através da consulta booleana
           e garanta as melhores oportunidades para o seu perfil
+        </p> */}
+        <p className="mb-1 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
+          Conectamos você com as melhores oportunidas do LinkedIn de acordo com
+          o seu perfil
         </p>
         <div className="max-w-xl w-full">
           <div className="flex mt-7 items-center space-x-3">
@@ -239,7 +243,8 @@ const Home: NextPage = () => {
               </span>
             </button>
           )}
-          <div>
+
+          {/* <div>
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded"
               onClick={openModal}
@@ -247,7 +252,7 @@ const Home: NextPage = () => {
               Abrir Modal
             </button>
             <Modal isOpen={isModalOpen} onClose={closeModal} />
-          </div>
+          </div> */}
           {loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
@@ -262,6 +267,10 @@ const Home: NextPage = () => {
           reverseOrder={false}
           toastOptions={{ duration: 2500 }}
         />
+        <div className="max-w-xl w-full">
+          <PartnerCompanies />
+        </div>
+
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
           {generatedQuery && (
