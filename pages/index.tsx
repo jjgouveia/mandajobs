@@ -13,6 +13,9 @@ import DropDown, { levelType } from "../components/DropDown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
+import QueryCounterComponent from "../components/QueryCounterComponent";
+import getSubscriberCount from "../hooks/getQueriesCount";
+import { supabase } from "../utils/supabase";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -20,7 +23,18 @@ const Home: NextPage = () => {
   const [tools, setTools] = useState("");
   const [toolsIdontUse, setToolsIdontUse] = useState("");
   const [level, setLevel] = useState<levelType>("Junior");
-  const [generatedQuery, setgeneratedQuery] = useState<String>("");
+  const [generatedQuery, setgeneratedQuery] = useState<string | undefined>(
+    undefined
+  );
+  const [counter, setCounter] = useState<number>(828);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const query = useRef<null | HTMLDivElement>(null);
 
@@ -40,6 +54,16 @@ const Home: NextPage = () => {
         return "only Junior titles";
       default:
         return "";
+    }
+  };
+
+  const insertQuery = async (query_string: string): Promise<void | null> => {
+    const { error } = await supabase
+      .from("query_bucket")
+      .insert({ query_string });
+    if (error) {
+      console.log(error);
+      return null;
     }
   };
 
@@ -92,9 +116,17 @@ const Home: NextPage = () => {
       const chunkValue = decoder.decode(value);
       parser.feed(chunkValue);
     }
+
     scrollToBios();
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (generatedQuery && loading === false) {
+      insertQuery(generatedQuery);
+      getSubscriberCount(setCounter);
+    }
+  }, [loading]);
 
   useEffect(() => {
     if (localStorage.getItem("mandaJobsFirst") !== "false") {
@@ -154,6 +186,10 @@ const Home: NextPage = () => {
     setTheme();
   }, []);
 
+  useEffect(() => {
+    getSubscriberCount(setCounter);
+  }, []);
+
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
@@ -162,14 +198,14 @@ const Home: NextPage = () => {
       </Head>
       <Header />
 
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-5 sm:mt-6 sm:-mb-10">
-        <br />
-        <p className="text-slate-500 -mt-6">
-          Otimize a sua busca por vagas no LinkedIn através da consulta booleana
-          e garanta as melhores oportunidades para o seu perfil
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-0 sm:mt-0 sm:-mb-10">
+        <QueryCounterComponent counter={counter} />
+        <p className="mb-1 mt-1 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
+          Conectando você com as melhores oportunides do LinkedIn de acordo com
+          o seu perfil
         </p>
         <div className="max-w-xl w-full">
-          <div className="flex mt-7 items-center space-x-3">
+          <div className="flex mt-4 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">1</p>
             <p className="text-left font-medium">Em qual posição você atua:</p>
           </div>
@@ -230,6 +266,16 @@ const Home: NextPage = () => {
               </span>
             </button>
           )}
+
+          {/* <div>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+              onClick={openModal}
+            >
+              Abrir Modal
+            </button>
+            <Modal isOpen={isModalOpen} onClose={closeModal} />
+          </div> */}
           {loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
@@ -244,6 +290,8 @@ const Home: NextPage = () => {
           reverseOrder={false}
           toastOptions={{ duration: 2500 }}
         />
+        <div className="max-w-xl w-full">{/* <PartnerCompanies /> */}</div>
+
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
           {generatedQuery && (

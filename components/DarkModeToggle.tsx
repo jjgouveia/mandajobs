@@ -8,6 +8,8 @@ function DarkModeToggle() {
   const [loading, setLoading] = useState(true);
 
   const toggleDarkMode = () => {
+    console.log("toggleDarkMode");
+
     setDarkMode((prevMode) => !prevMode);
     const theme = document.documentElement.classList[0];
 
