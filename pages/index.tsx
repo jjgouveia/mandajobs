@@ -14,6 +14,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import { PartnerCompanies } from "../components/PartnerCompanies";
+import QueryCounterComponent from "../components/QueryCounterComponent";
+import getSubscriberCount from "../hooks/QueryCount";
 import { supabase } from "../utils/supabase";
 
 const Home: NextPage = () => {
@@ -25,6 +27,7 @@ const Home: NextPage = () => {
   const [generatedQuery, setgeneratedQuery] = useState<string | undefined>(
     undefined
   );
+  const [counter, setCounter] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
@@ -122,6 +125,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (generatedQuery && loading === false) {
       insertQueryOnSupabase(generatedQuery);
+      getSubscriberCount(setCounter);
     }
   }, [loading]);
 
@@ -183,14 +187,9 @@ const Home: NextPage = () => {
     setTheme();
   }, []);
 
-  const getSubscriberCount = async (): Promise<void | null> => {
-    const { data, error } = await supabase.from("consult").select();
-    console.log(data);
-    if (error) {
-      console.log(error);
-      return null;
-    }
-  };
+  useEffect(() => {
+    getSubscriberCount(setCounter);
+  }, []);
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -201,16 +200,11 @@ const Home: NextPage = () => {
       <Header />
 
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-0 sm:mt-0 sm:-mb-10">
-        <br />
-        {/* <p className="text-slate-500 -mt-6">
-          Otimize a sua busca por vagas no LinkedIn através da consulta booleana
-          e garanta as melhores oportunidades para o seu perfil
-        </p> */}
+        <QueryCounterComponent counter={counter} />
         <p className="mb-1 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
           Conectamos você com as melhores oportunidas do LinkedIn de acordo com
           o seu perfil
         </p>
-        {/* <SubscribersCount /> */}
         <div className="max-w-xl w-full">
           <div className="flex mt-7 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">1</p>
