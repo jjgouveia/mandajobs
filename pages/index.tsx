@@ -13,7 +13,6 @@ import DropDown, { levelType } from "../components/DropDown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
-import { PartnerCompanies } from "../components/PartnerCompanies";
 import QueryCounterComponent from "../components/QueryCounterComponent";
 import getSubscriberCount from "../hooks/getQueriesCount";
 import { supabase } from "../utils/supabase";
@@ -201,11 +200,11 @@ const Home: NextPage = () => {
 
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-0 sm:mt-0 sm:-mb-10">
         <QueryCounterComponent counter={counter} />
-        <p className="mb-2 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
+        <p className="mb-1 mt-1 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
           Conectando você com as melhores oportunides do LinkedIn de acordo com
           o seu perfil
         </p>
-        <div className="max-w-xl w-full border-t">
+        <div className="max-w-xl w-full">
           <div className="flex mt-4 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">1</p>
             <p className="text-left font-medium">Em qual posição você atua:</p>
@@ -291,9 +290,7 @@ const Home: NextPage = () => {
           reverseOrder={false}
           toastOptions={{ duration: 2500 }}
         />
-        <div className="max-w-xl w-full">
-          <PartnerCompanies />
-        </div>
+        <div className="max-w-xl w-full">{/* <PartnerCompanies /> */}</div>
 
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
