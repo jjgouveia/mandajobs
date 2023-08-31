@@ -13,17 +13,17 @@ export interface Database {
                 Row: {
                     created_at: string | null
                     id: number
-                    link: string
+                    query_string: string
                 }
                 Insert: {
                     created_at?: string | null
                     id?: never
-                    link: string
+                    query_string: string
                 }
                 Update: {
                     created_at?: string | null
                     id?: never
-                    link?: string
+                    query_string?: string
                 }
                 Relationships: []
             }

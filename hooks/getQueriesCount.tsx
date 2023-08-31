@@ -1,8 +1,8 @@
 import { supabase } from "../utils/supabase";
 
-const getSubscriberCount = async (callback: Function): Promise<void | null> => {
+const getQueriesCount = async (callback: Function): Promise<void | null> => {
   const { count, error } = await supabase
-    .from("consult")
+    .from("query_bucket")
     .select("*", { count: "exact" });
 
   if (error || !count) {
@@ -12,4 +12,4 @@ const getSubscriberCount = async (callback: Function): Promise<void | null> => {
   callback(count);
 };
 
-export default getSubscriberCount;
+export default getQueriesCount;
