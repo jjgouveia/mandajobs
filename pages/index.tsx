@@ -68,7 +68,7 @@ const Home: NextPage = () => {
   };
 
   const prompt = `Create a query for I use in linkedin searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
-  I'm a ${title} developer that uses ${tools} and don't work with ${toolsIdontUse}. ${switchLevel()}
+  I'm a ${title} professional that uses ${tools} and don't work with ${toolsIdontUse}. ${switchLevel()}
   `;
 
   const generateQuery = async (e: any) => {
