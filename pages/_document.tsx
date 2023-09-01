@@ -1,18 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
-  componentDidMount() {
-    const script = document.createElement("script");
-    script.innerHTML = `
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-B2329WXFYR');
-    `;
-    document.head.appendChild(script);
-  }
-
   render() {
     return (
       <Html lang="pt-BR">
@@ -83,11 +71,6 @@ class MyDocument extends Document {
           <meta itemProp="description" content="Manda Jobs" />
           <meta itemProp="image" content="/favicon.ico" />
           <meta name="mobile-web-app-capable" content="yes" />
-
-          <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-B2329WXFYR"
-          ></script>
         </Head>
         <body>
           <Main />
