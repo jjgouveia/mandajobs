@@ -20,22 +20,24 @@ class MyDocument extends Document {
           <meta name="title" content="Manda Jobs" />
           <meta
             name="description"
-            content="Otimize sua busca por vagas no LinkedIn através da consulta booleana e garanta as melhores oportunidades para o seu perfil."
+            content="Conectando você com as melhores oportunidades do LinkedIn de acordo
+          com o seu perfil"
           />
           <meta
             property="keywords"
             content="trabalho remoto, emprego, vagas, trabalho em casa, empregos de tecnologia, carreira em tecnologia, trabalho flexível, oportunidades de trabalho, empresas remotas"
           />
           <meta name="robots" content="index, follow" />
-          <meta property="og:url" content="https://mandajobs.vercel.app" />
+          <meta property="og:url" content="https://mandajobs.tech" />
           <meta property="og:title" content="Manda Jobs" />
           <meta
             property="og:description"
-            content="Otimize sua busca por vagas no LinkedIn através da consulta booleana e garanta as melhores oportunidades para o seu perfil."
+            content="Conectando você com as melhores oportunidades do LinkedIn de acordo
+          com o seu perfil"
           />
           <meta
             property="og:image"
-            content="https://github.com/jjgouveia/sturdy-doodle/blob/main/mandajobs/mandajobs.png?raw=true"
+            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs.png"
           />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
@@ -47,15 +49,16 @@ class MyDocument extends Document {
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="mandajobs.vercel.app" />
-          <meta property="twitter:url" content="https://mandajobs.vercel.app" />
+          <meta property="twitter:url" content="https://mandajobs.tech" />
           <meta name="twitter:title" content="Manda Jobs" />
           <meta
             name="twitter:description"
-            content="Otimize sua busca por vagas no LinkedIn através da consulta booleana e garanta as melhores oportunidades para o seu perfil."
+            content="Conectando você com as melhores oportunidades do LinkedIn de acordo
+          com o seu perfil"
           />
           <meta
             name="twitter:image"
-            content="https://github.com/jjgouveia/sturdy-doodle/blob/main/mandajobs/mandajobs.png?raw=true"
+            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs.png"
           />
           <meta name="twitter:creator" content="@outrogouveia" />
 

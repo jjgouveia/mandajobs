@@ -225,7 +225,7 @@ const Home: NextPage = () => {
             value={tools}
             onChange={(e) => setTools(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: Angular, Next.js, React, Java, Node, Fé..."}
+            placeholder={"Ex.: Angular, Next.js, Java, Node, Fé..."}
           />
           <div className="flex mt-4 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">3</p>
@@ -237,7 +237,7 @@ const Home: NextPage = () => {
             value={toolsIdontUse}
             onChange={(e) => setToolsIdontUse(e.target.value)}
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder={"Ex.: PHP, Ruby.."}
+            placeholder={"Ex.: PHP, Ruby, Darkhold.."}
           />
           <div className="flex mb-5 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">4</p>
