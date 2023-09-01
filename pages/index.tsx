@@ -201,8 +201,8 @@ const Home: NextPage = () => {
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-0 sm:mt-0 sm:-mb-10">
         <QueryCounterComponent counter={counter} />
         <p className="mb-1 mt-1 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
-          Conectando você com as melhores oportunides do LinkedIn de acordo com
-          o seu perfil
+          Conectando você com as melhores oportunidades do LinkedIn de acordo
+          com o seu perfil
         </p>
         <div className="max-w-xl w-full">
           <div className="flex mt-4 items-center space-x-3">
@@ -215,7 +215,7 @@ const Home: NextPage = () => {
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder={`Ex.: front-end, back-end, fullstack...`}
           />
-          <div className="flex mt-6 items-center space-x-3">
+          <div className="flex mt-4 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">2</p>
             <p className="text-left font-medium">
               Tecnologias que você utiliza:
@@ -227,7 +227,7 @@ const Home: NextPage = () => {
             className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder={"Ex.: Angular, Next.js, React, Java, Node, Fé..."}
           />
-          <div className="flex mt-6 items-center space-x-3">
+          <div className="flex mt-4 items-center space-x-3">
             <p className="text-left font-medium text-blue-600">3</p>
             <p className="text-left font-medium">
               Tecnologias que você NÃO utiliza:
@@ -258,8 +258,9 @@ const Home: NextPage = () => {
 
           {!loading && (
             <button
-              className="bg-blue-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full"
+              className="bg-blue-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full disabled:opacity-50"
               onClick={(e) => generateQuery(e)}
+              disabled={title === "" || tools === "" || toolsIdontUse === ""}
             >
               <span style={{ letterSpacing: "0.05rem" }}>
                 Gerar consulta ✨
@@ -301,7 +302,7 @@ const Home: NextPage = () => {
                   className="sm:text-4xl text-3xl font-bold mx-auto"
                   ref={query}
                 >
-                  Sua consulta personalizada
+                  Sua consulta personalizada ✨
                 </h2>
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">

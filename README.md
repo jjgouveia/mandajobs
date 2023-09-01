@@ -14,25 +14,26 @@
 
 ## Descrição
 
-O <b>Manda Jobs</b> é um projeto que visa facilitar a busca por vagas de emprego no LinkedIn, permitindo encontrar aquelas que mais se encaixam no perfil da pessoa usuária.
+O objetivo do **Manda Jobs** é conectar a pessoa usuária com as melhores oportunidades disponíveis no LinkedIn de acordo com o seu perfil.
 
 ## Como funciona?
 
-A partir de um conjunto de palavras-chave relacionadas ao perfil da vaga desejada pela pessoa usuária, o sistema gera uma query booleana (AND, OR, NOT e ()) para o LinkedIn, utilizando a API da OpenAI. A partir dessa query, é possível copiá-la e colar no campo de busca de vagas do LinkedIn, ou clicar no botão "Consultar vagas no LinkedIn 🚀" para ser redirecionado para a página de vagas com a query já preenchida de forma automágica.
+A partir de um conjunto de palavras-chave relacionadas ao perfil da vaga desejada pela pessoa usuária, o sistema gera uma query booleana (AND, OR, NOT e ()) para o LinkedIn, utilizando a API da OpenAI. A partir dessa query, é possível copiá-la e colar no campo de busca de vagas do LinkedIn, ou clicar no botão "Consultar vagas no LinkedIn 🚀" para ser redirecionado até a página de vagas com a query (consulta) já preenchida de forma automágica.
 
 ## Tecnologias
 
 - [NextJs](https://nextjs.org/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [OpenAI](https://openai.com/)
+- [Supabase](https://supabase.com/)
 
 ## Contribuição
 
 - Opções:
-  1.  Issue: Abra uma issue descrevendo a sua sugestão;
-  2.  Fork: Faça um fork do projeto;
-  3.  Manda um email pra mim: [gouvik.dev@gmail.com](mailto:gouvik.dev@gmail.com);
-  4.  Entre em contato comigo pelo LinkedIn: [https://www.linkedin.com/in/jarbasgouveia](https://www.linkedin.com/in/jarbasgouveia);
+  1. Issue: Abra uma issue descrevendo a sua sugestão;
+  2. Fork: Faça um fork do projeto;
+  3. Manda um email pra mim: [gouvik.dev@gmail.com](mailto:gouvik.dev@gmail.com);
+  4. Entre em contato comigo pelo LinkedIn: [https://www.linkedin.com/in/jarbasgouveia](https://www.linkedin.com/in/jarbasgouveia);
 - Pull requests são muito bem-vindos. Para grandes mudanças, por favor, abra uma issue primeiro para discutir o que você gostaria de mudar.
 
 ## Agradecimentos
