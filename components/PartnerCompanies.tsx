@@ -14,19 +14,31 @@ const companies: Company[] = [
     description: "Página especializa na produção de conteúdo de tecnologia.",
     imagePath: "/images/companies/progtv.png",
   },
-
   {
-    name: "FrontIn",
-    url: "https://frontinsampa.com.br/pt-br",
-    description:
-      "Empresa especializada em produção de eventos e conteúdo de tecnologia.",
-    imagePath: "/images/companies/frontin.webp",
+    name: "SkCoders",
+    url: "https://appskcoders.com.br/",
+    description: "Aprenda a programar no seu tempo, do seu jeito e sem custo!",
+    imagePath: "/images/companies/SkCoders.png",
   },
   {
-    name: "Trampar de Casa",
-    url: "https://trampardecasa.com.br/",
-    description: "Empresa especializada em vagas de trabalho remoto.",
-    imagePath: "/images/companies/trampardecasa.svg",
+    name: "Strider",
+    url: "app.onstrider.com/r/mandajobs",
+    description: "Plataforma de recrutamento e seleção de desenvolvedores.",
+    imagePath: "/images/companies/strider.svg",
+  },
+  {
+    name: "Skill Labs.",
+    url: "https://www.sklabs.com.br/",
+    description:
+      "Um ecossistema que conecta co-fundadores e especialistas em tecnologia para construir novas empresas do zero.",
+    imagePath: "/images/companies/skill_labs.png",
+  },
+  {
+    name: "BeMentor",
+    url: "https://www.sklabs.com.br/",
+    description:
+      "Plataforma de ensino com objetivo de conectar mentores e mentorados numa experiência personalizada e de alto impacto.",
+    imagePath: "/images/companies/bementor.webp",
   },
 ];
 
@@ -45,15 +57,15 @@ const CompanySection = ({ name, imagePath, url, description }: Company) => (
 
 export const PartnerCompanies = () => {
   return (
-    <section className="mt-8">
-      <p className="text-sm font-semibold text-gray-500">
-        Parceiros que apoiam o projeto
+    <section className="mt-8 bg-slate-100 rounded-md border border-blue-200">
+      <p className="text-sm text-black p-1">
+        Empresas que apoiam o projeto e a recolocação profissional
       </p>
       <div className="w-full overflow-hidden">
         <span
           className={`group flex w-full items-center justify-start max-lg:w-1/4`}
         >
-          <span className="animate-scroll-left group-hover:paused flex gap-10">
+          <span className="animate-scroll-left group-hover:paused flex gap-8">
             {companies.map((company) => (
               <CompanySection key={company.name} {...company} />
             ))}

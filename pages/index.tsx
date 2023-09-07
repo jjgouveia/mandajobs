@@ -13,6 +13,7 @@ import DropDown, { levelType } from "../components/DropDown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
+import { PartnerCompanies } from "../components/PartnerCompanies";
 import QueryCounterComponent from "../components/QueryCounterComponent";
 import getSubscriberCount from "../hooks/getQueriesCount";
 import { supabase } from "../utils/supabase";
@@ -291,7 +292,9 @@ const Home: NextPage = () => {
           reverseOrder={false}
           toastOptions={{ duration: 2500 }}
         />
-        <div className="max-w-xl w-full">{/* <PartnerCompanies /> */}</div>
+        <div className="max-w-xl w-full">
+          <PartnerCompanies />
+        </div>
 
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
