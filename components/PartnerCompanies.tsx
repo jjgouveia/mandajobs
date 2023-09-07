@@ -22,7 +22,7 @@ const companies: Company[] = [
   },
   {
     name: "Strider",
-    url: "app.onstrider.com/r/mandajobs",
+    url: "https://app.onstrider.com/r/mandajobs",
     description: "Plataforma de recrutamento e seleção de desenvolvedores.",
     imagePath: "/images/companies/strider.svg",
   },
@@ -35,7 +35,7 @@ const companies: Company[] = [
   },
   {
     name: "BeMentor",
-    url: "https://www.sklabs.com.br/",
+    url: "https://www.bementor.com.br/",
     description:
       "Plataforma de ensino com objetivo de conectar mentores e mentorados numa experiência personalizada e de alto impacto.",
     imagePath: "/images/companies/bementor.webp",
