@@ -30,7 +30,6 @@ const handler = async (req: Request): Promise<Response> => {
   };
 
   const stream = await OpenAIStream(payload);
-  // return stream response (SSE)
   return new Response(
     stream, {
     headers: new Headers({
