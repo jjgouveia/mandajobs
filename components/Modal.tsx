@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <svg
               viewBox="0 0 24 24"
               aria-hidden="true"
-              className="mr-3 h-6 w-6 fill-white"
+              className="mr-3 h-6 w-6 fill-black"
             >
               <path
                 fillRule="evenodd"

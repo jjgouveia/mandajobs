@@ -6,7 +6,6 @@ import {
 } from "eventsource-parser";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
@@ -15,6 +14,7 @@ import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import { PartnerCompanies } from "../components/PartnerCompanies";
 import QueryCounterComponent from "../components/QueryCounterComponent";
+import HeadlessModal from "../components/ui/HeadlessModal";
 import getSubscriberCount from "../hooks/getQueriesCount";
 import { supabase } from "../utils/supabase";
 
@@ -342,18 +342,13 @@ const Home: NextPage = () => {
                           <p className="query">{q}</p>
                         </div>
                         <p className="text-sm text-slate-400 -pb-5">- ou -</p>
-                        <Link
-                          href={`https://www.linkedin.com/jobs/search/?currentJobId=3644169029&geoId=106057199&keywords=${generatedQuery}&location=Brasil&refresh=true`}
-                          target="_blank"
-                          title="Consultar vagas no LinkedIn"
-                          className="w-full"
-                        >
-                          <button className="bg-green-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-green-500 w-full">
-                            <span style={{ letterSpacing: "0.05rem" }}>
-                              Consultar vagas no LinkedIn 🚀
-                            </span>
-                          </button>
-                        </Link>
+                        <div className="w-full">
+                          <HeadlessModal
+                            query={generatedQuery}
+                            text={"Consultar vagas no LinkedIn 🚀"}
+                            btnTwdClass="bg-green-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-green-500 w-full"
+                          />
+                        </div>
                       </>
                     );
                   })}
