@@ -257,6 +257,8 @@ const Home: NextPage = () => {
             />
           </div>
 
+          <HeadlessModal query={generatedQuery!} text={"Consultar vagas 🚀"} />
+
           {!loading && (
             <button
               className="bg-blue-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full disabled:opacity-50"
