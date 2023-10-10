@@ -1,18 +1,5 @@
 # Manda Jobs 💼
 
-## 📍 Table of Contents
-
-- [Manda Jobs 💼](#manda-jobs-)
-  - [📍 Table of Contents](#-table-of-contents)
-  - [Descrição](#descrição)
-  - [Como funciona?](#como-funciona)
-  - [Quem apoia o projeto?](#quem-apoia-o-projeto)
-  - [Tecnologias](#tecnologias)
-  - [Contribuição](#contribuição)
-  - [Agradecimentos](#agradecimentos)
-
----
-
 ## Descrição
 
 O objetivo do **Manda Jobs** é conectar a pessoa usuária com as melhores oportunidades disponíveis no LinkedIn de acordo com o seu perfil.
