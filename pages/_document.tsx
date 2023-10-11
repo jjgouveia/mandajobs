@@ -5,6 +5,11 @@ class MyDocument extends Document {
     return (
       <Html lang="pt-BR">
         <Head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455539118400314"
+            crossorigin="anonymous"
+          ></script>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
