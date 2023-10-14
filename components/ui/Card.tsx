@@ -16,13 +16,11 @@ export default function Card({
           <div className="w-12 h-12 flex justify-center items-center border border-slate-500/10 rounded-3xl">
             {icon}
           </div>
-
-          <h3 className=" text-slate-100 text-xl text-center font-semibold">
+          <h3 className=" text-slate-100 text-xl text-center font-semibold tracking-wide">
             {title}
           </h3>
         </div>
-
-        <p className="font-medium leading-relaxed  text-slate-100 text-justify select-none">
+        <p className="font-medium text-lg leading-relaxed text-slate-100 text-justify select-none">
           {description}
         </p>
       </div>

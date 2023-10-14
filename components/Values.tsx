@@ -66,42 +66,74 @@ export default function Values() {
               }
             />
           </div>
-
           <div className="w-full p-3 md:w-1/3">
-            <div
-              target="_blank"
-              className="group block h-full shadow-md shadow-slate-800/60 rounded-xl border border-slate-500/30 bg-zinc-700/70 p-7"
-            >
-              <div className="flex flex-col flex-wrap gap-3">
-                <div className="flex items-center gap-3 pb-2">
-                  <div className="w-12 h-12 flex justify-center items-center shadow-sm shadow-slate-500 bg-gray-100 border border-slate-500/10 rounded-3xl">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-9 h-9 fill-blue-600"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 00-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 01-.189-.866c0-.298.059-.605.189-.866zm2.023 6.828a.75.75 0 10-1.06-1.06 3.75 3.75 0 01-5.304 0 .75.75 0 00-1.06 1.06 5.25 5.25 0 007.424 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-
-                  <h3 className="text-xl text-center font-semibold">
-                    Interface amigável
-                  </h3>
-                </div>
-
-                <p className="font-medium leading-relaxed text-gray-600 text-justify select-none">
-                  Sua candidatura é muito importante para nós. Por isso,
+            <Card
+              title="Interface amigável"
+              description="Sua candidatura é muito importante para nós. Por isso,
                   desenvolvemos uma interface simples e intuitiva em que você
                   pode criar o seu currículo e enviá-lo para o recrutador da
-                  campanha em poucos cliques.
-                </p>
-              </div>
-            </div>
+                  campanha em poucos cliques."
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-9 h-9 fill-blue-200"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 00-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 01-.189-.866c0-.298.059-.605.189-.866zm2.023 6.828a.75.75 0 10-1.06-1.06 3.75 3.75 0 01-5.304 0 .75.75 0 00-1.06 1.06 5.25 5.25 0 007.424 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              }
+            />
+          </div>
+          <div className="w-full p-3 md:w-1/3">
+            <Card
+              title="Interface amigável"
+              description="Sua candidatura é muito importante para nós. Por isso,
+                  desenvolvemos uma interface simples e intuitiva em que você
+                  pode criar o seu currículo e enviá-lo para o recrutador da
+                  campanha em poucos cliques."
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-9 h-9 fill-blue-200"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 00-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 01-.189-.866c0-.298.059-.605.189-.866zm2.023 6.828a.75.75 0 10-1.06-1.06 3.75 3.75 0 01-5.304 0 .75.75 0 00-1.06 1.06 5.25 5.25 0 007.424 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              }
+            />
+          </div>
+          <div className="w-full p-3 md:w-1/3">
+            <Card
+              title="Interface amigável"
+              description="Sua candidatura é muito importante para nós. Por isso,
+                  desenvolvemos uma interface simples e intuitiva em que você
+                  pode criar o seu currículo e enviá-lo para o recrutador da
+                  campanha em poucos cliques."
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-9 h-9 fill-blue-200"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 00-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 01-.189-.866c0-.298.059-.605.189-.866zm2.023 6.828a.75.75 0 10-1.06-1.06 3.75 3.75 0 01-5.304 0 .75.75 0 00-1.06 1.06 5.25 5.25 0 007.424 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              }
+            />
           </div>
         </div>
       </div>
