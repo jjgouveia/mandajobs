@@ -10,8 +10,8 @@ export default function HowItWorks() {
               className="mx-auto transform rounded-2xl object-cover transition duration-1000 ease-in-out hover:-translate-y-4 max-lg:aspect-video max-lg:w-10/12 max-md:w-full"
               src="/assets/ideogram.webp"
               alt="Homem olhando para o pôr do sol no horizonte do mar"
-              width={652}
-              height={435}
+              width={525}
+              height={390}
             />
           </div>
           <div className="w-full p-8 lg:w-1/2">

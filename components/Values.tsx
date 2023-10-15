@@ -5,7 +5,7 @@ export default function Values() {
     <section id="values" className="z-10 overflow-hidden pb-36 sn:pt-32 pt-8">
       <div className="overflow-hidden container mx-auto px-8 lg:px-4">
         <div className="overflow-hidden">
-          <h2 className="xl:text-10xl max-xs:text-4xl mb-9 text-[2.8rem] font-bold leading-none tracking-tight text-white md:text-8xl">
+          <h2 className="xl:text-[5.5rem] max-xs:text-4xl mb-9 text-[2.8rem] font-bold leading-none tracking-tight text-white md:text-8xl">
             Nossa missão é transformar a forma como você se posiciona no mercado
             de trabalho
           </h2>
@@ -51,11 +51,11 @@ export default function Values() {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 52 52"
-                  enable-background="new 0 0 52 52"
+                  enableBackground="new 0 0 52 52"
                   xmlSpace="preserve"
                   className="w-7 h-7 fill-blue-200"
                 >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                   <g
                     id="SVGRepo_tracerCarrier"
                     strokeLinecap="round"
@@ -104,9 +104,9 @@ export default function Values() {
                   className="w-9 h-9 fill-blue-200"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 00.374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08zm3.094 8.016a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                 </svg>
               }
@@ -126,7 +126,7 @@ export default function Values() {
                   viewBox="0 0 260.366 260.366"
                   xmlSpace="preserve"
                 >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                   <g
                     id="SVGRepo_tracerCarrier"
                     strokeLinecap="round"

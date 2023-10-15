@@ -1,7 +1,9 @@
 import type { NextPage } from "next";
+import FAQ from "../components/FAQ";
 import HeaderExperimental from "../components/HeaderExperimental";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
+import ScrollToTopButton from "../components/ScrollToTop";
 import Values from "../components/Values";
 
 const Index: NextPage = () => {
@@ -24,7 +26,8 @@ const Index: NextPage = () => {
       <Hero />
       <Values />
       <HowItWorks />
-      <div className="custom-cursor"></div>
+      <FAQ />
+      <ScrollToTopButton />
     </main>
   );
 };

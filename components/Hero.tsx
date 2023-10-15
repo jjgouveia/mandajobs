@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="container mx-auto overflow-y-hidden overflow-x-hidden">
         <div className="flex justify-around flex-wrap items-center min-h-screen">
           <div className="w-full pl-5 sm:pt-5 pt-0 pr-5 sm:pb-5 pb-0 lg:w-1/2 lg:pr-0">
-            <h1 className="title sm:text-left text-center lg:text-8xl max-xs:text-5xl mb-6 text-[3.5rem] font-bold leading-none sm:tracking-tight tracking-wide md:text-8xl text-gray-100">
+            <h1 className="title sm:text-left text-center lg:text-[5rem] max-xs:text-5xl mb-6 text-[3.5rem] font-bold leading-none sm:tracking-tight tracking-wide md:text-8xl text-gray-100">
               Seu filtro inteligente <br /> de vagas para o{" "}
               <span className="mix-blend-plus-lighter text-blue-500">
                 LinkedIn
