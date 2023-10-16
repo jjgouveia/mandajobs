@@ -1,8 +1,11 @@
 import type { NextPage } from "next";
+import CTA from "../components/CTA";
 import FAQ from "../components/FAQ";
+import FooterExperimental from "../components/FooterExperimental";
 import HeaderExperimental from "../components/HeaderExperimental";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
+import Partners from "../components/Partners";
 import ScrollToTopButton from "../components/ScrollToTop";
 import Values from "../components/Values";
 
@@ -25,8 +28,11 @@ const Index: NextPage = () => {
       <HeaderExperimental />
       <Hero />
       <Values />
-      <HowItWorks />
       <FAQ />
+      <Partners />
+      <HowItWorks />
+      <CTA />
+      <FooterExperimental />
       <ScrollToTopButton />
     </main>
   );

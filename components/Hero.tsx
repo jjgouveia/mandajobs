@@ -3,15 +3,13 @@
 
 export default function Hero() {
   return (
-    <div className="pb-28 sm:-mt-8 mt-5">
+    <div className="pb-28 sm:-mt-8 mt-5 ">
       <div className="container mx-auto overflow-y-hidden overflow-x-hidden">
         <div className="flex justify-around flex-wrap items-center min-h-screen">
           <div className="w-full pl-5 sm:pt-5 pt-0 pr-5 sm:pb-5 pb-0 lg:w-1/2 lg:pr-0">
-            <h1 className="title sm:text-left text-center lg:text-[5rem] max-xs:text-5xl mb-6 text-[3.5rem] font-bold leading-none sm:tracking-tight tracking-wide md:text-8xl text-gray-100">
-              Seu filtro inteligente <br /> de vagas para o{" "}
-              <span className="mix-blend-plus-lighter text-blue-500">
-                LinkedIn
-              </span>
+            <h1 className="animate-fade-up animate-once animate-duration-500 animate-delay-700 animate-ease-linear title sm:text-left text-center lg:text-[5rem] max-xs:text-5xl mb-6 text-[3.5rem] font-bold leading-none sm:tracking-tight tracking-wide md:text-8xl text-gray-100">
+              Seu filtro inteligente <br /> de vagas para o Linked
+              <span className="mix-blend-plus-lighter text-blue-500">In</span>
               <div className="aurora">
                 <div className="aurora__item" />
                 <div className="aurora__item" />
@@ -19,13 +17,11 @@ export default function Hero() {
                 <div className="aurora__item" />
               </div>
             </h1>
-            <p className="mt-7 hidden sm:block sm:mb-9 mb-0 text-xl font-medium text-gray-100 max-xl:max-w-sm sn:text-center text-justify">
+            <p className="animate-fade-up animate-once animate-duration-500 animate-delay-700 animate-ease-linear mt-7 hidden sm:block sm:mb-9 mb-0 text-xl font-medium text-gray-100 max-xl:max-w-sm sn:text-center text-justify">
               Alimentado por Inteligência Artificial, o Manda Jobs é um filtro
               inteligente de vagas que conecta você com as melhores
               oportunidades de acordo com o seu perfil.
             </p>
-            {/* <SubscriberForm />
-            <PartnerCompanies /> */}
           </div>
           <div className="p-0">
             <div id="teste" className="sm:mt-0 -mt-28 flex justify-center">

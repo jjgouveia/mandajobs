@@ -5,7 +5,6 @@ class MyDocument extends Document {
     return (
       <Html lang="pt-BR">
         <Head>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js" />
           <script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455539118400314"

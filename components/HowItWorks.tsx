@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function HowItWorks() {
   return (
-    <section id="como-funciona" className="overflow-hidden bg-[#141417] mt-32">
+    <section id="how-it-works" className="overflow-hidden bg-[#141417] mt-32">
       <div className="container mx-auto px-8 lg:px-4 overflow-hidden">
         <div className="-m-8 flex flex-wrap items-center">
           <div className="w-full p-8 lg:w-1/2 mt-4">

@@ -29,9 +29,11 @@
     "react-hot-toast": "^2.4.0",
     "react-use-measure": "^2.1.1",
     "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-animated": "^1.0.1",
     "three": "^0.157.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.22",
     "@types/node": "18.11.3",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
