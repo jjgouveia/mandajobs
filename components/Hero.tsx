@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="container mx-auto overflow-y-hidden overflow-x-hidden">
         <div className="flex justify-around flex-wrap items-center min-h-screen">
           <div className="w-full pl-5 sm:pt-5 pt-0 pr-5 sm:pb-5 pb-0 lg:w-1/2 lg:pr-0">
-            <h1 className="animate-fade-up animate-once animate-duration-500 animate-delay-700 animate-ease-linear title sm:text-left text-center lg:text-[5rem] max-xs:text-5xl mb-6 text-[3.5rem] font-bold leading-none sm:tracking-tight tracking-wide md:text-8xl text-gray-100">
+            <h1 className="animate-fade-up animate-once animate-duration-500 animate-animate-ease-linear title sm:text-left text-center lg:text-[5rem] max-xs:text-5xl mb-6 text-[3.5rem] font-bold leading-none sm:tracking-tight tracking-wide md:text-8xl text-gray-100">
               Seu filtro inteligente <br /> de vagas para o Linked
               <span className="mix-blend-plus-lighter text-blue-500">In</span>
               <div className="aurora">
@@ -17,7 +17,7 @@ export default function Hero() {
                 <div className="aurora__item" />
               </div>
             </h1>
-            <p className="animate-fade-up animate-once animate-duration-500 animate-delay-700 animate-ease-linear mt-7 hidden sm:block sm:mb-9 mb-0 text-xl font-medium text-gray-100 max-xl:max-w-sm sn:text-center text-justify">
+            <p className="animate-fade-up animate-once animate-duration-500 animate-animate-ease-linear mt-7 hidden sm:block sm:mb-9 mb-0 text-xl font-medium text-gray-100 max-xl:max-w-sm sn:text-center text-justify">
               Alimentado por Inteligência Artificial, o Manda Jobs é um filtro
               inteligente de vagas que conecta você com as melhores
               oportunidades de acordo com o seu perfil.
@@ -260,7 +260,6 @@ export default function Hero() {
                       attributeName="d"
                       dur="6s"
                       repeatCount="indefinite"
-                      delay="3s"
                       keyTimes="0;0.90;0.95;1"
                       keySplines="0 0.4 1 0.2; 0 0.4 1 0.2; 0 0.4 1 0.2"
                       values="M64 0 L64 0Z; M64 0 L64 0Z; M48 12 L0 48Z; M0 48 L0 48Z"
@@ -269,7 +268,6 @@ export default function Hero() {
                       attributeName="opacity"
                       dur="6s"
                       repeatCount="indefinite"
-                      delay="3s"
                       keyTimes="0;0.90;0.95;1"
                       values="1; 1; 0.6; 0"
                     />
