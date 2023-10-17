@@ -193,9 +193,9 @@ const Search: NextPage = () => {
   return (
     <>
       <Title title="Manda Jobs - Filtro Inteligente" />
-      <div className=" flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+      <main className=" flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
         <HeaderExperimental />
-        <main className="z-50 flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-0 sm:mt-0 sm:-mb-10">
+        <div className="z-50 flex flex-1 w-full flex-col items-center justify-center text-center px-2 mt-0 sm:mt-0 sm:-mb-10">
           <QueryCounterComponent counter={counter} />
           <p className="mb-1 mt-1 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
             Conectando você com as melhores oportunidades do LinkedIn de acordo
@@ -345,10 +345,10 @@ const Search: NextPage = () => {
               </>
             )}
           </div>
-        </main>
+        </div>
         <FooterExperimental />
         <Analytics />
-      </div>
+      </main>
     </>
   );
 };

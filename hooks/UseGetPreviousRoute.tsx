@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type PreviousRoute = string | null;
+type PreviousRoute = string;
 
 export default function UseGetPreviousRoute(previous: string): PreviousRoute {
   const [previousRoute, setPreviousRoute] = useState(previous);

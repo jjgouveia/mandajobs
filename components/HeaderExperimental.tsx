@@ -8,7 +8,6 @@ export default function HeaderExperimental() {
   const [isMobileNavVisible, setMobileNavVisibility] = useState(false);
 
   const route = useRouter().pathname;
-
   const previousRoute = UseGetPreviousRoute(route);
 
   return (
@@ -64,20 +63,17 @@ export default function HeaderExperimental() {
                 aria-label="Abrir menu lateral"
               >
                 <svg
-                  className="navbar-burger text-blue-500"
-                  width={51}
-                  height={51}
-                  viewBox="0 0 56 56"
-                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="#ffffff"
+                  className="w-7 h-7"
                 >
-                  <rect width={56} height={56} rx={28} fill="currentColor" />
                   <path
-                    d="M37 32H19M37 24H19"
-                    stroke="white"
-                    strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
                   />
                 </svg>
               </button>
@@ -87,7 +83,7 @@ export default function HeaderExperimental() {
       </div>
       {isMobileNavVisible && (
         <div
-          className="navbar-menu fixed bottom-0 left-0 top-0 z-50 w-4/6 sm:max-w-xs lg:hidden"
+          className="navbar-menu fixed bottom-0 left-0 top-0 z-[51] w-4/6 sm:max-w-xs lg:hidden"
           role="dialog"
           aria-modal={isMobileNavVisible}
         >
@@ -136,7 +132,7 @@ export default function HeaderExperimental() {
                   <ul>
                     <li className="mb-12">
                       <a
-                        className="font-medium hover:text-gray-700"
+                        className="font-medium text-gray-900 hover:text-gray-700"
                         href="#values"
                         onClick={() => setMobileNavVisibility(false)}
                       >
@@ -145,7 +141,7 @@ export default function HeaderExperimental() {
                     </li>
                     <li>
                       <a
-                        className="font-medium hover:text-gray-700"
+                        className="font-medium text-gray-900 hover:text-gray-700"
                         href="#faq"
                         onClick={() => setMobileNavVisibility(false)}
                       >
@@ -154,7 +150,7 @@ export default function HeaderExperimental() {
                     </li>
                     <li className="mb-12">
                       <a
-                        className="font-medium hover:text-gray-700"
+                        className="font-medium text-gray-900 hover:text-gray-700"
                         href="#partners"
                         onClick={() => setMobileNavVisibility(false)}
                       >
@@ -163,7 +159,7 @@ export default function HeaderExperimental() {
                     </li>
                     <li className="mb-12">
                       <a
-                        className="font-medium hover:text-gray-700"
+                        className="font-medium text-gray-900 hover:text-gray-700"
                         href="#how-it-works"
                         onClick={() => setMobileNavVisibility(false)}
                       >
@@ -173,7 +169,7 @@ export default function HeaderExperimental() {
 
                     <li className="mb-12">
                       <a
-                        className="font-medium hover:text-gray-700"
+                        className="font-medium text-gray-900 hover:text-gray-700"
                         href="#go"
                         onClick={() => setMobileNavVisibility(false)}
                       >

@@ -8,11 +8,15 @@ export default function FooterExperimental() {
   const previousRoute = UseGetPreviousRoute(route);
 
   return (
-    <footer className={`z-50 ${previousRoute === "/" && "bg-slate-900/60"}`}>
+    <footer
+      className={`z-50 ${
+        previousRoute.split("/")[1] === "" && "bg-slate-900/60"
+      }`}
+    >
       <div className="pt-16 sm:pt-24 lg:pt-0 px-6 pb-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8 mt-4">
           <div className="space-y-8">
-            <p className="max-w-lg font-body text-base text-neutral-400">
+            <p className="max-w-lg font-body text-base text-neutral-400 text-justify">
               O Manda Jobs é uma plataforma que conecta profissionais com as
               melhores oportunidades do LinkedIn por meio de inteligência
               artificial.
