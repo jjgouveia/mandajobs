@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
+import EverywhereILookAround from "../components/ui/EverywhereILookAround";
 
 class MyDocument extends Document {
   render() {
@@ -82,8 +83,12 @@ class MyDocument extends Document {
           <meta itemProp="image" content="/favicon.ico" />
           <meta name="mobile-web-app-capable" content="yes" />
         </Head>
+
         <body>
-          <Main />
+          <div className="glow-container">
+            <EverywhereILookAround />
+            <Main />
+          </div>
           <NextScript />
         </body>
       </Html>

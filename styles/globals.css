@@ -6,11 +6,11 @@
 
 @layer components {
   html {
-    @apply transition-all;
+    @apply bg-[#141417] text-white transition-all;
   }
-  .dark {
+  /* .dark {
     @apply bg-gray-900 text-white;
-  }
+  } */
 
   .ball {
     --delay: 0s;
@@ -95,7 +95,6 @@
   .glow-container {
     overflow-x: hidden;
     overflow-y: hidden;
-    position: absolute;
     width: 100%;
     min-height: 100vh;
   }
@@ -165,18 +164,6 @@ canvas {
   }
 }
 
-:root {
-  --bg: #131010;
-  --clr-1: #424141;
-  --clr-2: #ffa3ff;
-  --clr-3: #ffd470;
-  --clr-4: #8cc2ff;
-
-  --blur: 1rem;
-  --fs: clamp(3rem, 8vw, 7rem);
-  --ls: clamp(-1.75px, -0.25vw, -3.5px);
-}
-
 .title {
   position: relative;
   overflow: hidden;
@@ -185,21 +172,13 @@ canvas {
 
 :root {
   --color-text: rgb(57, 57, 57);
-  --color-bg: papayawhip;
-  --color-bg-accent: #ecdcc0;
+  --color-bg: rgb(31, 31, 31);
+  --color-bg-accent: #2e2e2ece;
   --size: clamp(10rem, 1rem + 40vmin, 30rem);
   --gap: calc(var(--size) / 14);
   --duration: 60s;
   --scroll-start: 0;
   --scroll-end: calc(-100% - var(--gap));
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text: papayawhip;
-    --color-bg: rgb(63, 63, 63);
-    --color-bg-accent: #282828;
-  }
 }
 
 * {
@@ -251,7 +230,6 @@ canvas {
   }
 }
 
-/* Element styles */
 .marquee svg {
   display: grid;
   place-items: center;
@@ -263,7 +241,6 @@ canvas {
   border-radius: 0.5rem;
 }
 
-/* Parent wrapper */
 .wrapper {
   display: flex;
   flex-direction: column;

@@ -1,13 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import UseGetPreviousRoute from "../hooks/UseGetPreviousRoute";
 
 export default function HeaderExperimental() {
   const [isMobileNavVisible, setMobileNavVisibility] = useState(false);
 
+  const router = useRouter();
+  const route = router.pathname;
+
+  const previousRoute = UseGetPreviousRoute(route);
+
   return (
     <header className="flex justify-between items-center w-full mt-0 pb-1 sm:px-4 px-2">
-      <div className="relative w-full flex items-center justify-between bg-transparent py-4 lg:px-4 animate-fade-down animate-once animate-delay-700">
+      <div
+        className={`relative w-full flex items-center justify-between bg-transparent py-4 lg:px-4 ${
+          previousRoute === "/"
+            ? "animate-fade-down animate-once animate-delay-700"
+            : ""
+        }`}
+      >
         <div className="w-full">
           <div className="flex flex-wrap items-center w-full justify-between">
             <Link href="/" role="button" tabIndex={0} className="flex w-auto ">
@@ -33,9 +46,11 @@ export default function HeaderExperimental() {
                 <li className="mr-9 font-medium hover:text-gray-700">
                   <Link href="#partners">Apoiadores</Link>
                 </li>
-                <li className="mr-9 font-medium hover:text-gray-700">
-                  <Link href="#go">Começar!</Link>
-                </li>
+                {route === "/" && (
+                  <li className="mr-9 font-medium hover:text-gray-700">
+                    <Link href="#go">Começar!</Link>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>

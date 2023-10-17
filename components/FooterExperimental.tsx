@@ -1,7 +1,7 @@
 import Link from "next/link";
 import RepoStarsCount from "./RepoStarsCount";
 
-export default function Partners() {
+export default function FooterExperimental() {
   return (
     <footer className="z-50 bg-slate-900/60">
       <div className="pt-16 sm:pt-24 lg:pt-0 px-6 pb-8">
