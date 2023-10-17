@@ -7,8 +7,7 @@ import UseGetPreviousRoute from "../hooks/UseGetPreviousRoute";
 export default function HeaderExperimental() {
   const [isMobileNavVisible, setMobileNavVisibility] = useState(false);
 
-  const router = useRouter();
-  const route = router.pathname;
+  const route = useRouter().pathname;
 
   const previousRoute = UseGetPreviousRoute(route);
 
