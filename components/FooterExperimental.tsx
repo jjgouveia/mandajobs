@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import UseGetPreviousRoute from "../hooks/UseGetPreviousRoute";
 import RepoStarsCount from "./RepoStarsCount";
 
 export default function FooterExperimental() {
+  const route = useRouter().pathname;
+  const previousRoute = UseGetPreviousRoute(route);
+
   return (
-    <footer className="z-50 bg-slate-900/60">
+    <footer className={`z-50 ${previousRoute === "/" && "bg-slate-900/60"}`}>
       <div className="pt-16 sm:pt-24 lg:pt-0 px-6 pb-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8 mt-4">
           <div className="space-y-8">
@@ -60,7 +65,7 @@ export default function FooterExperimental() {
               <div className="mt-10 md:mt-0"></div>
             </div>
 
-            <div className="md:grid md:grid-cols-2 md:gap-8 text-center">
+            <div className="md:grid md:grid-cols-1 md:gap-8 text-center">
               <div>
                 <h2 className="text-lg font-medium text-neutral-100">
                   Produtos
