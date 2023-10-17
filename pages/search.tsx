@@ -197,13 +197,12 @@ const Search: NextPage = () => {
         <HeaderExperimental />
         <div className="z-50 flex flex-1 w-full flex-col items-center justify-center text-center px-2 mt-0 sm:mt-0 sm:-mb-10">
           <QueryCounterComponent counter={counter} />
-          <p className="mb-1 mt-1 text-md font-medium text-gray-500 max-xl:max-w-sm md:text-xl">
-            Conectando você com as melhores oportunidades do LinkedIn de acordo
-            com o seu perfil
+          <p className="mb-1 mt-1 text-md font-medium max-xl:max-w-sm md:text-xl">
+            Preencha os campos abaixo para gerar uma consulta personalizada
           </p>
           <div className="max-w-xl w-full">
             <div className="flex mt-4 items-center space-x-3">
-              <p className="text-left font-medium text-blue-600">1</p>
+              <p className="text-left font-medium">1.</p>
               <p className="text-left font-medium">
                 Em qual posição você atua:
               </p>
@@ -215,7 +214,7 @@ const Search: NextPage = () => {
               placeholder={`Ex.: front-end, back-end, fullstack...`}
             />
             <div className="flex mt-4 items-center space-x-3">
-              <p className="text-left font-medium text-blue-600">2</p>
+              <p className="text-left font-medium">2.</p>
               <p className="text-left font-medium">
                 Tecnologias que você utiliza:
               </p>
@@ -227,7 +226,7 @@ const Search: NextPage = () => {
               placeholder={"Ex.: Angular, Next.js, Java, Node"}
             />
             <div className="flex mt-4 items-center space-x-3">
-              <p className="text-left font-medium text-blue-600">3</p>
+              <p className="text-left font-medium">3.</p>
               <p className="text-left font-medium">
                 Tecnologias que você NÃO utiliza:
               </p>
@@ -239,7 +238,7 @@ const Search: NextPage = () => {
               placeholder={"Ex.: PHP, Ruby..."}
             />
             <div className="flex mb-5 items-center space-x-3">
-              <p className="text-left font-medium text-blue-600">4</p>
+              <p className="text-left font-medium">4.</p>
               <p className="text-left font-medium">
                 Nível de senioridade:
                 <span className="text-sm text-slate-500">

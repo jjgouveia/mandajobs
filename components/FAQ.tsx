@@ -3,7 +3,7 @@ export default function FAQ() {
     <section id="faq" className="overflow-hidden pb-32 pt-8 z-10">
       <div className="container mx-auto px-8 lg:px-4">
         <p className="tracking-px mb-5 text-sm font-semibold uppercase text-slate-200">
-          ALGUMA DÚVIDA?
+          MANDA DÚVIDAS
         </p>
         <h2 className="text-slate-200 xl:text-8xl font-heading max-xs:hyphens-auto max-xs:text-4xl mb-16 text-6xl font-bold leading-none tracking-tight md:text-8xl">
           Perguntas Frequentes

@@ -47,6 +47,7 @@ export default function RepoStarsCount({ user, repo }: Props) {
             <div className="flex ml-1 mr-1 mt-1 font-medium">
               <span>Stars:</span>
               <p className="font-semibold" id="h2">
+                {" "}
                 {stars}
               </p>
             </div>

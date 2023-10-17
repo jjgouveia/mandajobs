@@ -8,7 +8,8 @@ export default function Partners() {
           Quem apoia
         </h2>
         <p className="tracking-px mb-5 text-sm font-semibold uppercase text-slate-200">
-          Empresas que apoiam a inovação
+          Empresas que apoiam o Manda Jobs e a inclusão da tecnologia na
+          recolocação profissional
         </p>
         <div>
           <article className="wrapper">

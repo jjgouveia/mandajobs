@@ -7,8 +7,8 @@ import UseGetPreviousRoute from "../hooks/UseGetPreviousRoute";
 export default function HeaderExperimental() {
   const [isMobileNavVisible, setMobileNavVisibility] = useState(false);
 
-  const route = useRouter().pathname;
-  const previousRoute = UseGetPreviousRoute(route);
+  const { push, pathname } = useRouter();
+  const previousRoute = UseGetPreviousRoute(pathname);
 
   return (
     <header className="flex justify-between items-center w-full mt-0 pb-1 sm:px-4 px-2">
@@ -36,7 +36,7 @@ export default function HeaderExperimental() {
             <nav className="hidden w-auto lg:block text-gray-100">
               <ul className="mr-16 flex items-center">
                 <li className="mr-9 font-medium hover:text-gray-700">
-                  <Link href="#values">Nossa Missão</Link>
+                  <button onClick={() => push("/#values")}>Nossa Missão</button>
                 </li>
                 <li className="mr-9 font-medium hover:text-gray-700">
                   <a href="#faq">Perguntas Frequentes</a>
@@ -44,7 +44,7 @@ export default function HeaderExperimental() {
                 <li className="mr-9 font-medium hover:text-gray-700">
                   <Link href="#partners">Apoiadores</Link>
                 </li>
-                {route === "/" && (
+                {previousRoute === "/" && (
                   <li className="mr-9 font-medium hover:text-gray-700">
                     <Link href="#go">Começar!</Link>
                   </li>
@@ -130,14 +130,14 @@ export default function HeaderExperimental() {
                 </div>
                 <div className="flex w-full flex-col justify-center py-16">
                   <ul>
-                    <li className="mb-12">
-                      <a
-                        className="font-medium text-gray-900 hover:text-gray-700"
-                        href="#values"
-                        onClick={() => setMobileNavVisibility(false)}
+                    <li className="mb-12 text-gray-900">
+                      <button
+                        onClick={() => {
+                          push("/#values"), setMobileNavVisibility(false);
+                        }}
                       >
                         Nossa Missão
-                      </a>
+                      </button>
                     </li>
                     <li>
                       <a
