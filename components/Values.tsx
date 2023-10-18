@@ -77,8 +77,7 @@ export default function Values() {
               title="Interface amigável"
               description="Sua candidatura é muito importante para nós. Por isso,
                   desenvolvemos uma interface simples e intuitiva em que você
-                  pode criar o seu currículo e enviá-lo para o recrutador da
-                  campanha em poucos cliques."
+                  pode encontrar vagas de forma rápida e fácil."
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +117,7 @@ export default function Values() {
           <div className="w-full p-3 md:w-1/3">
             <Card
               title="Sem conexão com o LinkedIn"
-              description="Nossa plataforma foi desenvolvida utilizando uma tecnologia de API Headless, que permite que você acesse o conteúdo de forma rápida e segura, sem precisar estar conectado ao LinkedIn. As informações são atualizadas em tempo real sem que, para isso, você esteja logado ao site."
+              description="Nossa plataforma foi desenvolvida utilizando uma tecnologia independente, que permite que você acesse o conteúdo de forma rápida e segura, sem precisar estar conectado ao LinkedIn. As informações são atualizadas em tempo real sem que, para isso, você esteja logado ao site."
               icon={
                 <svg
                   className="w-6 h-6 fill-blue-200"
