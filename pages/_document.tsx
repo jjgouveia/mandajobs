@@ -48,7 +48,7 @@ class MyDocument extends Document {
           />
           <meta
             property="og:image"
-            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs.png"
+            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs_v1dot5.png"
           />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
@@ -68,7 +68,7 @@ class MyDocument extends Document {
           />
           <meta
             name="twitter:image"
-            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs.png"
+            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs_v1dot5.png"
           />
           <meta name="twitter:creator" content="@outrogouveia" />
           <meta name="apple-mobile-web-app-title" content="Manda Jobs" />
