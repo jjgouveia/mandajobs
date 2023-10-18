@@ -9,7 +9,7 @@ export default function FooterExperimental() {
 
   return (
     <footer
-      className={`z-9 ${
+      className={`z-40 ${
         previousRoute.split("/")[1] === "" && "bg-slate-900/60"
       }`}
     >

@@ -201,71 +201,69 @@ const Search: NextPage = () => {
           <p className="mb-1 mt-1 text-md font-medium max-xl:max-w-sm md:text-xl">
             Preencha os campos abaixo para gerar uma consulta personalizada
           </p>
-          <div className="max-w-xl w-full">
-            <Fade cascade triggerOnce>
-              <ul>
-                <li>
-                  <div className="flex mt-4 items-center space-x-3">
-                    <p className="text-left font-medium">1.</p>
-                    <p className="text-left font-medium">
-                      Em qual posição você atua:
-                    </p>
-                  </div>
-                  <input
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder={`Ex.: front-end, back-end, fullstack...`}
+          <div className="max-w-xl w-full z-11">
+            <ul>
+              <li>
+                <div className="flex mt-4 items-center space-x-3">
+                  <p className="text-left font-medium">1.</p>
+                  <p className="text-left font-medium">
+                    Em qual posição você atua:
+                  </p>
+                </div>
+                <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Ex.: front-end, back-end, fullstack...`}
+                />
+              </li>
+              <li>
+                <div className="flex mt-4 items-center space-x-3">
+                  <p className="text-left font-medium">2.</p>
+                  <p className="text-left font-medium">
+                    Tecnologias que você utiliza:
+                  </p>
+                </div>
+                <input
+                  value={tools}
+                  onChange={(e) => setTools(e.target.value)}
+                  className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={"Ex.: Angular, Next.js, Java, Node"}
+                />
+              </li>
+              <li>
+                <div className="flex mt-4 items-center space-x-3">
+                  <p className="text-left font-medium">3.</p>
+                  <p className="text-left font-medium">
+                    Tecnologias que você NÃO utiliza:
+                  </p>
+                </div>
+                <input
+                  value={toolsIdontUse}
+                  onChange={(e) => setToolsIdontUse(e.target.value)}
+                  className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={"Ex.: PHP, Ruby..."}
+                />
+              </li>
+              <li>
+                <div className="flex mb-5 items-center space-x-3">
+                  <p className="text-left font-medium">4.</p>
+                  <p className="text-left font-medium">
+                    Nível de senioridade:
+                    <span className="text-sm text-slate-500">
+                      {" "}
+                      (Junior por padrão)
+                    </span>
+                  </p>
+                </div>
+                <div className="block">
+                  <DropDown
+                    level={level}
+                    setLevel={(newlevel) => setLevel(newlevel)}
                   />
-                </li>
-                <li>
-                  <div className="flex mt-4 items-center space-x-3">
-                    <p className="text-left font-medium">2.</p>
-                    <p className="text-left font-medium">
-                      Tecnologias que você utiliza:
-                    </p>
-                  </div>
-                  <input
-                    value={tools}
-                    onChange={(e) => setTools(e.target.value)}
-                    className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder={"Ex.: Angular, Next.js, Java, Node"}
-                  />
-                </li>
-                <li>
-                  <div className="flex mt-4 items-center space-x-3">
-                    <p className="text-left font-medium">3.</p>
-                    <p className="text-left font-medium">
-                      Tecnologias que você NÃO utiliza:
-                    </p>
-                  </div>
-                  <input
-                    value={toolsIdontUse}
-                    onChange={(e) => setToolsIdontUse(e.target.value)}
-                    className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder={"Ex.: PHP, Ruby..."}
-                  />
-                </li>
-                <li>
-                  <div className="flex mb-5 items-center space-x-3">
-                    <p className="text-left font-medium">4.</p>
-                    <p className="text-left font-medium">
-                      Nível de senioridade:
-                      <span className="text-sm text-slate-500">
-                        {" "}
-                        (Junior por padrão)
-                      </span>
-                    </p>
-                  </div>
-                  <div className="block">
-                    <DropDown
-                      level={level}
-                      setLevel={(newlevel) => setLevel(newlevel)}
-                    />
-                  </div>
-                </li>
-              </ul>
-            </Fade>
+                </div>
+              </li>
+            </ul>
 
             {!loading && (
               <button
