@@ -6,6 +6,7 @@ import {
 } from "eventsource-parser";
 import type { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
+import { Fade } from "react-awesome-reveal";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
 import FooterExperimental from "../components/FooterExperimental";
@@ -201,58 +202,70 @@ const Search: NextPage = () => {
             Preencha os campos abaixo para gerar uma consulta personalizada
           </p>
           <div className="max-w-xl w-full">
-            <div className="flex mt-4 items-center space-x-3">
-              <p className="text-left font-medium">1.</p>
-              <p className="text-left font-medium">
-                Em qual posição você atua:
-              </p>
-            </div>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder={`Ex.: front-end, back-end, fullstack...`}
-            />
-            <div className="flex mt-4 items-center space-x-3">
-              <p className="text-left font-medium">2.</p>
-              <p className="text-left font-medium">
-                Tecnologias que você utiliza:
-              </p>
-            </div>
-            <input
-              value={tools}
-              onChange={(e) => setTools(e.target.value)}
-              className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder={"Ex.: Angular, Next.js, Java, Node"}
-            />
-            <div className="flex mt-4 items-center space-x-3">
-              <p className="text-left font-medium">3.</p>
-              <p className="text-left font-medium">
-                Tecnologias que você NÃO utiliza:
-              </p>
-            </div>
-            <input
-              value={toolsIdontUse}
-              onChange={(e) => setToolsIdontUse(e.target.value)}
-              className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder={"Ex.: PHP, Ruby..."}
-            />
-            <div className="flex mb-5 items-center space-x-3">
-              <p className="text-left font-medium">4.</p>
-              <p className="text-left font-medium">
-                Nível de senioridade:
-                <span className="text-sm text-slate-500">
-                  {" "}
-                  (Junior por padrão)
-                </span>
-              </p>
-            </div>
-            <div className="block">
-              <DropDown
-                level={level}
-                setLevel={(newlevel) => setLevel(newlevel)}
-              />
-            </div>
+            <Fade cascade triggerOnce>
+              <ul>
+                <li>
+                  <div className="flex mt-4 items-center space-x-3">
+                    <p className="text-left font-medium">1.</p>
+                    <p className="text-left font-medium">
+                      Em qual posição você atua:
+                    </p>
+                  </div>
+                  <input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Ex.: front-end, back-end, fullstack...`}
+                  />
+                </li>
+                <li>
+                  <div className="flex mt-4 items-center space-x-3">
+                    <p className="text-left font-medium">2.</p>
+                    <p className="text-left font-medium">
+                      Tecnologias que você utiliza:
+                    </p>
+                  </div>
+                  <input
+                    value={tools}
+                    onChange={(e) => setTools(e.target.value)}
+                    className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={"Ex.: Angular, Next.js, Java, Node"}
+                  />
+                </li>
+                <li>
+                  <div className="flex mt-4 items-center space-x-3">
+                    <p className="text-left font-medium">3.</p>
+                    <p className="text-left font-medium">
+                      Tecnologias que você NÃO utiliza:
+                    </p>
+                  </div>
+                  <input
+                    value={toolsIdontUse}
+                    onChange={(e) => setToolsIdontUse(e.target.value)}
+                    className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={"Ex.: PHP, Ruby..."}
+                  />
+                </li>
+                <li>
+                  <div className="flex mb-5 items-center space-x-3">
+                    <p className="text-left font-medium">4.</p>
+                    <p className="text-left font-medium">
+                      Nível de senioridade:
+                      <span className="text-sm text-slate-500">
+                        {" "}
+                        (Junior por padrão)
+                      </span>
+                    </p>
+                  </div>
+                  <div className="block">
+                    <DropDown
+                      level={level}
+                      setLevel={(newlevel) => setLevel(newlevel)}
+                    />
+                  </div>
+                </li>
+              </ul>
+            </Fade>
 
             {!loading && (
               <button
@@ -281,7 +294,9 @@ const Search: NextPage = () => {
             toastOptions={{ duration: 2500 }}
           />
           <div className="max-w-xl w-full">
-            <PartnerCompanies />
+            <Fade triggerOnce>
+              <PartnerCompanies />
+            </Fade>
           </div>
 
           <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
@@ -289,12 +304,14 @@ const Search: NextPage = () => {
             {generatedQuery && (
               <>
                 <div>
-                  <h2
-                    className="sm:text-4xl text-3xl font-bold mx-auto"
-                    ref={query}
-                  >
-                    Sua consulta personalizada ✨
-                  </h2>
+                  <Fade triggerOnce>
+                    <h2
+                      className="sm:text-4xl text-3xl font-bold mx-auto"
+                      ref={query}
+                    >
+                      Sua consulta personalizada ✨
+                    </h2>
+                  </Fade>
                 </div>
                 <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
                   {generatedQuery
@@ -315,7 +332,7 @@ const Search: NextPage = () => {
                             onClick={() => {
                               navigator.clipboard.writeText(q);
                               toast("Consulta copiada!", {
-                                icon: "🚀",
+                                icon: "📋",
                               });
                             }}
                             key={q}
@@ -334,7 +351,7 @@ const Search: NextPage = () => {
                             <HeadlessModal
                               query={generatedQuery}
                               text={"Consultar vagas no LinkedIn 🚀"}
-                              btnTwdClass="bg-green-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-green-500 w-full"
+                              btnTwdClass="sm:mb-8 sm:border-b sm:border-slate-800 bg-green-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-0 mt-0 hover:bg-green-500 w-full"
                             />
                           </div>
                         </>
