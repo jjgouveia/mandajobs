@@ -202,7 +202,7 @@ const Search: NextPage = () => {
             Preencha os campos abaixo para gerar uma consulta personalizada
           </p>
           <div className="max-w-xl w-full z-11">
-            <ul>
+            <ul className="animate-fade-up animate-once animate-delay-[600ms] z-12">
               <li>
                 <div className="flex mt-4 items-center space-x-3">
                   <p className="text-left font-medium">1.</p>
@@ -292,9 +292,7 @@ const Search: NextPage = () => {
             toastOptions={{ duration: 2500 }}
           />
           <div className="max-w-xl w-full">
-            <Fade triggerOnce>
-              <PartnerCompanies />
-            </Fade>
+            <PartnerCompanies />
           </div>
 
           <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />

@@ -48,7 +48,9 @@ export default function HeaderExperimental() {
                 </li>
                 {previousRoute !== "/search" && (
                   <li className="mr-9 font-medium hover:text-gray-700">
-                    <button onClick={() => push("/search")}>Começar!</button>
+                    <button onClick={() => push("/search")}>
+                      <span className="border-b">Começar!</span>
+                    </button>
                   </li>
                 )}
               </ul>
