@@ -37,9 +37,9 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'scroll-left': 'scroll-left 12s linear infinite',
+        'scroll-left': 'scroll-left 24s linear infinite',
       },
     },
   },
-  plugins: [require("@tailwindcss/forms"), require("@headlessui/tailwindcss"), require('tailwindcss-animate')],
+  plugins: [require("@tailwindcss/forms"), require("@headlessui/tailwindcss"), require('tailwindcss-animated')],
 };

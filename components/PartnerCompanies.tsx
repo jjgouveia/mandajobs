@@ -52,7 +52,6 @@ const CompanySection = ({ name, imagePath, url, description }: Company) => (
       width={128}
       height={28}
       loading="eager"
-      
     />
   </a>
 );

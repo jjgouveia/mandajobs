@@ -1,13 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   html {
-    @apply bg-gray-100 text-dark-backgroundColor transition-all;
+    @apply bg-[#141417] text-white transition-all;
   }
-  .dark {
+  /* .dark {
     @apply bg-gray-900 text-white;
+  } */
+
+  .ball {
+    --delay: 0s;
+    --size: 0.4;
+    --speed: 20s;
+    aspect-ratio: 1;
+    width: calc(100% * var(--size));
+    background: linear-gradient(259.53deg, #0a3fff 6.53%, #f55f0a 95.34%);
+    filter: blur(10vw);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation: loop var(--speed) infinite linear;
+    animation-delay: var(--delay);
+    transform-origin: 50% 50%;
+    opacity: 0.6;
+  }
+
+  @keyframes loop {
+    0% {
+      transform: translate3D(0%, 51%, 0) rotate(0deg);
+    }
+    5% {
+      transform: translate3D(8%, 31%, 0) rotate(18deg);
+    }
+    10% {
+      transform: translate3D(22%, 13%, 0) rotate(36deg);
+    }
+    15% {
+      transform: translate3D(40%, 2%, 0) rotate(54deg);
+    }
+    20% {
+      transform: translate3D(46%, 21%, 0) rotate(72deg);
+    }
+    25% {
+      transform: translate3D(50%, 47%, 0) rotate(90deg);
+    }
+    30% {
+      transform: translate3D(53%, 80%, 0) rotate(108deg);
+    }
+    35% {
+      transform: translate3D(59%, 98%, 0) rotate(125deg);
+    }
+    40% {
+      transform: translate3D(84%, 89%, 0) rotate(144deg);
+    }
+    45% {
+      transform: translate3D(92%, 68%, 0) rotate(162deg);
+    }
+    50% {
+      transform: translate3D(99%, 47%, 0) rotate(180deg);
+    }
+    55% {
+      transform: translate3D(97%, 21%, 0) rotate(198deg);
+    }
+    60% {
+      transform: translate3D(80%, 7%, 0) rotate(216deg);
+    }
+    65% {
+      transform: translate3D(68%, 25%, 0) rotate(234deg);
+    }
+    70% {
+      transform: translate3D(59%, 41%, 0) rotate(251deg);
+    }
+    75% {
+      transform: translate3D(50%, 63%, 0) rotate(270deg);
+    }
+    80% {
+      transform: translate3D(38%, 78%, 0) rotate(288deg);
+    }
+    85% {
+      transform: translate3D(21%, 92%, 0) rotate(306deg);
+    }
+    90% {
+      transform: translate3D(3%, 79%, 0) rotate(324deg);
+    }
+    100% {
+      transform: translate3D(0%, 51%, 0) rotate(360deg);
+    }
+  }
+  .glow-container {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
   }
 
   main {
@@ -15,8 +112,9 @@
     font-weight: 400;
   }
 
-  h1 {
-    font-family: "Montserrat", sans-serif;
+  h1,
+  h2 {
+    font-family: "Space Grotesk", sans-serif;
   }
 
   #star-container {
@@ -63,5 +161,102 @@ canvas {
   100% {
     opacity: 1;
     transform: rotateX(720deg);
+  }
+}
+
+.title {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+:root {
+  --color-text: rgb(57, 57, 57);
+  --color-bg: rgb(31, 31, 31);
+  --color-bg-accent: #2e2e2ece;
+  --size: clamp(10rem, 1rem + 40vmin, 30rem);
+  --gap: calc(var(--size) / 14);
+  --duration: 60s;
+  --scroll-start: 0;
+  --scroll-end: calc(-100% - var(--gap));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: var(--gap);
+  mask-image: linear-gradient(
+    var(--mask-direction, to right),
+    hsl(0 0% 0% / 0),
+    hsl(0 0% 0% / 1) 20%,
+    hsl(0 0% 0% / 1) 80%,
+    hsl(0 0% 0% / 0)
+  );
+}
+
+.marquee__group {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--gap);
+  min-width: 100%;
+  max-height: 120px;
+  animation: scroll-x var(--duration) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__group {
+    animation-play-state: paused;
+  }
+}
+
+.marquee--reverse .marquee__group {
+  animation-direction: reverse;
+  animation-delay: -3s;
+}
+
+@keyframes scroll-x {
+  from {
+    transform: translateX(var(--scroll-start));
+  }
+  to {
+    transform: translateX(var(--scroll-end));
+  }
+}
+
+.marquee svg {
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  fill: var(--color-text);
+  background: var(--color-bg-accent);
+  aspect-ratio: 16/9;
+  padding: calc(var(--size) / 10);
+  border-radius: 0.5rem;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  margin: auto;
+  max-width: 100vw;
+}
+
+.wrapper--vertical {
+  flex-direction: row;
+  height: 100vh;
+}
+
+@keyframes fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
   }
 }

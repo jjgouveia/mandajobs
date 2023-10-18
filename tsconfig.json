@@ -15,6 +15,13 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/ui/Teste.jsx",
+    "components/ui/AiHeart.jsx",
+    "components/Hero.jsx"
+  ],
   "exclude": ["node_modules"]
 }

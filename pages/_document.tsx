@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
+import EverywhereILookAround from "../components/ui/EverywhereILookAround";
 
 class MyDocument extends Document {
   render() {
@@ -10,7 +11,6 @@ class MyDocument extends Document {
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2455539118400314"
             crossOrigin="anonymous"
           ></script>
-
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
@@ -27,7 +27,6 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque&family=Montserrat&display=swap"
             rel="stylesheet"
           />
-
           <link rel="icon" href="/favicon.ico" />
           <meta name="title" content="Manda Jobs" />
           <meta
@@ -58,7 +57,6 @@ class MyDocument extends Document {
           <meta property="og:site_name" content="Manda Jobs" />
           <meta property="og:author" content="@jjgouveia" />
           <meta property="og:creator" content="@jjgouveia" />
-
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="mandajobs.vercel.app" />
           <meta property="twitter:url" content="https://mandajobs.tech" />
@@ -73,13 +71,11 @@ class MyDocument extends Document {
             content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs.png"
           />
           <meta name="twitter:creator" content="@outrogouveia" />
-
           <meta name="apple-mobile-web-app-title" content="Manda Jobs" />
           <meta name="application-name" content="Manda Jobs" />
           <meta name="msapplication-TileColor" content="#111827" />
           <meta name="msapplication-TileImage" content="/favicon.ico" />
           <meta name="msapplication-config" content="/favicon.ico" />
-
           <meta name="theme-color" content="#111827" />
           <meta name="msapplication-navbutton-color" content="#111827" />
           <meta itemProp="name" content="Manda Jobs" />
@@ -87,8 +83,12 @@ class MyDocument extends Document {
           <meta itemProp="image" content="/favicon.ico" />
           <meta name="mobile-web-app-capable" content="yes" />
         </Head>
+
         <body>
-          <Main />
+          <div className="glow-container">
+            <EverywhereILookAround />
+            <Main />
+          </div>
           <NextScript />
         </body>
       </Html>
