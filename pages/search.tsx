@@ -202,7 +202,7 @@ const Search: NextPage = () => {
             Preencha os campos abaixo para gerar uma consulta personalizada
           </p>
           <div className="max-w-xl w-full z-11">
-            <ul className="animate-fade-up animate-once animate-delay-[600ms] z-12">
+            <ul>
               <li>
                 <div className="flex mt-4 items-center space-x-3">
                   <p className="text-left font-medium">1.</p>
