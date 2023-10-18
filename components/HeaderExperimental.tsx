@@ -141,7 +141,7 @@ export default function HeaderExperimental() {
                         Nossa Missão
                       </button>
                     </li>
-                    <li className="mb-12">
+                    <li className="mb-12  text-gray-900">
                       <button
                         onClick={() => {
                           push("/#faq"), setMobileNavVisibility(false);
@@ -150,7 +150,7 @@ export default function HeaderExperimental() {
                         Perguntas Frequentes
                       </button>
                     </li>
-                    <li className="mb-12">
+                    <li className="mb-12  text-gray-900">
                       <button
                         onClick={() => {
                           push("/#partners"), setMobileNavVisibility(false);
@@ -159,7 +159,7 @@ export default function HeaderExperimental() {
                         Nossos Apoiadores
                       </button>
                     </li>
-                    <li className="mb-12">
+                    <li className="mb-12  text-gray-900">
                       <button
                         onClick={() => {
                           push("/#how-it-works"), setMobileNavVisibility(false);
@@ -169,7 +169,7 @@ export default function HeaderExperimental() {
                       </button>
                     </li>
 
-                    <li className="mb-12">
+                    <li className="mb-12  text-gray-900">
                       <button
                         onClick={() => {
                           push("/search"), setMobileNavVisibility(false);
