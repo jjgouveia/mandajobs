@@ -16,7 +16,7 @@ export default function HowItWorks() {
             />
           </div>
           <div className="w-full p-8 lg:w-1/2">
-            <Fade direction="up" triggerOnce={true}>
+            <Fade direction="up">
               <h2 className="font-heading max-xs:text-4xl mb-16 text-6xl font-bold leading-tight tracking-tight md:text-7xl text-slate-200">
                 Como Funciona
               </h2>

@@ -7,7 +7,7 @@ export default function FAQ() {
         <p className="tracking-px mb-5 text-sm font-semibold uppercase text-slate-200">
           MANDA DÚVIDAS
         </p>
-        <Fade direction="up" triggerOnce={true}>
+        <Fade direction="up">
           <h2 className="text-slate-200 xl:text-8xl font-heading max-xs:hyphens-auto max-xs:text-4xl mb-16 text-6xl font-bold leading-none tracking-tight md:text-8xl">
             Perguntas Frequentes
           </h2>

@@ -6,7 +6,7 @@ export default function Values() {
     <section id="values" className="z-10 overflow-hidden pb-36 sn:pt-32 pt-8">
       <div className="overflow-hidden container mx-auto px-8 lg:px-4">
         <div className="overflow-hidden">
-          <Fade direction="up" damping={0.8} triggerOnce={true}>
+          <Fade direction="up" damping={0.8}>
             <h2 className="xl:text-[5.5rem] max-xs:text-4xl mb-9 text-[2.8rem] font-bold leading-none tracking-tight text-white md:text-8xl">
               Nossa missão é transformar a forma como você se posiciona no
               mercado de trabalho

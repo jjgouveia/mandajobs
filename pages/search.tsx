@@ -202,7 +202,7 @@ const Search: NextPage = () => {
             Preencha os campos abaixo para gerar uma consulta personalizada
           </p>
           <div className="max-w-xl w-full z-11">
-            <ul>
+            <ul className="animate-fade-up animate-once animate-delay-[600ms] z-12">
               <li>
                 <div className="flex mt-4 items-center space-x-3">
                   <p className="text-left font-medium">1.</p>
@@ -267,7 +267,7 @@ const Search: NextPage = () => {
 
             {!loading && (
               <button
-                className="bg-blue-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full disabled:opacity-50"
+                className="bg-blue-600 transition-all transition-duration-2000 rounded-xl text-white font-medium px-4 py-2 sm:mt-6 mt-8 hover:bg-blue-500 w-full disabled:bg-blue-300 disabled:cursor-not-allowed"
                 onClick={(e) => generateQuery(e)}
                 disabled={title === "" || tools === "" || toolsIdontUse === ""}
               >
