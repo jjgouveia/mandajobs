@@ -1,3 +1,5 @@
+import { Fade } from "react-awesome-reveal";
+
 export default function FAQ() {
   return (
     <section id="faq" className="overflow-hidden pb-32 pt-8 z-10">
@@ -5,9 +7,11 @@ export default function FAQ() {
         <p className="tracking-px mb-5 text-sm font-semibold uppercase text-slate-200">
           MANDA DÚVIDAS
         </p>
-        <h2 className="text-slate-200 xl:text-8xl font-heading max-xs:hyphens-auto max-xs:text-4xl mb-16 text-6xl font-bold leading-none tracking-tight md:text-8xl">
-          Perguntas Frequentes
-        </h2>
+        <Fade direction="up" triggerOnce={true}>
+          <h2 className="text-slate-200 xl:text-8xl font-heading max-xs:hyphens-auto max-xs:text-4xl mb-16 text-6xl font-bold leading-none tracking-tight md:text-8xl">
+            Perguntas Frequentes
+          </h2>
+        </Fade>
         <div className="mb-8">
           <div className="-m-4 flex flex-wrap">
             <div className="w-full p-4 md:w-1/2">

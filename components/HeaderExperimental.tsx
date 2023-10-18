@@ -14,7 +14,7 @@ export default function HeaderExperimental() {
     <header className="flex justify-between items-center w-full mt-0 pb-1 sm:px-4 px-2">
       <div
         className={`relative w-full flex items-center justify-between bg-transparent py-4 lg:px-4 ${
-          previousRoute === "/"
+          previousRoute === "/" || previousRoute
             ? "animate-fade-down animate-once animate-delay-700"
             : ""
         }`}
@@ -39,14 +39,16 @@ export default function HeaderExperimental() {
                   <button onClick={() => push("/#values")}>Nossa Missão</button>
                 </li>
                 <li className="mr-9 font-medium hover:text-gray-700">
-                  <a href="#faq">Perguntas Frequentes</a>
+                  <button onClick={() => push("/#faq")}>
+                    Perguntas Frequentes
+                  </button>
                 </li>
                 <li className="mr-9 font-medium hover:text-gray-700">
-                  <Link href="#partners">Apoiadores</Link>
+                  <button onClick={() => push("/#partners")}>Apoiadores</button>
                 </li>
                 {previousRoute === "/" && (
                   <li className="mr-9 font-medium hover:text-gray-700">
-                    <Link href="#go">Começar!</Link>
+                    <button onClick={() => push("/search")}>Começar!</button>
                   </li>
                 )}
               </ul>
@@ -139,42 +141,42 @@ export default function HeaderExperimental() {
                         Nossa Missão
                       </button>
                     </li>
-                    <li>
-                      <a
-                        className="font-medium text-gray-900 hover:text-gray-700"
-                        href="#faq"
-                        onClick={() => setMobileNavVisibility(false)}
+                    <li className="mb-12">
+                      <button
+                        onClick={() => {
+                          push("/#faq"), setMobileNavVisibility(false);
+                        }}
                       >
                         Perguntas Frequentes
-                      </a>
+                      </button>
                     </li>
                     <li className="mb-12">
-                      <a
-                        className="font-medium text-gray-900 hover:text-gray-700"
-                        href="#partners"
-                        onClick={() => setMobileNavVisibility(false)}
+                      <button
+                        onClick={() => {
+                          push("/#partners"), setMobileNavVisibility(false);
+                        }}
                       >
                         Nossos Apoiadores
-                      </a>
+                      </button>
                     </li>
                     <li className="mb-12">
-                      <a
-                        className="font-medium text-gray-900 hover:text-gray-700"
-                        href="#how-it-works"
-                        onClick={() => setMobileNavVisibility(false)}
+                      <button
+                        onClick={() => {
+                          push("/#how-it-works"), setMobileNavVisibility(false);
+                        }}
                       >
                         Como Funciona
-                      </a>
+                      </button>
                     </li>
 
                     <li className="mb-12">
-                      <a
-                        className="font-medium text-gray-900 hover:text-gray-700"
-                        href="#go"
-                        onClick={() => setMobileNavVisibility(false)}
+                      <button
+                        onClick={() => {
+                          push("/search"), setMobileNavVisibility(false);
+                        }}
                       >
-                        Começar
-                      </a>
+                        Começar!
+                      </button>
                     </li>
                   </ul>
                 </div>

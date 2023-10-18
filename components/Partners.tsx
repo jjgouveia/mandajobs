@@ -1,12 +1,15 @@
+import { Fade } from "react-awesome-reveal";
 import "../styles/partners.module.css";
 
 export default function Partners() {
   return (
     <section id="partners" className="overflow-hidden py-20 z-10">
       <div className="container mx-auto px-8 lg:px-8">
-        <h2 className="font-heading max-xs:text-4xl mb-20 text-6xl font-bold leading-tight tracking-tight md:text-8xl text-slate-200">
-          Quem apoia
-        </h2>
+        <Fade direction="up" triggerOnce={true}>
+          <h2 className="font-heading max-xs:text-4xl mb-20 text-6xl font-bold leading-tight tracking-tight md:text-8xl text-slate-200">
+            Quem apoia
+          </h2>
+        </Fade>
         <p className="tracking-px mb-5 text-sm font-semibold uppercase text-slate-200">
           Empresas que apoiam o Manda Jobs e a inclusão da tecnologia na
           recolocação profissional

@@ -13,6 +13,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
     "@headlessui/react": "latest",
     "@headlessui/tailwindcss": "^0.1.2",
     "@heroicons/react": "^2.0.13",
@@ -24,6 +25,7 @@
     "headlessui": "^0.0.0",
     "next": "latest",
     "react": "18.2.0",
+    "react-awesome-reveal": "^4.2.5",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.42.0",
     "react-hot-toast": "^2.4.0",
