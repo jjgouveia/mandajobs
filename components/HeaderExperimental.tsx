@@ -13,7 +13,7 @@ export default function HeaderExperimental() {
   return (
     <header className="flex justify-between items-center w-full mt-0 pb-1 sm:px-4 px-2">
       <div
-        className={`relative w-full flex items-center justify-between bg-transparent py-4 lg:px-4 ${
+        className={`relative w-full flex items-center justify-between bg-transparent pb-4 lg:px-4 ${
           previousRoute === "/" || previousRoute
             ? "animate-fade-down animate-once animate-delay-700"
             : ""

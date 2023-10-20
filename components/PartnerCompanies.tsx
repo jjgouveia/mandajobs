@@ -58,7 +58,7 @@ const CompanySection = ({ name, imagePath, url, description }: Company) => (
 
 export const PartnerCompanies = () => {
   return (
-    <section className="mt-8 bg-slate-100 rounded-md border border-blue-200">
+    <section className="mt-12 bg-slate-100 rounded-md border border-blue-200">
       <p className="text-sm text-black p-1">
         Empresas que apoiam o projeto e a recolocação profissional
       </p>

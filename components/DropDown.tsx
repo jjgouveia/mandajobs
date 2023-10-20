@@ -11,14 +11,14 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export type levelType = "Junior" | "Pleno" | "Senior";
+export type levelType = "Junior" | "Pleno" | "Senior" | "Estagiário";
 
 interface DropDownProps {
   level: levelType;
   setLevel: (level: levelType) => void;
 }
 
-let levels: levelType[] = ["Junior", "Pleno", "Senior"];
+let levels: levelType[] = ["Junior", "Pleno", "Senior", "Estagiário"];
 
 export default function DropDown({ level, setLevel }: DropDownProps) {
   return (

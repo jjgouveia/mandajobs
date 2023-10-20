@@ -54,6 +54,8 @@ const Search: NextPage = () => {
         return "only Seniors titles";
       case "Junior":
         return "only Junior titles";
+      case "Estagiário":
+        return "only Intern or Internship or Estágio titles";
       default:
         return "";
     }
