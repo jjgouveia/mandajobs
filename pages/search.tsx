@@ -6,7 +6,6 @@ import {
 } from "eventsource-parser";
 import type { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
-import { Fade } from "react-awesome-reveal";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
 import FooterExperimental from "../components/FooterExperimental";
@@ -133,63 +132,6 @@ const Search: NextPage = () => {
   }, [loading]);
 
   useEffect(() => {
-    if (localStorage.getItem("mandaJobsFirst") !== "false") {
-      toast("Bem vindo ao Manda Jobs! 🚀", {
-        icon: "🚀",
-      });
-      localStorage.setItem("mandaJobsFirst", "false");
-    }
-    // if (localStorage.getItem("mandaJobsTheme") === "dark") {
-    //   document.documentElement.classList.add("dark");
-    // }
-
-    // const themePreference = () => {
-    //   const hasLocalStorage = localStorage.getItem("mandaJobsTheme");
-
-    //   let supports = false;
-    //   let theme = undefined;
-
-    //   if (hasLocalStorage === "light") {
-    //     theme = "light";
-    //   }
-    //   if (hasLocalStorage === "dark") {
-    //     theme = "dark";
-    //   }
-
-    //   if (window.matchMedia(`(prefers-color-scheme: dark)`).matches) {
-    //     theme = hasLocalStorage ? hasLocalStorage : "dark";
-    //     supports = true;
-    //   }
-    //   if (window.matchMedia(`(prefers-color-scheme: light)`).matches) {
-    //     theme = hasLocalStorage ? hasLocalStorage : "light";
-    //     supports = true;
-    //   }
-    //   if (window.matchMedia(`(prefers-color-scheme: no-preference)`).matches) {
-    //     theme = hasLocalStorage ? hasLocalStorage : "none";
-    //     supports = true;
-    //   }
-
-    //   return { supports, theme };
-
-    // const setTheme = () => {
-    //   const userThemePreference = themePreference();
-    //   switch (userThemePreference.theme) {
-    //     case "dark":
-    //       document.documentElement.classList.remove("light");
-    //       document.documentElement.classList.add("dark");
-
-    //       break;
-    //     case "light":
-    //       document.documentElement.classList.remove("dark");
-    //       document.documentElement.classList.add("light");
-    //       break;
-    //   }
-    // };
-
-    // setTheme();
-  }, []);
-
-  useEffect(() => {
     getSubscriberCount(setCounter);
   }, []);
 
@@ -215,7 +157,7 @@ const Search: NextPage = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="mt-2 mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`1. Em qual posição você atua`}
+                  placeholder={`Ex.: fullstack, devops, etc`}
                 />
               </li>
               <li>
@@ -229,7 +171,7 @@ const Search: NextPage = () => {
                   value={tools}
                   onChange={(e) => setTools(e.target.value)}
                   className="mt-2 mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={"2. Tecnologias que você utiliza"}
+                  placeholder={"Ex.: react, node, java, etc"}
                 />
               </li>
               <li>
@@ -243,7 +185,7 @@ const Search: NextPage = () => {
                   value={toolsIdontUse}
                   onChange={(e) => setToolsIdontUse(e.target.value)}
                   className="mt-2 mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={"3. Tecnologias que você NÃO utiliza"}
+                  placeholder={"Ex.: php, ruby..."}
                 />
               </li>
               <li>
@@ -292,7 +234,6 @@ const Search: NextPage = () => {
           />
           <div className="max-w-xl w-full">
             <QueryCounterComponent counter={counter} />
-
             <PartnerCompanies />
           </div>
 
@@ -301,14 +242,12 @@ const Search: NextPage = () => {
             {generatedQuery && (
               <>
                 <div>
-                  <Fade triggerOnce>
-                    <h2
-                      className="sm:text-4xl text-3xl font-bold mx-auto"
-                      ref={query}
-                    >
-                      Sua consulta personalizada ✨
-                    </h2>
-                  </Fade>
+                  <h2
+                    className="sm:text-4xl text-3xl font-bold mx-auto"
+                    ref={query}
+                  >
+                    Sua consulta personalizada ✨
+                  </h2>
                 </div>
                 <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
                   {generatedQuery
