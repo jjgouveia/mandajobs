@@ -6,7 +6,6 @@ import {
 } from "eventsource-parser";
 import type { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
-import { Fade } from "react-awesome-reveal";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { levelType } from "../components/DropDown";
 import FooterExperimental from "../components/FooterExperimental";
@@ -133,80 +132,22 @@ const Search: NextPage = () => {
   }, [loading]);
 
   useEffect(() => {
-    if (localStorage.getItem("mandaJobsFirst") !== "false") {
-      toast("Bem vindo ao Manda Jobs! 🚀", {
-        icon: "🚀",
-      });
-      localStorage.setItem("mandaJobsFirst", "false");
-    }
-    // if (localStorage.getItem("mandaJobsTheme") === "dark") {
-    //   document.documentElement.classList.add("dark");
-    // }
-
-    // const themePreference = () => {
-    //   const hasLocalStorage = localStorage.getItem("mandaJobsTheme");
-
-    //   let supports = false;
-    //   let theme = undefined;
-
-    //   if (hasLocalStorage === "light") {
-    //     theme = "light";
-    //   }
-    //   if (hasLocalStorage === "dark") {
-    //     theme = "dark";
-    //   }
-
-    //   if (window.matchMedia(`(prefers-color-scheme: dark)`).matches) {
-    //     theme = hasLocalStorage ? hasLocalStorage : "dark";
-    //     supports = true;
-    //   }
-    //   if (window.matchMedia(`(prefers-color-scheme: light)`).matches) {
-    //     theme = hasLocalStorage ? hasLocalStorage : "light";
-    //     supports = true;
-    //   }
-    //   if (window.matchMedia(`(prefers-color-scheme: no-preference)`).matches) {
-    //     theme = hasLocalStorage ? hasLocalStorage : "none";
-    //     supports = true;
-    //   }
-
-    //   return { supports, theme };
-
-    // const setTheme = () => {
-    //   const userThemePreference = themePreference();
-    //   switch (userThemePreference.theme) {
-    //     case "dark":
-    //       document.documentElement.classList.remove("light");
-    //       document.documentElement.classList.add("dark");
-
-    //       break;
-    //     case "light":
-    //       document.documentElement.classList.remove("dark");
-    //       document.documentElement.classList.add("light");
-    //       break;
-    //   }
-    // };
-
-    // setTheme();
-  }, []);
-
-  useEffect(() => {
     getSubscriberCount(setCounter);
   }, []);
 
   return (
     <>
       <Title title="Manda Jobs - Filtro Inteligente" />
-      <main className=" flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+      <main className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
         <HeaderExperimental />
-        <div className="z-10 flex flex-1 w-full flex-col items-center justify-center text-center px-2 mt-0 sm:mt-0 sm:-mb-10">
-          <QueryCounterComponent counter={counter} />
-          <p className="mb-1 mt-1 text-md font-medium max-xl:max-w-sm md:text-xl">
+        <div className="animate-fade-up animate-once animate-delay-[600ms] z-10 flex flex-1 w-full flex-col items-center justify-center text-center px-2 mt-8 sm:mt-0 sm:-mb-10">
+          {/* <p className="mb-1 mt-1 text-md font-medium max-xl:max-w-sm md:text-xl">
             Preencha os campos abaixo para gerar uma consulta personalizada
-          </p>
+          </p> */}
           <div className="max-w-xl w-full z-11">
-            <ul className="animate-fade-up animate-once animate-delay-[600ms] z-12">
+            <ul className="px-3 z-12">
               <li>
-                <div className="flex mt-4 items-center space-x-3">
+                <div className="flex mt-4 items-center space-x-3 text-gray-300 text-sm">
                   <p className="text-left font-medium">1.</p>
                   <p className="text-left font-medium">
                     Em qual posição você atua:
@@ -215,12 +156,12 @@ const Search: NextPage = () => {
                 <input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Ex.: front-end, back-end, fullstack...`}
+                  className="mt-2 mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Ex.: fullstack, devops, etc`}
                 />
               </li>
               <li>
-                <div className="flex mt-4 items-center space-x-3">
+                <div className="flex mt-4 items-center space-x-3 text-gray-300 text-sm">
                   <p className="text-left font-medium">2.</p>
                   <p className="text-left font-medium">
                     Tecnologias que você utiliza:
@@ -229,12 +170,12 @@ const Search: NextPage = () => {
                 <input
                   value={tools}
                   onChange={(e) => setTools(e.target.value)}
-                  className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={"Ex.: Angular, Next.js, Java, Node"}
+                  className="mt-2 mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={"Ex.: react, node, java, etc"}
                 />
               </li>
               <li>
-                <div className="flex mt-4 items-center space-x-3">
+                <div className="flex mt-4 items-center space-x-3 text-gray-300 text-sm">
                   <p className="text-left font-medium">3.</p>
                   <p className="text-left font-medium">
                     Tecnologias que você NÃO utiliza:
@@ -243,12 +184,12 @@ const Search: NextPage = () => {
                 <input
                   value={toolsIdontUse}
                   onChange={(e) => setToolsIdontUse(e.target.value)}
-                  className="mt-4 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={"Ex.: PHP, Ruby..."}
+                  className="mt-2 mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={"Ex.: php, ruby..."}
                 />
               </li>
               <li>
-                <div className="flex mb-5 items-center space-x-3">
+                <div className="flex mb-2 items-center space-x-3 text-gray-300 text-sm">
                   <p className="text-left font-medium">4.</p>
                   <p className="text-left font-medium">
                     Nível de senioridade:
@@ -273,9 +214,7 @@ const Search: NextPage = () => {
                 onClick={(e) => generateQuery(e)}
                 disabled={title === "" || tools === "" || toolsIdontUse === ""}
               >
-                <span style={{ letterSpacing: "0.05rem" }}>
-                  Gerar consulta ✨
-                </span>
+                <span style={{ letterSpacing: "0.05rem" }}>Consultar ✨</span>
               </button>
             )}
 
@@ -294,6 +233,7 @@ const Search: NextPage = () => {
             toastOptions={{ duration: 2500 }}
           />
           <div className="max-w-xl w-full">
+            <QueryCounterComponent counter={counter} />
             <PartnerCompanies />
           </div>
 
@@ -302,14 +242,12 @@ const Search: NextPage = () => {
             {generatedQuery && (
               <>
                 <div>
-                  <Fade triggerOnce>
-                    <h2
-                      className="sm:text-4xl text-3xl font-bold mx-auto"
-                      ref={query}
-                    >
-                      Sua consulta personalizada ✨
-                    </h2>
-                  </Fade>
+                  <h2
+                    className="sm:text-4xl text-3xl font-bold mx-auto"
+                    ref={query}
+                  >
+                    Sua consulta personalizada ✨
+                  </h2>
                 </div>
                 <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
                   {generatedQuery

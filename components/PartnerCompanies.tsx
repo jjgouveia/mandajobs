@@ -40,6 +40,13 @@ const companies: Company[] = [
       "Plataforma de ensino com objetivo de conectar mentores e mentorados numa experiência personalizada e de alto impacto.",
     imagePath: "/images/companies/bementor.webp",
   },
+  {
+    name: "WeCoder",
+    url: "https://www.wecoder.com.br/",
+    description:
+      "Plataforma de ensino de programação para crianças e adolescentes.",
+    imagePath: "/images/companies/1685100564093.svg",
+  },
 ];
 
 const CompanySection = ({ name, imagePath, url, description }: Company) => (
