@@ -19,6 +19,7 @@ import getSubscriberCount from "../hooks/getQueriesCount";
 // import { supabase } from "../utils/supabase"; // Removed Supabase import
 import { db } from "../utils/firebaseConfig"; // Import Firestore
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
+// Removida importação direta do generateLinkedInQuery para evitar erro de módulos Node.js no cliente
 
 const Search: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -82,46 +83,39 @@ const Search: NextPage = () => {
     e.preventDefault();
     setgeneratedQuery("");
     setLoading(true);
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt,
-      }),
-    });
+    
+    try {
+      const response = await fetch("/api/generate-query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          tools,
+          toolsIdontUse,
+          level,
+        }),
+      });
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    const data = response.body;
-    if (!data) {
-      return;
-    }
-
-    const onParse = (event: ParsedEvent | ReconnectInterval) => {
-      if (event.type === "event") {
-        const data = event.data;
-        try {
-          const text = JSON.parse(data).text ?? "";
-          setgeneratedQuery((prev) => prev + text);
-        } catch (e) {
-          console.error(e);
-        }
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.error || "Ocorreu um erro ao gerar a consulta");
+        setLoading(false);
+        return;
       }
-    };
 
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    const parser = createParser(onParse);
-    let done = false;
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      parser.feed(chunkValue);
+      const { query } = await response.json();
+      if (query) {
+        setgeneratedQuery(query);
+      } else {
+        toast.error("Nenhuma consulta foi gerada");
+      }
+    } catch (error) {
+      console.error("Erro ao gerar consulta:", error);
+      toast.error("Falha ao processar a solicitação");
+    } finally {
+      setLoading(false);
     }
 
     scrollToBios();
