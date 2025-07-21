@@ -1,15 +1,16 @@
-import { supabase } from "../utils/supabase";
+import { db } from "../utils/firebaseConfig"; // Import Firestore
+import { collection, getCountFromServer } from "firebase/firestore"; // Import Firestore functions
 
 const getQueriesCount = async (callback: Function): Promise<void | null> => {
-  const { count, error } = await supabase
-    .from("query_bucket")
-    .select("*", { count: "exact" });
-
-  if (error || !count) {
-    console.error(error);
+  try {
+    const collectionRef = collection(db, "queries");
+    const snapshot = await getCountFromServer(collectionRef);
+    const count = snapshot.data().count;
+    callback(count);
+  } catch (error) {
+    console.error("Error getting queries count from Firestore: ", error);
     return null;
   }
-  callback(count);
 };
 
 export default getQueriesCount;

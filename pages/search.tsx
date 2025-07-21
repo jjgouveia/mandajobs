@@ -16,7 +16,9 @@ import QueryCounterComponent from "../components/QueryCounterComponent";
 import Title from "../components/Title";
 import HeadlessModal from "../components/ui/HeadlessModal";
 import getSubscriberCount from "../hooks/getQueriesCount";
-import { supabase } from "../utils/supabase";
+// import { supabase } from "../utils/supabase"; // Removed Supabase import
+import { db } from "../utils/firebaseConfig"; // Import Firestore
+import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 
 const Search: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -60,13 +62,15 @@ const Search: NextPage = () => {
     }
   };
 
-  const insertQuery = async (query_string: string): Promise<void | null> => {
-    const { error } = await supabase
-      .from("query_bucket")
-      .insert({ query_string });
-    if (error) {
-      console.log(error);
-      return null;
+  const insertQuery = async (query_string: string): Promise<void> => {
+    try {
+      await addDoc(collection(db, "queries"), {
+        query_string: query_string,
+        timestamp: new Date(), // Optional: Add a timestamp
+      });
+      console.log("Query successfully inserted into Firestore");
+    } catch (error) {
+      console.error("Error inserting query into Firestore: ", error);
     }
   };
 
