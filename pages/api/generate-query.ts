@@ -12,38 +12,56 @@ export default async function handler(
   }
 
   try {
-    const { title, tools, toolsIdontUse, level } = req.body;
+    let { title, tools, toolsIdontUse, level } = req.body;
+
+    if (level) {
+      level = level.toLowerCase();
+    }
+
 
     if (!title || !tools || !toolsIdontUse) {
       return res.status(400).json({ error: 'Dados incompletos' });
     }
 
-    // Montar keywords com base nos parâmetros
-    const keywords = `${title}, ${tools}, ${toolsIdontUse}, nível ${level || 'Junior'}`;
-    
-    // Gerar a query usando o fluxo de AI
+    type SeniorityKey = 'junior' | 'pleno' | 'senior' | 'estagiário';
+
+    const seniorities: Record<SeniorityKey, string> = {
+      junior: 'junior',
+      pleno: 'medium',
+      senior: 'senior',
+      estagiário: 'intern',
+    };
+
+    const seniorityKey = (level as string) in seniorities
+      ? (level as SeniorityKey)
+      : 'junior';
+
     const result = await generateLinkedInQuery({
-      keywords
+      title,
+      tools,
+      toolsIdontUse,
+      level: seniorities[seniorityKey],
     });
 
-    // Salvar a query gerada no Firestore
     try {
       await addDoc(collection(db, "queries"), {
         query_string: result.booleanQuery,
+        level: seniorityKey,
+        title,
+        tools,
+        toolsIdontUse,
         timestamp: new Date(),
       });
       console.log("Query salva no Firestore com sucesso");
     } catch (error) {
       console.error("Erro ao salvar query no Firestore:", error);
-      // Não retornamos erro aqui pois o importante é gerar a query
     }
 
-    // Retornar a query gerada
     return res.status(200).json({ query: result.booleanQuery });
-    
+
   } catch (error: any) {
     console.error('Erro ao gerar query:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Erro ao processar a requisição',
       message: error.message || 'Erro desconhecido'
     });

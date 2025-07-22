@@ -108,7 +108,7 @@ export default function HeadlessModal({
                   <div className="mt-4 flex flex-col justify-between">
                     <div>
                       <Link
-                        target="__blank"
+                        target="_blank"
                         href={"https://github.com/jjgouveia/mandajobs"}
                         className="lg font-semibold flex items-center justify-center rounded-md border border-transparent bg-amber-300 py-3 text-md text-gray-900 hover:bg-amber-400 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
                       >
@@ -125,7 +125,7 @@ export default function HeadlessModal({
                         </svg>
                         Dar uma estrela no Github
                       </Link>
-                      <Link href={research} className="text-md">
+                      <Link href={research} target="_blank" className="text-md" onClick={closeModal}>
                         <button
                           className="w-full lg font-semibold text-md flex items-center justify-center rounded-md border border-transparent bg-green-300 px-4 py-2 text-gray-900 hover:bg-green-400 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 mt-2"
                           onClick={handlerAlreadySupport}

@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  turbopack: {
+    conditions: {
+
+
+    }
+  },
   // Configuração do webpack para lidar com módulos específicos do Node.js
   webpack: (config: WebpackConfig, { isServer }) => {
     // Se não estiver no servidor (ou seja, se estiver no cliente/navegador)

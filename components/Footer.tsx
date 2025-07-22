@@ -68,7 +68,7 @@ export default function Footer() {
       </footer>
       <div className="flex flex-col">
         <p className="text-xs text-slate-400 text-center">
-          Este site não é afiliado ao LinkedIn, OpenAI ou qualquer outra empresa
+          Este site não é afiliado ao LinkedIn, Gemini ou qualquer outra empresa
           mencionada. Ao utilizá-lo, você concorda com os nossos{" "}
           <Link
             className="underline hover:text-slate-500 transition"

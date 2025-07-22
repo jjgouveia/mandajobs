@@ -11,7 +11,10 @@ import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const GenerateLinkedInQueryInputSchema = z.object({
-    keywords: z.string().describe('Comma separated keywords for job roles or technologies'),
+    title: z.string().describe('Your job title'),
+    tools: z.string().describe('Your tools'),
+    toolsIdontUse: z.string().describe('Your tools you don\'t use'),
+    level: z.string().describe('Your level'),
 });
 export type GenerateLinkedInQueryInput = z.infer<typeof GenerateLinkedInQueryInputSchema>;
 
@@ -24,12 +27,18 @@ export async function generateLinkedInQuery(input: GenerateLinkedInQueryInput): 
     return generateLinkedInQueryFlow(input);
 }
 
+
+
 const prompt = ai.definePrompt({
     name: 'generateLinkedInQueryPrompt',
     input: { schema: GenerateLinkedInQueryInputSchema },
     output: { schema: GenerateLinkedInQueryOutputSchema },
-    prompt: `Gere uma query booleana no estilo do LinkedIn usando os termos abaixo: {{{keywords}}}.\n\nUse os operadores AND, OR, NOT e parênteses. Otimize para uma busca eficiente no LinkedIn Jobs. Não explique o resultado. Apenas retorne a query.\n\nExemplo de saída:\n(backend AND python AND flask) AND remoto`,
+    prompt: `Create a query for I use in linkedin searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
+  I'm a {{title}} professional that uses {{tools}} and don't work with {{toolsIdontUse}}. I'm {{level}} professional.
+  `,
 });
+
+
 
 const generateLinkedInQueryFlow = ai.defineFlow(
     {
