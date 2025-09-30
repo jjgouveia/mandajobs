@@ -37,7 +37,7 @@ export default function FooterExperimental() {
               <h2 className="text-2xl font-bold text-white">Manda Jobs</h2>
             </div>
             <p className="text-base text-gray-300 leading-relaxed max-w-md">
-              O Pega Trabalhos é uma plataforma que conecta profissionais com as melhores oportunidades do Linkedin por meio
+              O Manda Jobs é uma plataforma que conecta profissionais com as melhores oportunidades do Linkedin por meio
               de inteligência artificial.
             </p>
           </div>
