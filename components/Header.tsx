@@ -17,6 +17,9 @@ export default function Header() {
           <Link href="/#duvidas" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
             Dúvidas
           </Link>
+          <Link href="/quem-faz" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+            Quem faz
+          </Link>
           <Link href="/termos-de-uso" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
             Termos de Uso
           </Link>

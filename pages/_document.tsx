@@ -38,7 +38,7 @@ class MyDocument extends Document {
             content="trabalho remoto, emprego, vagas, trabalho em casa, empregos de tecnologia, carreira em tecnologia, trabalho flexível, oportunidades de trabalho, empresas remotas"
           />
           <meta name="robots" content="index, follow" />
-          <meta property="og:url" content="https://mandajobs.tech" />
+          <meta property="og:url" content="https://mandajobs.vercel.app" />
           <meta property="og:title" content="Manda Jobs" />
           <meta
             property="og:description"
@@ -58,7 +58,7 @@ class MyDocument extends Document {
           <meta property="og:creator" content="@jjgouveia" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="mandajobs.vercel.app" />
-          <meta property="twitter:url" content="https://mandajobs.tech" />
+          <meta property="twitter:url" content="https://mandajobs.vercel.app" />
           <meta name="twitter:title" content="Manda Jobs" />
           <meta
             name="twitter:description"

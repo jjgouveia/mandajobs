@@ -21,6 +21,9 @@ export default function Footer() {
               <Link href="/" className="no-underline hover:text-white">
                 Home
               </Link>
+              <Link href="/quem-faz" className="no-underline hover:text-white">
+                Quem faz
+              </Link>
               <Link href="/termos-de-uso" className="no-underline hover:text-white">
                 Termos de Uso
               </Link>

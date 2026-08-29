@@ -12,6 +12,8 @@ import { Copy, SearchIcon, Zap } from "lucide-react"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import HeadlessModal from "../components/ui/HeadlessModal"
 import { ExpandedSearch } from "../components/ExpandedSearch"
+import { SearchRankings } from "../components/SearchRankings"
+import { QueryCountWithTooltip } from "../components/QueryCountWithTooltip"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import getQueriesCount from "../hooks/getQueriesCount"
@@ -335,21 +337,14 @@ const JobSearch = () => {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-brutalist-ink/70 mt-10 text-center"
         >
-          <span>
-            <strong className="text-brutalist-ink">
-              {counter !== null ? counter.toLocaleString("pt-BR") : "..."}
-            </strong>{" "}
-            consultas geradas
-          </span>
-          <span aria-hidden="true">·</span>
-          <span>
-            <strong className="text-brutalist-ink">15 mil+</strong> usuários ativos
-          </span>
+          <QueryCountWithTooltip count={counter} />
           <span aria-hidden="true">·</span>
           <span>
             <strong className="text-brutalist-ink">100% gratuito</strong>, sempre
           </span>
         </motion.div>
+
+        <SearchRankings />
 
         {/* How it works */}
         <section id="como-funciona" className="border-t-[3px] border-brutalist-ink mt-14 pt-10">

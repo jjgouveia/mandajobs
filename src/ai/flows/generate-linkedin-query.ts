@@ -34,7 +34,13 @@ const prompt = ai.definePrompt({
     input: { schema: GenerateLinkedInQueryInputSchema },
     output: { schema: GenerateLinkedInQueryOutputSchema },
     prompt: `Create a query for I use in linkedin searchbar. Use the operators AND, OR, NOT e () for that. Just give me the code, without explanation.
-  I'm a {{title}} professional that uses {{tools}} and don't work with {{toolsIdontUse}}. I'm {{level}} professional.
+  I'm a {{title}} professional that uses {{tools}}. I'm {{level}} professional.
+
+  Rules:
+  - Include the job title and seniority level in the query.
+  - Include the technologies from {{tools}} with OR between them.
+  - If {{toolsIdontUse}} is not empty, you MUST exclude every listed technology using NOT for each one (example: NOT php AND NOT ruby).
+  - Return two numbered alternatives when possible (1. and 2.).
   `,
 });
 

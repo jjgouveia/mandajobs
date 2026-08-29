@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { generateLinkedInQuery } from '@/ai/flows/generate-linkedin-query';
+import { applyToolExclusionsToQuery } from '@/lib/apply-tool-exclusions';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../utils/firebaseConfig';
 
@@ -45,9 +46,11 @@ export default async function handler(
       level: seniorities[seniorityKey],
     });
 
+    const booleanQuery = applyToolExclusionsToQuery(result.booleanQuery, toolsIdontUse);
+
     try {
       await addDoc(collection(db, "queries"), {
-        query_string: result.booleanQuery,
+        query_string: booleanQuery,
         level: seniorityKey,
         title,
         tools,
@@ -59,7 +62,7 @@ export default async function handler(
       console.error("Erro ao salvar query no Firestore:", error);
     }
 
-    return res.status(200).json({ query: result.booleanQuery });
+    return res.status(200).json({ query: booleanQuery });
 
   } catch (error: any) {
     console.error('Erro ao gerar query:', error);
