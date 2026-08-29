@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { db } from "../utils/firebaseConfig"
 import { collection, addDoc } from "firebase/firestore"
 import HeadlessModal from "../components/ui/HeadlessModal"
+import { ExpandedSearch } from "../components/ExpandedSearch"
 import FooterExperimental from "../components/FooterExperimental"
 
 type LevelType = "Junior" | "Pleno" | "Senior" | "Estagiário"
@@ -366,12 +367,13 @@ const JobSearch = () => {
                       )
                     })}
 
-                  <div className="mt-6">
+                  <div className="mt-6 space-y-4">
                     <HeadlessModal
                       query={generatedQuery}
                       text="Consultar vagas no LinkedIn 🚀"
                       btnTwdClass="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-3 rounded-lg transition-all duration-200"
                     />
+                    <ExpandedSearch key={generatedQuery} query={generatedQuery} />
                   </div>
                 </CardContent>
               </Card>
