@@ -19,9 +19,11 @@ export default async function handler(
     }
 
 
-    if (!title || !tools || !toolsIdontUse) {
+    if (!title || !tools) {
       return res.status(400).json({ error: 'Dados incompletos' });
     }
+
+    toolsIdontUse = toolsIdontUse ?? '';
 
     type SeniorityKey = 'junior' | 'pleno' | 'senior' | 'estagiário';
 

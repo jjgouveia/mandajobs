@@ -9,24 +9,28 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Copy, SearchIcon, Zap } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { db } from "../utils/firebaseConfig"
-import { collection, addDoc } from "firebase/firestore"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import HeadlessModal from "../components/ui/HeadlessModal"
 import { ExpandedSearch } from "../components/ExpandedSearch"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
+import getQueriesCount from "../hooks/getQueriesCount"
 
 type LevelType = "Junior" | "Pleno" | "Senior" | "Estagiário"
 
+const CURTAIN_DELAY = 0.2
+const CURTAIN_DURATION = 0.5
+const SLAM_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
+
 const JobSearch = () => {
+  const shouldReduceMotion = useReducedMotion()
   const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState("")
   const [tools, setTools] = useState("")
   const [toolsIdontUse, setToolsIdontUse] = useState("")
   const [level, setLevel] = useState<LevelType>("Junior")
   const [generatedQuery, setGeneratedQuery] = useState<string | undefined>(undefined)
-  const [counter, setCounter] = useState<number>(830)
+  const [counter, setCounter] = useState<number | null>(null)
 
   const queryRef = useRef<null | HTMLDivElement>(null)
 
@@ -48,18 +52,6 @@ const JobSearch = () => {
         return "only Intern or Internship or Estágio titles"
       default:
         return ""
-    }
-  }
-
-  const insertQuery = async (query_string: string): Promise<void> => {
-    try {
-      await addDoc(collection(db, "queries"), {
-        query_string: query_string,
-        timestamp: new Date(),
-      })
-      console.log("Query successfully inserted into Firestore")
-    } catch (error) {
-      console.error("Error inserting query into Firestore: ", error)
     }
   }
 
@@ -92,6 +84,7 @@ const JobSearch = () => {
       const { query } = await response.json()
       if (query) {
         setGeneratedQuery(query)
+        getQueriesCount(setCounter)
         setTimeout(scrollToResults, 100)
       } else {
         toast.error("Nenhuma consulta foi gerada")
@@ -114,27 +107,46 @@ const JobSearch = () => {
   const isFormValid = title !== "" && tools !== ""
 
   useEffect(() => {
-    if (generatedQuery && loading === false) {
-      insertQuery(generatedQuery)
-      setCounter((prev) => prev + 1)
-    }
-  }, [loading])
+    getQueriesCount(setCounter)
+  }, [])
 
   return (
     <div className="min-h-screen bg-brutalist-paper font-body text-brutalist-ink">
+      <motion.div
+        aria-hidden="true"
+        className="fixed inset-0 z-[100] bg-brutalist-ink"
+        style={{ transformOrigin: "bottom", pointerEvents: "none" }}
+        initial={{ scaleY: 1 }}
+        animate={{ scaleY: 0 }}
+        transition={
+          shouldReduceMotion ? { duration: 0 } : { duration: CURTAIN_DURATION, delay: CURTAIN_DELAY, ease: SLAM_EASE }
+        }
+      />
+
       <Header />
 
       <main className="max-w-2xl mx-auto px-6 py-14">
         {/* Hero (short) */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.35, y: -40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={
+            shouldReduceMotion ? { duration: 0 } : { duration: 0.55, delay: CURTAIN_DELAY + 0.25, ease: SLAM_EASE }
+          }
           className="text-center mb-10"
         >
           <h1 className="font-display text-4xl sm:text-5xl font-bold uppercase leading-[1.05] mb-4">
             Seu filtro inteligente de vagas no{" "}
-            <span className="bg-brutalist-ink text-brutalist-yellow px-2">LinkedIn</span>
+            <motion.span
+              initial={shouldReduceMotion ? false : { scale: 1.6 }}
+              animate={{ scale: 1 }}
+              transition={
+                shouldReduceMotion ? { duration: 0 } : { duration: 0.3, delay: CURTAIN_DELAY + 0.7, ease: SLAM_EASE }
+              }
+              className="inline-block bg-brutalist-ink text-brutalist-yellow px-2"
+            >
+              LinkedIn
+            </motion.span>
           </h1>
           <p className="text-base sm:text-lg text-brutalist-ink/70 max-w-md mx-auto">
             Preencha os campos abaixo e a nossa IA monta a consulta booleana certa pra você usar na busca de vagas.
@@ -145,7 +157,7 @@ const JobSearch = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          transition={{ duration: 0.6, delay: 0.75 }}
         >
           <div className="bg-white border-[3px] border-brutalist-ink shadow-brutal-md p-6 sm:p-10">
             <h2 className="font-display text-2xl font-bold uppercase mb-1">Configure sua busca</h2>
@@ -320,11 +332,14 @@ const JobSearch = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.9 }}
           className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-brutalist-ink/70 mt-10 text-center"
         >
           <span>
-            <strong className="text-brutalist-ink">{counter.toLocaleString()}+</strong> consultas geradas
+            <strong className="text-brutalist-ink">
+              {counter !== null ? counter.toLocaleString("pt-BR") : "..."}
+            </strong>{" "}
+            consultas geradas
           </span>
           <span aria-hidden="true">·</span>
           <span>
