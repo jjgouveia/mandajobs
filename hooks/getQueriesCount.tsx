@@ -1,14 +1,15 @@
-import { db } from "../utils/firebaseConfig"; // Import Firestore
-import { collection, getCountFromServer } from "firebase/firestore"; // Import Firestore functions
-
-const getQueriesCount = async (callback: Function): Promise<void | null> => {
+const getQueriesCount = async (callback: (count: number) => void): Promise<void | null> => {
   try {
-    const collectionRef = collection(db, "queries");
-    const snapshot = await getCountFromServer(collectionRef);
-    const count = snapshot.data().count;
+    const response = await fetch('/api/queries-count');
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const { count } = await response.json();
     callback(count);
   } catch (error) {
-    console.error("Error getting queries count from Firestore: ", error);
+    console.error('Error getting queries count:', error);
     return null;
   }
 };
