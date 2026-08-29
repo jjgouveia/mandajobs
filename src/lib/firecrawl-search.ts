@@ -1,6 +1,7 @@
 import {
   buildKeywordFallback,
   buildWebSearchQuery,
+  filterResultsByRegion,
   mapWebResults,
   SearchApiError,
   type ExpandedSearchItem,
@@ -59,6 +60,9 @@ function extractWebResults(data: FirecrawlSearchResponse["data"]): FirecrawlWebR
   return data.web ?? []
 }
 
+const MAX_RESULTS = 10
+const FETCH_LIMIT = 25
+
 async function fetchFirecrawlResults(params: {
   query: string
   days: SearchWindowDays
@@ -75,7 +79,7 @@ async function fetchFirecrawlResults(params: {
     },
     body: JSON.stringify({
       query: params.query,
-      limit: 10,
+      limit: FETCH_LIMIT,
       sources: ["web"],
       country,
       location,
@@ -91,7 +95,10 @@ async function fetchFirecrawlResults(params: {
     throw new SearchApiError(message, response.status)
   }
 
-  return mapWebResults(extractWebResults(payload.data))
+  return filterResultsByRegion(mapWebResults(extractWebResults(payload.data)), params.region).slice(
+    0,
+    MAX_RESULTS
+  )
 }
 
 export async function searchWithFirecrawl(params: {
@@ -111,7 +118,8 @@ export async function searchWithFirecrawl(params: {
     if (!query) continue
 
     try {
-      return await fetchFirecrawlResults({ ...params, query })
+      const results = await fetchFirecrawlResults({ ...params, query })
+      if (results.length > 0) return results
     } catch (error) {
       if (!(error instanceof SearchApiError)) throw error
       lastError = error
