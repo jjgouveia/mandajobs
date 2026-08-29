@@ -29,11 +29,6 @@ interface CseApiResponse {
   error?: { message?: string; code?: number }
 }
 
-const JOB_INTENT = '(vaga OR vagas OR job OR hiring OR "job opening")'
-const BRAZIL_TERMS = '(Brasil OR Brazil OR "remoto Brasil" OR "remote Brazil")'
-const INTL_TERMS =
-  '(remote OR internacional OR worldwide OR "United States" OR Europe) -Brasil -Brazil'
-
 const DATE_META_KEYS = [
   "article:published_time",
   "og:published_time",
@@ -46,6 +41,18 @@ const DATE_META_KEYS = [
   "dc.date.issued",
 ]
 
+const MAX_CSE_QUERY_LENGTH = 380
+
+export class CseApiError extends Error {
+  statusCode: number
+
+  constructor(message: string, statusCode: number) {
+    super(message)
+    this.name = "CseApiError"
+    this.statusCode = statusCode
+  }
+}
+
 export function toGoogleQuery(linkedinQuery: string): string {
   return linkedinQuery
     .replace(/^\s*\d+[.)]\s*/g, "")
@@ -56,14 +63,97 @@ export function toGoogleQuery(linkedinQuery: string): string {
 }
 
 export function getPrimaryBooleanQuery(generatedQuery: string): string {
-  const withoutLeadingIndex = generatedQuery.replace(/^\s*1[.)]\s*/i, "")
-  return withoutLeadingIndex.split(/\s*2[.)]\s*/)[0]?.trim() ?? generatedQuery.trim()
+  const cleaned = generatedQuery
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/^["'`]+|["'`]+$/g, "")
+    .trim()
+
+  const withoutLeadingIndex = cleaned.replace(/^\s*1[.)]\s*/i, "")
+  const primary = withoutLeadingIndex.split(/\s*2[.)]\s*/)[0]?.trim()
+
+  if (primary) return primary
+
+  const firstLine = cleaned.split(/\n+/).find((line) => line.trim().length > 0)
+  return firstLine?.trim() ?? cleaned
+}
+
+function trimQuery(query: string): string {
+  if (query.length <= MAX_CSE_QUERY_LENGTH) return query
+  return query.slice(0, MAX_CSE_QUERY_LENGTH).replace(/\s+\S*$/, "").trim()
+}
+
+function simplifyBooleanForCse(booleanQuery: string): string {
+  let query = toGoogleQuery(booleanQuery)
+  query = query.replace(/[()]/g, " ")
+  query = query.replace(/\s+-/g, " -")
+  query = query.replace(/\s+/g, " ").trim()
+  return trimQuery(query)
+}
+
+function buildKeywordFallback(booleanQuery: string, region: SearchRegion): string {
+  const raw = toGoogleQuery(getPrimaryBooleanQuery(booleanQuery))
+  const tokens = raw
+    .replace(/[()]/g, " ")
+    .split(/\s+/)
+    .filter((token) => token && token.toUpperCase() !== "OR" && token !== "-")
+    .filter((token) => !token.startsWith("-"))
+    .slice(0, 10)
+
+  const negatives = (raw.match(/-\S+/g) ?? []).slice(0, 3)
+  const location = region === "br" ? "vaga Brasil" : "remote job -Brasil"
+
+  return trimQuery([...tokens, ...negatives, location].join(" "))
 }
 
 export function buildCseQuery(linkedinQuery: string, region: SearchRegion): string {
-  const base = toGoogleQuery(getPrimaryBooleanQuery(linkedinQuery))
-  const location = region === "br" ? BRAZIL_TERMS : INTL_TERMS
-  return `${base} ${JOB_INTENT} ${location}`.trim()
+  const core = simplifyBooleanForCse(getPrimaryBooleanQuery(linkedinQuery))
+  const location = region === "br" ? "vaga Brasil" : "remote job -Brasil"
+  return trimQuery(`${core} ${location}`.trim())
+}
+
+export function mapCseClientError(statusCode: number, message: string): { httpStatus: number; message: string } {
+  const normalized = message.toLowerCase()
+
+  if (statusCode === 403) {
+    if (normalized.includes("referer")) {
+      return {
+        httpStatus: 502,
+        message:
+          "A chave da API bloqueia chamadas do servidor. No Google Cloud, use restrição por API (Custom Search), não por referrer.",
+      }
+    }
+
+    if (normalized.includes("disabled") || normalized.includes("has not been used")) {
+      return {
+        httpStatus: 502,
+        message: "Ative a Custom Search API no projeto do Google Cloud.",
+      }
+    }
+
+    return {
+      httpStatus: 502,
+      message: "Chave da API ou Search Engine ID inválidos.",
+    }
+  }
+
+  if (statusCode === 429) {
+    return {
+      httpStatus: 429,
+      message: "Cota diária da busca esgotada (100/dia no plano gratuito).",
+    }
+  }
+
+  if (statusCode === 400) {
+    return {
+      httpStatus: 400,
+      message: "Não foi possível interpretar essa consulta. Tente gerar a query de novo.",
+    }
+  }
+
+  return {
+    httpStatus: 502,
+    message: message || "Não foi possível ampliar a busca agora.",
+  }
 }
 
 function parseIsoDate(value?: string): string | null {
@@ -117,25 +207,30 @@ export function mapAndSortCseItems(payload: CseApiResponse): ExpandedSearchItem[
 }
 
 export function isSearchWindowDays(value: unknown): value is SearchWindowDays {
-  return value === 7 || value === 15 || value === 30
+  const numeric = typeof value === "string" ? Number(value) : value
+  return numeric === 7 || numeric === 15 || numeric === 30
 }
 
 export function isSearchRegion(value: unknown): value is SearchRegion {
   return value === "br" || value === "intl"
 }
 
-export async function searchCustomSearch(params: {
-  query: string
+export function coerceSearchWindowDays(value: unknown): SearchWindowDays | null {
+  if (!isSearchWindowDays(value)) return null
+  return typeof value === "string" ? (Number(value) as SearchWindowDays) : value
+}
+
+async function fetchCseResults(params: {
+  q: string
   days: SearchWindowDays
   region: SearchRegion
   apiKey: string
   cx: string
 }): Promise<ExpandedSearchItem[]> {
-  const q = buildCseQuery(params.query, params.region)
   const url = new URL("https://www.googleapis.com/customsearch/v1")
   url.searchParams.set("key", params.apiKey)
   url.searchParams.set("cx", params.cx)
-  url.searchParams.set("q", q)
+  url.searchParams.set("q", params.q)
   url.searchParams.set("num", "10")
   url.searchParams.set("dateRestrict", `d${params.days}`)
   url.searchParams.set("safe", "active")
@@ -153,8 +248,37 @@ export async function searchCustomSearch(params: {
 
   if (!response.ok) {
     const message = payload.error?.message || "Falha na Custom Search API"
-    throw new Error(message)
+    throw new CseApiError(message, payload.error?.code ?? response.status)
   }
 
   return mapAndSortCseItems(payload)
+}
+
+export async function searchCustomSearch(params: {
+  query: string
+  days: SearchWindowDays
+  region: SearchRegion
+  apiKey: string
+  cx: string
+}): Promise<ExpandedSearchItem[]> {
+  const queries = [
+    buildCseQuery(params.query, params.region),
+    buildKeywordFallback(params.query, params.region),
+  ]
+
+  let lastError: CseApiError | null = null
+
+  for (const q of queries) {
+    if (!q) continue
+
+    try {
+      return await fetchCseResults({ ...params, q })
+    } catch (error) {
+      if (!(error instanceof CseApiError)) throw error
+      lastError = error
+      if (error.statusCode !== 400) throw error
+    }
+  }
+
+  throw lastError ?? new CseApiError("Falha na Custom Search API", 502)
 }
