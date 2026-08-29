@@ -2,6 +2,9 @@
   "private": true,
   "name": "mandajobs",
   "version": "1.0.0",
+  "engines": {
+    "node": "24.x"
+  },
   "description": "Otimize a sua busca por vagas no LinkedIn através da consulta booleana e garanta as melhores oportunidades para o seu perfil.",
   "author": {
     "name": "Jr Gouveia",
