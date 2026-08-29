@@ -7,11 +7,29 @@ module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			display: ['"Space Grotesk"', 'sans-serif'],
+  			body: ['"DM Sans"', 'sans-serif'],
+  			mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+  		},
+  		boxShadow: {
+  			brutal: '5px 5px 0 #131313',
+  			'brutal-md': '8px 8px 0 #131313',
+  			'brutal-pink': '6px 6px 0 #ff3d6e'
+  		},
   		colors: {
+  			brutalist: {
+  				yellow: '#fdf500',
+  				blue: '#0033ff',
+  				pink: '#ff3d6e',
+  				ink: '#131313',
+  				paper: '#f5f0e6'
+  			},
   			dark: {
   				backgroundColor: '#1a1a1a',
   				text: '#fff'

@@ -1,23 +1,27 @@
-import Image from "next/image";
 import Link from "next/link";
-import DarkModeToggle from "./DarkModeToggle";
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center w-full mt-2 pb-1 sm:px-4 px-2">
-      <Link href="/" className="flex space-x-3">
-        <Image
-          alt="header text"
-          src="/handshake.svg"
-          className="sm:w-12 sm:h-12 w-10 h-10 ml-0"
-          width={32}
-          height={32}
-        />
-        <h1 className="sm:text-4xl text-2xl font-semibold ml-2 tracking-tight m-0.5 sm:m-2">
-          Manda Jobs <span className="text-sm text-slate-400">beta</span>
-        </h1>
-      </Link>
-      <DarkModeToggle />
-    </header>
+    <div className="bg-brutalist-yellow border-b-[3px] border-brutalist-ink">
+      <div className="max-w-4xl mx-auto flex items-center justify-between px-6 py-5">
+        <Link
+          href="/"
+          className="font-display font-bold text-lg bg-brutalist-ink text-brutalist-yellow px-3 py-1.5 no-underline"
+        >
+          MANDA JOBS
+        </Link>
+        <nav className="hidden sm:flex items-center gap-8 font-display font-bold text-sm uppercase tracking-tight">
+          <Link href="/#missao" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+            Missão
+          </Link>
+          <Link href="/#duvidas" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+            Dúvidas
+          </Link>
+          <Link href="/termos-de-uso" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+            Termos de Uso
+          </Link>
+        </nav>
+      </div>
+    </div>
   );
 }
