@@ -8,17 +8,29 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Copy, SearchIcon, Zap } from "lucide-react"
+import { Copy, Link2, SearchIcon, Zap } from "lucide-react"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import HeadlessModal from "../components/ui/HeadlessModal"
 import { ExpandedSearch } from "../components/ExpandedSearch"
-import { SearchRankings } from "../components/SearchRankings"
+import { RankingHighlight, SearchRankings } from "../components/SearchRankings"
 import { QueryCountWithTooltip } from "../components/QueryCountWithTooltip"
+import { TagInput } from "../components/TagInput"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import getQueriesCount from "../hooks/getQueriesCount"
-
-type LevelType = "Junior" | "Pleno" | "Senior" | "Estagiário"
+import { useFormPersistence } from "../hooks/useFormPersistence"
+import { JOB_PRESETS, type LanguagePref, type LevelType, type WorkMode } from "@/lib/job-presets"
+import {
+  getShareableUrl,
+  parseShareableSearchParams,
+  replaceShareableUrl,
+} from "@/lib/shareable-form-url"
+import {
+  trackPresetApplied,
+  trackQueryCopied,
+  trackQueryGenerated,
+} from "@/lib/analytics-events"
+import { SCROLL_TO_RESULTS_DELAY_MS } from "@/lib/app-limits"
 
 const CURTAIN_DELAY = 0.2
 const CURTAIN_DURATION = 0.5
@@ -27,14 +39,25 @@ const SLAM_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 const JobSearch = () => {
   const shouldReduceMotion = useReducedMotion()
   const [loading, setLoading] = useState(false)
-  const [title, setTitle] = useState("")
-  const [tools, setTools] = useState("")
-  const [toolsIdontUse, setToolsIdontUse] = useState("")
-  const [level, setLevel] = useState<LevelType>("Junior")
-  const [generatedQuery, setGeneratedQuery] = useState<string | undefined>(undefined)
+  const [variants, setVariants] = useState<string[]>([])
   const [counter, setCounter] = useState<number | null>(null)
+  const [allowAutoExpand, setAllowAutoExpand] = useState(false)
 
+  const { state, update, hydrated } = useFormPersistence()
+  const {
+    title,
+    tools,
+    toolsIdontUse,
+    level,
+    workMode,
+    language,
+    location,
+    lastVariants,
+  } = state
+
+  const primaryQuery = variants[0] ?? ""
   const queryRef = useRef<null | HTMLDivElement>(null)
+  const urlHydrated = useRef(false)
 
   const scrollToResults = () => {
     if (queryRef.current !== null) {
@@ -42,24 +65,29 @@ const JobSearch = () => {
     }
   }
 
-  const switchLevel = () => {
-    switch (level) {
-      case "Pleno":
-        return "only Pleno titles"
-      case "Senior":
-        return "only Seniors titles"
-      case "Junior":
-        return "only Junior titles"
-      case "Estagiário":
-        return "only Intern or Internship or Estágio titles"
-      default:
-        return ""
-    }
-  }
+  useEffect(() => {
+    getQueriesCount(setCounter)
+  }, [])
 
-  const generateQuery = async (e: any) => {
+  // Priority: URL params > localStorage (URL applied once after hydration)
+  useEffect(() => {
+    if (!hydrated || urlHydrated.current) return
+    urlHydrated.current = true
+
+    const fromUrl = parseShareableSearchParams(window.location.search)
+    if (Object.keys(fromUrl).length > 0) {
+      update(fromUrl)
+      return
+    }
+
+    if (lastVariants.length > 0) {
+      setVariants(lastVariants)
+    }
+  }, [hydrated, update, lastVariants])
+
+  const generateQuery = async (e: React.FormEvent | React.MouseEvent) => {
     e.preventDefault()
-    setGeneratedQuery("")
+    setVariants([])
     setLoading(true)
 
     try {
@@ -73,6 +101,9 @@ const JobSearch = () => {
           tools,
           toolsIdontUse,
           level,
+          workMode,
+          language,
+          location,
         }),
       })
 
@@ -83,11 +114,29 @@ const JobSearch = () => {
         return
       }
 
-      const { query } = await response.json()
-      if (query) {
-        setGeneratedQuery(query)
+      const data = await response.json()
+      const nextVariants: string[] = Array.isArray(data.variants) ? data.variants : []
+
+      if (nextVariants.length > 0) {
+        setVariants(nextVariants)
+        setAllowAutoExpand(true)
+        update({ lastVariants: nextVariants })
+        replaceShareableUrl({
+          title,
+          tools,
+          toolsIdontUse,
+          level,
+          workMode,
+          language,
+          location,
+        })
+        trackQueryGenerated({
+          level,
+          hasAvoidTools: toolsIdontUse.trim().length > 0,
+          workMode,
+        })
         getQueriesCount(setCounter)
-        setTimeout(scrollToResults, 100)
+        setTimeout(scrollToResults, SCROLL_TO_RESULTS_DELAY_MS)
       } else {
         toast.error("Nenhuma consulta foi gerada")
       }
@@ -99,18 +148,32 @@ const JobSearch = () => {
     }
   }
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string, variantIndex: number) => {
     navigator.clipboard.writeText(text.trim())
+    trackQueryCopied(variantIndex)
     toast.success("Consulta copiada!", {
       icon: "📋",
     })
   }
 
-  const isFormValid = title !== "" && tools !== ""
+  const shareUrl = getShareableUrl({
+    title,
+    tools,
+    toolsIdontUse,
+    level,
+    workMode,
+    language,
+    location,
+  })
 
-  useEffect(() => {
-    getQueriesCount(setCounter)
-  }, [])
+  const applyPreset = (presetId: string) => {
+    const preset = JOB_PRESETS.find((p) => p.id === presetId)
+    if (!preset) return
+    update({ title: preset.title, tools: preset.tools })
+    trackPresetApplied(presetId)
+  }
+
+  const isFormValid = title !== "" && tools !== ""
 
   return (
     <div className="min-h-screen bg-brutalist-paper font-body text-brutalist-ink">
@@ -128,7 +191,6 @@ const JobSearch = () => {
       <Header />
 
       <main className="max-w-2xl mx-auto px-6 py-14">
-        {/* Hero (short) */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.35, y: -40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -150,12 +212,12 @@ const JobSearch = () => {
               LinkedIn
             </motion.span>
           </h1>
-          <p className="text-base sm:text-lg text-brutalist-ink/70 max-w-md mx-auto">
+          <p className="text-base sm:text-lg text-brutalist-ink/70 max-w-md mx-auto mb-4">
             Preencha os campos abaixo e a nossa IA monta a consulta booleana certa pra você usar na busca de vagas.
           </p>
+          <RankingHighlight />
         </motion.div>
 
-        {/* Form — the product itself, front and center */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -163,9 +225,22 @@ const JobSearch = () => {
         >
           <div className="bg-white border-[3px] border-brutalist-ink shadow-brutal-md p-6 sm:p-10">
             <h2 className="font-display text-2xl font-bold uppercase mb-1">Configure sua busca</h2>
-            <p className="text-sm text-brutalist-ink/60 mb-8">
+            <p className="text-sm text-brutalist-ink/60 mb-4">
               Preencha os campos abaixo para gerar uma consulta personalizada.
             </p>
+
+            <div className="flex flex-wrap gap-2 mb-8">
+              {JOB_PRESETS.map((preset) => (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => applyPreset(preset.id)}
+                  className="font-display text-xs font-bold uppercase border-[3px] border-brutalist-ink px-3 py-1.5 bg-brutalist-paper hover:bg-brutalist-yellow transition-colors"
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
 
             <div className="space-y-6">
               <div className="space-y-2">
@@ -178,7 +253,7 @@ const JobSearch = () => {
                 <Input
                   id="position"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => update({ title: e.target.value })}
                   placeholder="Ex.: fullstack, devops, frontend..."
                   className="rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 text-base placeholder:text-brutalist-ink/40 focus-visible:ring-0 focus-visible:border-brutalist-blue"
                 />
@@ -191,7 +266,7 @@ const JobSearch = () => {
                   </span>
                   Nível de senioridade
                 </Label>
-                <Select value={level} onValueChange={(value: LevelType) => setLevel(value)}>
+                <Select value={level} onValueChange={(value: LevelType) => update({ level: value })}>
                   <SelectTrigger className="w-40 rounded-none border-[3px] border-brutalist-ink bg-brutalist-yellow px-4 py-5 font-display font-bold focus:ring-0">
                     <SelectValue />
                   </SelectTrigger>
@@ -211,12 +286,11 @@ const JobSearch = () => {
                   </span>
                   Tecnologias que você utiliza
                 </Label>
-                <Input
+                <TagInput
                   id="tools"
                   value={tools}
-                  onChange={(e) => setTools(e.target.value)}
-                  placeholder="Ex.: react, node, python, aws..."
-                  className="rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 text-base placeholder:text-brutalist-ink/40 focus-visible:ring-0 focus-visible:border-brutalist-blue"
+                  onChange={(csv) => update({ tools: csv })}
+                  placeholder="Ex.: react, node, python..."
                 />
               </div>
 
@@ -230,11 +304,57 @@ const JobSearch = () => {
                     Opcional
                   </Badge>
                 </Label>
-                <Input
+                <TagInput
                   id="avoid-tools"
                   value={toolsIdontUse}
-                  onChange={(e) => setToolsIdontUse(e.target.value)}
+                  onChange={(csv) => update({ toolsIdontUse: csv })}
                   placeholder="Ex.: php, ruby, .net..."
+                />
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="font-display font-bold text-xs uppercase">Modalidade</Label>
+                  <Select value={workMode} onValueChange={(value: WorkMode) => update({ workMode: value })}>
+                    <SelectTrigger className="w-full rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 font-display font-bold focus:ring-0">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-none border-[3px] border-brutalist-ink">
+                      <SelectItem value="any">Indiferente</SelectItem>
+                      <SelectItem value="remoto">Remoto</SelectItem>
+                      <SelectItem value="hibrido">Híbrido</SelectItem>
+                      <SelectItem value="presencial">Presencial</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="font-display font-bold text-xs uppercase">Idioma da vaga</Label>
+                  <Select value={language} onValueChange={(value: LanguagePref) => update({ language: value })}>
+                    <SelectTrigger className="w-full rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 font-display font-bold focus:ring-0">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-none border-[3px] border-brutalist-ink">
+                      <SelectItem value="both">Ambos</SelectItem>
+                      <SelectItem value="pt">Português</SelectItem>
+                      <SelectItem value="en">Inglês</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="location" className="font-display font-bold text-xs uppercase">
+                  Localização
+                  <Badge className="ml-2 rounded-none border-[3px] border-brutalist-ink bg-brutalist-ink text-white text-[10px] font-display uppercase">
+                    Opcional
+                  </Badge>
+                </Label>
+                <Input
+                  id="location"
+                  value={location}
+                  onChange={(e) => update({ location: e.target.value })}
+                  placeholder="Ex.: São Paulo, Brasil, Remoto..."
                   className="rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 text-base placeholder:text-brutalist-ink/40 focus-visible:ring-0 focus-visible:border-brutalist-blue"
                 />
               </div>
@@ -260,9 +380,8 @@ const JobSearch = () => {
           </div>
         </motion.div>
 
-        {/* Results */}
         <AnimatePresence>
-          {generatedQuery && (
+          {variants.length > 0 && primaryQuery && (
             <motion.div
               ref={queryRef}
               initial={{ opacity: 0, y: 20 }}
@@ -278,59 +397,66 @@ const JobSearch = () => {
                 </h3>
                 <p className="text-sm text-brutalist-ink/60 mb-6">Clique para copiar e use no LinkedIn</p>
 
-                {generatedQuery
-                  .substring(generatedQuery.indexOf("1") + 0)
-                  .split("2.")
-                  .map((query, index) => {
-                    const cleanQuery = query.trim()
-                    if (!cleanQuery) return null
-
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.1 }}
-                      >
-                        <div
-                          className="border-[3px] border-brutalist-ink bg-brutalist-paper cursor-pointer hover:bg-brutalist-yellow/25 transition-colors group p-4"
-                          onClick={() => copyToClipboard(cleanQuery)}
-                        >
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1">
-                              <p className="text-xs font-display font-bold uppercase text-brutalist-ink/50 mb-2">
-                                Clique para copiar
-                              </p>
-                              <p className="font-mono text-sm leading-relaxed">{cleanQuery}</p>
-                            </div>
-                            <Copy className="w-5 h-5 text-brutalist-ink/40 group-hover:text-brutalist-ink transition-colors shrink-0" />
-                          </div>
+                {variants.map((query, index) => (
+                  <motion.div
+                    key={`${index}-${query.slice(0, 24)}`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <div
+                      className="border-[3px] border-brutalist-ink bg-brutalist-paper cursor-pointer hover:bg-brutalist-yellow/25 transition-colors group p-4"
+                      onClick={() => copyToClipboard(query, index)}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <p className="text-xs font-display font-bold uppercase text-brutalist-ink/50 mb-2">
+                            Clique para copiar
+                          </p>
+                          <p className="font-mono text-sm leading-relaxed">{query}</p>
                         </div>
-                        {index === 0 && (
-                          <div className="flex items-center justify-center my-4 gap-4">
-                            <div className="flex-1 h-[3px] bg-brutalist-ink" />
-                            <span className="font-display text-xs font-bold uppercase">ou</span>
-                            <div className="flex-1 h-[3px] bg-brutalist-ink" />
-                          </div>
-                        )}
-                      </motion.div>
-                    )
-                  })}
+                        <Copy className="w-5 h-5 text-brutalist-ink/40 group-hover:text-brutalist-ink transition-colors shrink-0" />
+                      </div>
+                    </div>
+                    {index === 0 && variants.length > 1 && (
+                      <div className="flex items-center justify-center my-4 gap-4">
+                        <div className="flex-1 h-[3px] bg-brutalist-ink" />
+                        <span className="font-display text-xs font-bold uppercase">ou</span>
+                        <div className="flex-1 h-[3px] bg-brutalist-ink" />
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
 
-                <div className="mt-6 space-y-4">
+                <div className="mt-6 space-y-3">
                   <HeadlessModal
-                    query={generatedQuery}
-                    text="Consultar vagas no LinkedIn"
+                    text="Abrir no LinkedIn"
+                    action={{
+                      type: "linkedin",
+                      query: primaryQuery,
+                      location: location || undefined,
+                    }}
                     btnTwdClass="w-full rounded-none border-[3px] border-brutalist-ink bg-brutalist-blue text-white shadow-brutal hover:bg-brutalist-blue/90 font-display font-bold uppercase py-3 transition-all"
                   />
-                  <ExpandedSearch key={generatedQuery} query={generatedQuery} />
+
+                  <HeadlessModal
+                    text="Copiar link desta busca"
+                    action={{ type: "share", url: shareUrl }}
+                    btnTwdClass="w-full rounded-none border-[3px] border-brutalist-ink bg-white text-brutalist-ink hover:bg-brutalist-paper font-display font-bold uppercase py-3 inline-flex items-center justify-center"
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <Link2 className="w-4 h-4" />
+                      Copiar link desta busca
+                    </span>
+                  </HeadlessModal>
+
+                  <ExpandedSearch key={primaryQuery} query={primaryQuery} autoSearch={allowAutoExpand} />
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Quick facts (plain, no billboard) */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -346,7 +472,6 @@ const JobSearch = () => {
 
         <SearchRankings />
 
-        {/* How it works */}
         <section id="como-funciona" className="border-t-[3px] border-brutalist-ink mt-14 pt-10">
           <div className="font-display text-xs font-bold uppercase text-brutalist-ink/50 mb-6">Como funciona</div>
           <div className="grid sm:grid-cols-3 gap-6">
@@ -374,7 +499,6 @@ const JobSearch = () => {
           </div>
         </section>
 
-        {/* Mission */}
         <section id="missao" className="border-t-[3px] border-brutalist-ink pt-10 mt-10">
           <div className="font-display text-xs font-bold uppercase text-brutalist-ink/50 mb-4">Por que existe</div>
           <p className="text-base sm:text-lg leading-relaxed max-w-xl mb-5">
@@ -388,7 +512,6 @@ const JobSearch = () => {
           </div>
         </section>
 
-        {/* FAQ */}
         <section id="duvidas" className="border-t-[3px] border-brutalist-ink pt-10 mt-10">
           <div className="font-display text-xs font-bold uppercase text-brutalist-ink/50 mb-6">
             Perguntas frequentes
@@ -404,7 +527,7 @@ const JobSearch = () => {
             </div>
             <div>
               <div className="font-display font-bold text-sm mb-1.5">Quantas consultas posso fazer?</div>
-              <p className="text-sm text-brutalist-ink/60">Sem limite, quando quiser.</p>
+              <p className="text-sm text-brutalist-ink/60">Sem limite diário rígido para uso normal — abusos são limitados automaticamente.</p>
             </div>
             <div>
               <div className="font-display font-bold text-sm mb-1.5">Vou garantir uma vaga?</div>

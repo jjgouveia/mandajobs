@@ -4,6 +4,73 @@ import { useEffect, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import type { RankingItem, SearchRankings as SearchRankingsData } from "@/lib/query-rankings"
 
+function buildRankingsUrl(year: number | null): string {
+  if (year === null) return "/api/search-rankings"
+  return `/api/search-rankings?year=${year}`
+}
+
+const rankingsCache = new Map<string, Promise<SearchRankingsData>>()
+
+function fetchSearchRankings(year: number | null): Promise<SearchRankingsData> {
+  const key = year === null ? "all" : String(year)
+  const cached = rankingsCache.get(key)
+  if (cached) return cached
+
+  const request = fetch(buildRankingsUrl(year))
+    .then(async (response) => {
+      if (!response.ok) throw new Error("Failed to load rankings")
+      return response.json() as Promise<SearchRankingsData>
+    })
+    .catch((error) => {
+      rankingsCache.delete(key)
+      throw error
+    })
+
+  rankingsCache.set(key, request)
+  return request
+}
+
+export function RankingHighlight() {
+  const [topPosition, setTopPosition] = useState<string | null>(null)
+  const [topTech, setTopTech] = useState<string | null>(null)
+
+  useEffect(() => {
+    let isMounted = true
+
+    fetchSearchRankings(null)
+      .then((data) => {
+        if (!isMounted) return
+        setTopPosition(data.positions[0]?.label ?? null)
+        setTopTech(data.technologies[0]?.label ?? null)
+      })
+      .catch(() => {
+        // highlight is optional
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  if (!topPosition && !topTech) return null
+
+  return (
+    <p className="text-sm font-display font-bold uppercase text-brutalist-ink/70">
+      {topTech ? (
+        <>
+          Stack #1: <span className="text-brutalist-ink capitalize">{topTech}</span>
+        </>
+      ) : null}
+      {topTech && topPosition ? <span className="mx-2">·</span> : null}
+      {topPosition ? (
+        <>
+          Cargo #1: <span className="text-brutalist-ink capitalize">{topPosition}</span>
+        </>
+      ) : null}
+    </p>
+  )
+}
+
 interface RankingColumnProps {
   title: string
   items: RankingItem[]
@@ -46,11 +113,6 @@ function RankingColumn({ title, items, emptyMessage }: RankingColumnProps) {
   )
 }
 
-function buildRankingsUrl(year: number | null): string {
-  if (year === null) return "/api/search-rankings"
-  return `/api/search-rankings?year=${year}`
-}
-
 function formatPeriodLabel(year: number | null): string {
   if (year === null) return "de todos os tempos"
   return `de ${year}`
@@ -70,10 +132,7 @@ export function SearchRankings() {
       setIsLoading(true)
 
       try {
-        const response = await fetch(buildRankingsUrl(selectedYear))
-        if (!response.ok) throw new Error("Failed to load rankings")
-
-        const data = (await response.json()) as SearchRankingsData
+        const data = await fetchSearchRankings(selectedYear)
         if (!isMounted) return
 
         setRankings(data)

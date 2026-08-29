@@ -1,15 +1,19 @@
-import { useState, type ReactNode } from "react"
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "react-hot-toast"
-import { Globe2, CalendarDays, ExternalLink, SearchIcon } from "lucide-react"
+import { Bookmark, BookmarkCheck, CalendarDays, ChevronDown, ExternalLink, Globe2, SearchIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import type { ExpandedSearchItem, SearchRegion, SearchWindowDays } from "@/lib/expanded-search"
+import { trackExpandedSearchRun } from "@/lib/analytics-events"
+import { useSavedJobs } from "../hooks/useSavedJobs"
 
 interface ExpandedSearchProps {
   query: string
+  autoSearch?: boolean
 }
 
 const DAY_OPTIONS: SearchWindowDays[] = [7, 15, 30]
+const AUTO_SEARCH_KEY = "mandajobs:auto-expand-search"
 
 function formatPublishedAt(isoDate: string | null): string {
   if (!isoDate) return "Data não informada"
@@ -42,14 +46,31 @@ function FilterChip({
   )
 }
 
-export function ExpandedSearch({ query }: ExpandedSearchProps) {
+function readAutoSearchPreference(defaultValue: boolean): boolean {
+  if (typeof window === "undefined") return defaultValue
+  try {
+    const raw = localStorage.getItem(AUTO_SEARCH_KEY)
+    if (raw === null) return defaultValue
+    return raw === "true"
+  } catch {
+    return defaultValue
+  }
+}
+
+export function ExpandedSearch({ query, autoSearch = true }: ExpandedSearchProps) {
   const [days, setDays] = useState<SearchWindowDays>(7)
   const [region, setRegion] = useState<SearchRegion>("br")
   const [isLoading, setIsLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
   const [items, setItems] = useState<ExpandedSearchItem[]>([])
+  const [autoEnabled, setAutoEnabled] = useState(() => readAutoSearchPreference(autoSearch))
+  const [showSaved, setShowSaved] = useState(false)
+  const lastAutoQuery = useRef<string>("")
+  const requestIdRef = useRef(0)
+  const { savedJobs, isSaved, toggleSave, removeSaved } = useSavedJobs()
 
-  const expandSearch = async () => {
+  const expandSearch = useCallback(async () => {
+    const requestId = ++requestIdRef.current
     setIsLoading(true)
 
     try {
@@ -59,30 +80,73 @@ export function ExpandedSearch({ query }: ExpandedSearchProps) {
         body: JSON.stringify({ query, days, region }),
       })
 
+      if (requestId !== requestIdRef.current) return
+
       const data = await response.json()
+
+      if (requestId !== requestIdRef.current) return
 
       if (!response.ok) {
         toast.error(data.error || "Não foi possível ampliar a busca")
         return
       }
 
-      setItems(data.items ?? [])
+      const nextItems: ExpandedSearchItem[] = data.items ?? []
+      setItems(nextItems)
       setHasSearched(true)
+      trackExpandedSearchRun({
+        region,
+        days,
+        resultCount: nextItems.length,
+      })
     } catch (error) {
+      if (requestId !== requestIdRef.current) return
       console.error(error)
       toast.error("Falha ao processar a busca ampliada")
     } finally {
-      setIsLoading(false)
+      if (requestId === requestIdRef.current) {
+        setIsLoading(false)
+      }
     }
+  }, [query, days, region])
+
+  useEffect(() => {
+    if (!autoEnabled || !query.trim()) return
+    if (lastAutoQuery.current === query) return
+    lastAutoQuery.current = query
+    void expandSearch()
+  }, [autoEnabled, query, expandSearch])
+
+  function toggleAutoSearch() {
+    setAutoEnabled((prev) => {
+      const next = !prev
+      try {
+        localStorage.setItem(AUTO_SEARCH_KEY, String(next))
+      } catch {
+        // ignore
+      }
+      return next
+    })
   }
 
   return (
     <div className="space-y-4 border-[3px] border-brutalist-ink bg-brutalist-paper p-4">
-      <div>
-        <p className="font-display font-bold text-sm uppercase">Ampliar busca na web</p>
-        <p className="text-brutalist-ink/60 text-sm mt-1">
-          Usa a mesma query no Google, com filtro de período e região.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+        <div>
+          <p className="font-display font-bold text-sm uppercase">Ampliar busca na web</p>
+          <p className="text-brutalist-ink/60 text-sm mt-1">
+            Usa a mesma query no Google, com filtro de período e região.
+          </p>
+        </div>
+        <label className="inline-flex items-center gap-2 font-display text-xs font-bold uppercase cursor-pointer shrink-0">
+          <input
+            type="checkbox"
+            checked={autoEnabled}
+            onChange={toggleAutoSearch}
+            className="rounded-none border-[2px] border-brutalist-ink"
+          />
+          Buscar automaticamente
+        </label>
       </div>
 
       <div className="space-y-3">
@@ -108,7 +172,7 @@ export function ExpandedSearch({ query }: ExpandedSearchProps) {
 
       <Button
         type="button"
-        onClick={expandSearch}
+        onClick={() => void expandSearch()}
         disabled={isLoading}
         className="w-full rounded-none border-[3px] border-brutalist-ink bg-brutalist-yellow text-brutalist-ink hover:bg-brutalist-yellow/80 font-display font-bold uppercase py-3 transition-colors"
       >
@@ -133,31 +197,88 @@ export function ExpandedSearch({ query }: ExpandedSearchProps) {
 
       {items.length > 0 && (
         <ul className="space-y-3">
-          {items.map((item) => (
-            <li key={item.url}>
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block border-[3px] border-brutalist-ink bg-white p-4 hover:bg-brutalist-paper transition-colors"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 space-y-1">
-                    <p className="font-medium leading-snug">{item.title}</p>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge className="rounded-none border-[3px] border-brutalist-ink bg-brutalist-paper text-brutalist-ink">
-                        {item.source}
-                      </Badge>
-                      <span className="text-brutalist-ink/50 text-xs">{formatPublishedAt(item.publishedAt)}</span>
+          {items.map((item) => {
+            const saved = isSaved(item.url)
+            return (
+              <li key={item.url} className="relative">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block border-[3px] border-brutalist-ink bg-white p-4 pr-12 hover:bg-brutalist-paper transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 space-y-1">
+                      <p className="font-medium leading-snug">{item.title}</p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge className="rounded-none border-[3px] border-brutalist-ink bg-brutalist-paper text-brutalist-ink">
+                          {item.source}
+                        </Badge>
+                        <span className="text-brutalist-ink/50 text-xs">{formatPublishedAt(item.publishedAt)}</span>
+                      </div>
+                      {item.snippet && (
+                        <p className="text-brutalist-ink/60 text-sm leading-relaxed">{item.snippet}</p>
+                      )}
                     </div>
-                    {item.snippet && <p className="text-brutalist-ink/60 text-sm leading-relaxed">{item.snippet}</p>}
+                    <ExternalLink className="w-4 h-4 shrink-0 text-brutalist-ink/40 mt-1" />
                   </div>
-                  <ExternalLink className="w-4 h-4 shrink-0 text-brutalist-ink/40 mt-1" />
-                </div>
-              </a>
-            </li>
-          ))}
+                </a>
+                <button
+                  type="button"
+                  aria-label={saved ? "Remover dos salvos" : "Salvar vaga"}
+                  onClick={() => toggleSave(item)}
+                  className="absolute top-3 right-3 p-1.5 border-[2px] border-brutalist-ink bg-white hover:bg-brutalist-yellow transition-colors"
+                >
+                  {saved ? (
+                    <BookmarkCheck className="w-4 h-4 text-brutalist-ink" />
+                  ) : (
+                    <Bookmark className="w-4 h-4 text-brutalist-ink/50" />
+                  )}
+                </button>
+              </li>
+            )
+          })}
         </ul>
+      )}
+
+      {savedJobs.length > 0 && (
+        <div className="border-t-[3px] border-brutalist-ink pt-4">
+          <button
+            type="button"
+            onClick={() => setShowSaved((v) => !v)}
+            className="w-full flex items-center justify-between font-display text-xs font-bold uppercase"
+          >
+            Vagas salvas ({savedJobs.length})
+            <ChevronDown className={`w-4 h-4 transition-transform ${showSaved ? "rotate-180" : ""}`} />
+          </button>
+          {showSaved && (
+            <ul className="mt-3 space-y-2">
+              {savedJobs.map((job) => (
+                <li
+                  key={job.url}
+                  className="flex items-start justify-between gap-2 border-[2px] border-brutalist-ink bg-white p-3"
+                >
+                  <a
+                    href={job.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium hover:underline min-w-0"
+                  >
+                    {job.title}
+                  </a>
+                  <button
+                    type="button"
+                    aria-label="Remover"
+                    onClick={() => removeSaved(job.url)}
+                    className="text-xs font-display font-bold uppercase text-brutalist-ink/50 hover:text-brutalist-ink shrink-0"
+                  >
+                    Remover
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
     </div>
   )

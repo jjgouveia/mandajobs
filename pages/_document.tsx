@@ -1,4 +1,23 @@
-import Document, { Head, Html, Main, NextScript } from "next/document";
+import Document, { Head, Html, Main, NextScript } from "next/document"
+
+const SITE_DESCRIPTION =
+  "Gere consultas booleanas otimizadas para LinkedIn e amplie a busca de vagas na web com IA. Gratuito, sem login."
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Manda Jobs",
+  url: "https://mandajobs.vercel.app",
+  description: SITE_DESCRIPTION,
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Any",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "BRL",
+  },
+  inLanguage: "pt-BR",
+}
 
 class MyDocument extends Document {
   render() {
@@ -14,13 +33,7 @@ class MyDocument extends Document {
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"
-            crossOrigin="true"
-          />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="true"
+            crossOrigin="anonymous"
           />
           <link
             href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque&family=Montserrat&display=swap"
@@ -28,23 +41,15 @@ class MyDocument extends Document {
           />
           <link rel="icon" href="/favicon.ico" />
           <meta name="title" content="Manda Jobs" />
+          <meta name="description" content={SITE_DESCRIPTION} />
           <meta
-            name="description"
-            content="Conectando você com as melhores oportunidades do LinkedIn de acordo
-          com o seu perfil"
-          />
-          <meta
-            property="keywords"
-            content="trabalho remoto, emprego, vagas, trabalho em casa, empregos de tecnologia, carreira em tecnologia, trabalho flexível, oportunidades de trabalho, empresas remotas"
+            name="keywords"
+            content="linkedin, busca booleana, vagas, emprego remoto, tecnologia, consulta linkedin, manda jobs"
           />
           <meta name="robots" content="index, follow" />
           <meta property="og:url" content="https://mandajobs.vercel.app" />
           <meta property="og:title" content="Manda Jobs" />
-          <meta
-            property="og:description"
-            content="Conectando você com as melhores oportunidades do LinkedIn de acordo
-          com o seu perfil"
-          />
+          <meta property="og:description" content={SITE_DESCRIPTION} />
           <meta
             property="og:image"
             content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs_v1dot5.png"
@@ -54,17 +59,11 @@ class MyDocument extends Document {
           <meta property="og:type" content="website" />
           <meta property="og:locale" content="pt_BR" />
           <meta property="og:site_name" content="Manda Jobs" />
-          <meta property="og:author" content="@jjgouveia" />
-          <meta property="og:creator" content="@jjgouveia" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="mandajobs.vercel.app" />
           <meta property="twitter:url" content="https://mandajobs.vercel.app" />
           <meta name="twitter:title" content="Manda Jobs" />
-          <meta
-            name="twitter:description"
-            content="Conectando você com as melhores oportunidades do LinkedIn de acordo
-          com o seu perfil"
-          />
+          <meta name="twitter:description" content={SITE_DESCRIPTION} />
           <meta
             name="twitter:image"
             content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs_v1dot5.png"
@@ -72,15 +71,12 @@ class MyDocument extends Document {
           <meta name="twitter:creator" content="@outrogouveia" />
           <meta name="apple-mobile-web-app-title" content="Manda Jobs" />
           <meta name="application-name" content="Manda Jobs" />
-          <meta name="msapplication-TileColor" content="#111827" />
-          <meta name="msapplication-TileImage" content="/favicon.ico" />
-          <meta name="msapplication-config" content="/favicon.ico" />
-          <meta name="theme-color" content="#111827" />
-          <meta name="msapplication-navbutton-color" content="#111827" />
-          <meta itemProp="name" content="Manda Jobs" />
-          <meta itemProp="description" content="Manda Jobs" />
-          <meta itemProp="image" content="/favicon.ico" />
+          <meta name="theme-color" content="#131313" />
           <meta name="mobile-web-app-capable" content="yes" />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
         </Head>
 
         <body>
@@ -88,8 +84,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

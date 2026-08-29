@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mandajobs.vercel.app/sitemap.xml

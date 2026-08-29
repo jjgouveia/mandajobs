@@ -1,3 +1,5 @@
+import { getPrimaryQuery, parseQueryVariants } from "@/lib/parse-query-variants"
+
 export type SearchRegion = "br" | "intl"
 export type SearchWindowDays = 7 | 15 | 30
 
@@ -52,15 +54,14 @@ export function toWebSearchQuery(linkedinQuery: string): string {
 }
 
 export function getPrimaryBooleanQuery(generatedQuery: string): string {
+  const variants = parseQueryVariants(generatedQuery)
+  const primary = getPrimaryQuery(variants)
+  if (primary) return primary
+
   const cleaned = generatedQuery
-    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/```(?:\w+)?\n?([\s\S]*?)```/g, "$1")
     .replace(/^["'`]+|["'`]+$/g, "")
     .trim()
-
-  const withoutLeadingIndex = cleaned.replace(/^\s*1[.)]\s*/i, "")
-  const primary = withoutLeadingIndex.split(/\s*2[.)]\s*/)[0]?.trim()
-
-  if (primary) return primary
 
   const firstLine = cleaned.split(/\n+/).find((line) => line.trim().length > 0)
   return firstLine?.trim() ?? cleaned
@@ -112,7 +113,7 @@ export function mapSearchClientError(statusCode: number, message: string): { htt
   if (statusCode === 401 || normalized.includes("unauthorized") || normalized.includes("invalid api key")) {
     return {
       httpStatus: 502,
-      message: "Chave da API Firecrawl inválida. Verifique FIRECRAWL_API_KEY na Vercel.",
+      message: "Busca ampliada indisponível no momento. Tente novamente mais tarde.",
     }
   }
 
@@ -126,7 +127,7 @@ export function mapSearchClientError(statusCode: number, message: string): { htt
   if (statusCode === 402 || normalized.includes("insufficient credits")) {
     return {
       httpStatus: 429,
-      message: "Créditos do Firecrawl esgotados.",
+      message: "Cota da busca esgotada. Tente novamente mais tarde.",
     }
   }
 
@@ -139,7 +140,7 @@ export function mapSearchClientError(statusCode: number, message: string): { htt
 
   return {
     httpStatus: 502,
-    message: message || "Não foi possível ampliar a busca agora.",
+    message: "Não foi possível ampliar a busca agora.",
   }
 }
 
@@ -211,6 +212,14 @@ export function mapWebResults(
     .filter((item): item is { title: string; url: string; description?: string } =>
       Boolean(item.title && item.url)
     )
+    .filter((item) => {
+      try {
+        const protocol = new URL(item.url).protocol
+        return protocol === "http:" || protocol === "https:"
+      } catch {
+        return false
+      }
+    })
     .map((item) => ({
       title: item.title,
       url: item.url,

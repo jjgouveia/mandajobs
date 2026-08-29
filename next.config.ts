@@ -2,12 +2,6 @@ import type { NextConfig } from 'next';
 import { Configuration as WebpackConfig } from 'webpack';
 
 const nextConfig: NextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -18,17 +12,55 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  turbopack: {
-    conditions: {
+  async headers() {
+    const isDevelopment = process.env.NODE_ENV !== 'production';
 
-
-    }
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value:
+              'geolocation=(), interest-cohort=(), payment=(self), camera=(self), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), ambient-light-sensor=(), autoplay=(self), encrypted-media=(self), fullscreen=(self), picture-in-picture=(self)',
+          },
+          ...(isDevelopment
+            ? []
+            : [
+                {
+                  key: 'Strict-Transport-Security',
+                  value: 'max-age=31536000; includeSubDomains; preload',
+                },
+              ]),
+        ],
+      },
+    ];
   },
-  // Configuração do webpack para lidar com módulos específicos do Node.js
+  turbopack: {
+    conditions: {},
+  },
   webpack: (config: WebpackConfig, { isServer }) => {
-    // Se não estiver no servidor (ou seja, se estiver no cliente/navegador)
     if (!isServer) {
-      // Substitui módulos específicos por um módulo vazio
       config.resolve = config.resolve || {};
       config.resolve.fallback = {
         ...(config.resolve.fallback || {}),
