@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast"
 import { Globe2, CalendarDays, ExternalLink, SearchIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import type { ExpandedSearchItem, SearchRegion, SearchWindowDays } from "@/lib/google-cse"
+import type { ExpandedSearchItem, SearchRegion, SearchWindowDays } from "@/lib/expanded-search"
 
 interface ExpandedSearchProps {
   query: string

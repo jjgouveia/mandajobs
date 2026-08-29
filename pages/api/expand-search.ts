@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import {
-  CseApiError,
   coerceSearchWindowDays,
   isSearchRegion,
-  mapCseClientError,
-  searchCustomSearch,
+  mapSearchClientError,
+  SearchApiError,
   type ExpandedSearchItem,
-} from "@/lib/google-cse"
+} from "@/lib/expanded-search"
+import { searchWithFirecrawl } from "@/lib/firecrawl-search"
 
 interface ExpandSearchResponse {
   items?: ExpandedSearchItem[]
@@ -21,12 +21,11 @@ export default async function handler(
     return res.status(405).json({ error: "Método não permitido" })
   }
 
-  const apiKey = process.env.GOOGLE_CSE_API_KEY
-  const cx = process.env.GOOGLE_CSE_CX
+  const apiKey = process.env.FIRECRAWL_API_KEY?.trim()
 
-  if (!apiKey || !cx || apiKey === "REPLACE_ME" || cx === "REPLACE_ME") {
+  if (!apiKey || apiKey === "REPLACE_ME") {
     return res.status(503).json({
-      error: "Busca ampliada não configurada. Defina GOOGLE_CSE_API_KEY e GOOGLE_CSE_CX.",
+      error: "Busca ampliada não configurada. Defina FIRECRAWL_API_KEY.",
     })
   }
 
@@ -42,21 +41,20 @@ export default async function handler(
   }
 
   try {
-    const items = await searchCustomSearch({
+    const items = await searchWithFirecrawl({
       query: query.trim(),
       days: searchDays,
       region,
       apiKey,
-      cx,
     })
 
     return res.status(200).json({ items })
   } catch (error) {
-    const statusCode = error instanceof CseApiError ? error.statusCode : 502
+    const statusCode = error instanceof SearchApiError ? error.statusCode : 502
     const message = error instanceof Error ? error.message : "Erro desconhecido"
-    const mapped = mapCseClientError(statusCode, message)
+    const mapped = mapSearchClientError(statusCode, message)
 
-    console.error("Erro na Custom Search:", { statusCode, message, query: query.trim().slice(0, 120) })
+    console.error("Erro na busca ampliada:", { statusCode, message, query: query.trim().slice(0, 120) })
     return res.status(mapped.httpStatus).json({ error: mapped.message })
   }
 }
