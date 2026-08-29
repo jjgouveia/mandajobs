@@ -40,7 +40,7 @@
     "headlessui": "^0.0.0",
     "lucide-react": "^0.525.0",
     "motion": "^12.23.6",
-    "next": "latest",
+    "next": "15.5.24",
     "react": "18.2.0",
     "react-awesome-reveal": "^4.2.5",
     "react-dom": "18.2.0",
