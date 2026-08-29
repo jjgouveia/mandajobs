@@ -17,7 +17,7 @@ import { QueryCountWithTooltip } from "../components/QueryCountWithTooltip"
 import { TagInput } from "../components/TagInput"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import getQueriesCount from "../hooks/getQueriesCount"
+import { useQueriesCount } from "../hooks/useQueriesCount"
 import { useFormPersistence } from "../hooks/useFormPersistence"
 import { JOB_PRESETS, type LanguagePref, type LevelType, type WorkMode } from "@/lib/job-presets"
 import {
@@ -40,7 +40,7 @@ const JobSearch = () => {
   const shouldReduceMotion = useReducedMotion()
   const [loading, setLoading] = useState(false)
   const [variants, setVariants] = useState<string[]>([])
-  const [counter, setCounter] = useState<number | null>(null)
+  const { count: counter, refresh: refreshQueriesCount } = useQueriesCount()
   const [allowAutoExpand, setAllowAutoExpand] = useState(false)
 
   const { state, update, hydrated } = useFormPersistence()
@@ -65,11 +65,7 @@ const JobSearch = () => {
     }
   }
 
-  useEffect(() => {
-    getQueriesCount(setCounter)
-  }, [])
-
-  // Priority: URL params > localStorage (URL applied once after hydration)
+  // Priority: URL params > localStorage
   useEffect(() => {
     if (!hydrated || urlHydrated.current) return
     urlHydrated.current = true
@@ -135,7 +131,7 @@ const JobSearch = () => {
           hasAvoidTools: toolsIdontUse.trim().length > 0,
           workMode,
         })
-        getQueriesCount(setCounter)
+        void refreshQueriesCount()
         setTimeout(scrollToResults, SCROLL_TO_RESULTS_DELAY_MS)
       } else {
         toast.error("Nenhuma consulta foi gerada")

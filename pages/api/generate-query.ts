@@ -71,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error: "Nenhuma consulta foi gerada" })
     }
 
-    void addDoc(collection(db, "queries"), {
+    await addDoc(collection(db, "queries"), {
       query_string: primary,
       level: seniorityKey,
       title,
@@ -81,8 +81,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       language: resolvedLanguage,
       location: resolvedLocation || null,
       timestamp: new Date(),
-    }).catch((error) => {
-      console.error("Erro ao salvar query no Firestore:", error)
     })
 
     return res.status(200).json({ variants, primary })
