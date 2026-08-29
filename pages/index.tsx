@@ -41,7 +41,6 @@ const JobSearch = () => {
   const [loading, setLoading] = useState(false)
   const [variants, setVariants] = useState<string[]>([])
   const { count: counter, refresh: refreshQueriesCount } = useQueriesCount()
-  const [allowAutoExpand, setAllowAutoExpand] = useState(false)
 
   const { state, update, hydrated } = useFormPersistence()
   const {
@@ -115,7 +114,6 @@ const JobSearch = () => {
 
       if (nextVariants.length > 0) {
         setVariants(nextVariants)
-        setAllowAutoExpand(true)
         update({ lastVariants: nextVariants })
         replaceShareableUrl({
           title,
@@ -446,7 +444,7 @@ const JobSearch = () => {
                     </span>
                   </HeadlessModal>
 
-                  <ExpandedSearch key={primaryQuery} query={primaryQuery} autoSearch={allowAutoExpand} />
+                  <ExpandedSearch key={primaryQuery} query={primaryQuery} />
                 </div>
               </div>
             </motion.div>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
+import { useCallback, useRef, useState, type ReactNode } from "react"
 import { toast } from "react-hot-toast"
 import { Bookmark, BookmarkCheck, CalendarDays, ChevronDown, ExternalLink, Globe2, SearchIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -9,11 +9,9 @@ import { useSavedJobs } from "../hooks/useSavedJobs"
 
 interface ExpandedSearchProps {
   query: string
-  autoSearch?: boolean
 }
 
 const DAY_OPTIONS: SearchWindowDays[] = [7, 15, 30]
-const AUTO_SEARCH_KEY = "mandajobs:auto-expand-search"
 
 function formatPublishedAt(isoDate: string | null): string {
   if (!isoDate) return "Data não informada"
@@ -46,26 +44,13 @@ function FilterChip({
   )
 }
 
-function readAutoSearchPreference(defaultValue: boolean): boolean {
-  if (typeof window === "undefined") return defaultValue
-  try {
-    const raw = localStorage.getItem(AUTO_SEARCH_KEY)
-    if (raw === null) return defaultValue
-    return raw === "true"
-  } catch {
-    return defaultValue
-  }
-}
-
-export function ExpandedSearch({ query, autoSearch = true }: ExpandedSearchProps) {
+export function ExpandedSearch({ query }: ExpandedSearchProps) {
   const [days, setDays] = useState<SearchWindowDays>(7)
   const [region, setRegion] = useState<SearchRegion>("br")
   const [isLoading, setIsLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
   const [items, setItems] = useState<ExpandedSearchItem[]>([])
-  const [autoEnabled, setAutoEnabled] = useState(() => readAutoSearchPreference(autoSearch))
   const [showSaved, setShowSaved] = useState(false)
-  const lastAutoQuery = useRef<string>("")
   const requestIdRef = useRef(0)
   const { savedJobs, isSaved, toggleSave, removeSaved } = useSavedJobs()
 
@@ -110,43 +95,13 @@ export function ExpandedSearch({ query, autoSearch = true }: ExpandedSearchProps
     }
   }, [query, days, region])
 
-  useEffect(() => {
-    if (!autoEnabled || !query.trim()) return
-    if (lastAutoQuery.current === query) return
-    lastAutoQuery.current = query
-    void expandSearch()
-  }, [autoEnabled, query, expandSearch])
-
-  function toggleAutoSearch() {
-    setAutoEnabled((prev) => {
-      const next = !prev
-      try {
-        localStorage.setItem(AUTO_SEARCH_KEY, String(next))
-      } catch {
-        // ignore
-      }
-      return next
-    })
-  }
-
   return (
     <div className="space-y-4 border-[3px] border-brutalist-ink bg-brutalist-paper p-4">
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-        <div>
-          <p className="font-display font-bold text-sm uppercase">Ampliar busca na web</p>
-          <p className="text-brutalist-ink/60 text-sm mt-1">
-            Usa a mesma query no Google, com filtro de período e região.
-          </p>
-        </div>
-        <label className="inline-flex items-center gap-2 font-display text-xs font-bold uppercase cursor-pointer shrink-0">
-          <input
-            type="checkbox"
-            checked={autoEnabled}
-            onChange={toggleAutoSearch}
-            className="rounded-none border-[2px] border-brutalist-ink"
-          />
-          Buscar automaticamente
-        </label>
+      <div>
+        <p className="font-display font-bold text-sm uppercase">Ampliar busca na web</p>
+        <p className="text-brutalist-ink/60 text-sm mt-1">
+          Usa a mesma query no Google, com filtro de período e região.
+        </p>
       </div>
 
       <div className="space-y-3">
