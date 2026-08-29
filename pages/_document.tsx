@@ -1,5 +1,4 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import EverywhereILookAround from "../components/ui/EverywhereILookAround";
 
 class MyDocument extends Document {
   render() {
@@ -85,10 +84,7 @@ class MyDocument extends Document {
         </Head>
 
         <body>
-          <div className="glow-container">
-            <EverywhereILookAround />
-            <Main />
-          </div>
+          <Main />
           <NextScript />
         </body>
       </Html>

@@ -6,16 +6,16 @@ import { Toaster, toast } from "react-hot-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Copy, Sparkles, SearchIcon, TrendingUp, Users, Building2, Zap } from "lucide-react"
+import { Copy, SearchIcon, Zap } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { db } from "../utils/firebaseConfig"
 import { collection, addDoc } from "firebase/firestore"
 import HeadlessModal from "../components/ui/HeadlessModal"
-import FooterExperimental from "../components/FooterExperimental"
+import { ExpandedSearch } from "../components/ExpandedSearch"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
 
 type LevelType = "Junior" | "Pleno" | "Senior" | "Estagiário"
 
@@ -121,136 +121,78 @@ const JobSearch = () => {
   }, [loading])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Header */}
-      <header className="border-b border-white/10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <h1 className="text-2xl font-bold text-white">Manda Jobs</h1>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                Nossa Missão
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                Perguntas Frequentes
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                Apoiadores
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-brutalist-paper font-body text-brutalist-ink">
+      <Header />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Hero Section */}
+      <main className="max-w-2xl mx-auto px-6 py-14">
+        {/* Hero (short) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Filtro Inteligente
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-              para LinkedIn
-            </span>
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Gere consultas personalizadas para encontrar as vagas perfeitas no LinkedIn
+          <h1 className="font-display text-4xl sm:text-5xl font-bold uppercase leading-[1.05] mb-4">
+            Seu filtro inteligente de vagas no{" "}
+            <span className="bg-brutalist-ink text-brutalist-yellow px-2">LinkedIn</span>
+          </h1>
+          <p className="text-base sm:text-lg text-brutalist-ink/70 max-w-md mx-auto">
+            Preencha os campos abaixo e a nossa IA monta a consulta booleana certa pra você usar na busca de vagas.
           </p>
         </motion.div>
 
-        {/* Stats */}
+        {/* Form — the product itself, front and center */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+          transition={{ duration: 0.6, delay: 0.15 }}
         >
-          <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-            <CardContent className="p-6 text-center">
-              <TrendingUp className="w-8 h-8 text-purple-400 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white">{counter.toLocaleString()}</div>
-              <div className="text-gray-400">Consultas Geradas</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-            <CardContent className="p-6 text-center">
-              <Users className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white">15K+</div>
-              <div className="text-gray-400">Usuários Ativos</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-            <CardContent className="p-6 text-center">
-              <Building2 className="w-8 h-8 text-green-400 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white">500+</div>
-              <div className="text-gray-400">Empresas Parceiras</div>
-            </CardContent>
-          </Card>
-        </motion.div>
+          <div className="bg-white border-[3px] border-brutalist-ink shadow-brutal-md p-6 sm:p-10">
+            <h2 className="font-display text-2xl font-bold uppercase mb-1">Configure sua busca</h2>
+            <p className="text-sm text-brutalist-ink/60 mb-8">
+              Preencha os campos abaixo para gerar uma consulta personalizada.
+            </p>
 
-        {/* Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white text-2xl">Configure sua busca</CardTitle>
-              <CardDescription className="text-gray-400">
-                Preencha os campos abaixo para gerar uma consulta personalizada
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="position" className="text-white flex items-center gap-2">
-                    <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
-                      1
-                    </span>
-                    Em qual posição você atua?
-                  </Label>
-                  <Input
-                    id="position"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Ex.: fullstack, devops, frontend..."
-                    className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="level" className="text-white flex items-center gap-2">
-                    <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
-                      2
-                    </span>
-                    Nível de senioridade
-                  </Label>
-                  <Select value={level} onValueChange={(value: LevelType) => setLevel(value)}>
-                    <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Estagiário">Estagiário</SelectItem>
-                      <SelectItem value="Junior">Junior</SelectItem>
-                      <SelectItem value="Pleno">Pleno</SelectItem>
-                      <SelectItem value="Senior">Senior</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="position" className="flex items-center gap-2 font-display font-bold text-xs uppercase">
+                  <span className="w-6 h-6 flex items-center justify-center bg-brutalist-yellow border-[3px] border-brutalist-ink text-[11px]">
+                    1
+                  </span>
+                  Em qual posição você atua?
+                </Label>
+                <Input
+                  id="position"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Ex.: fullstack, devops, frontend..."
+                  className="rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 text-base placeholder:text-brutalist-ink/40 focus-visible:ring-0 focus-visible:border-brutalist-blue"
+                />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="tools" className="text-white flex items-center gap-2">
-                  <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
+                <Label htmlFor="level" className="flex items-center gap-2 font-display font-bold text-xs uppercase">
+                  <span className="w-6 h-6 flex items-center justify-center bg-brutalist-blue text-white border-[3px] border-brutalist-ink text-[11px]">
+                    2
+                  </span>
+                  Nível de senioridade
+                </Label>
+                <Select value={level} onValueChange={(value: LevelType) => setLevel(value)}>
+                  <SelectTrigger className="w-40 rounded-none border-[3px] border-brutalist-ink bg-brutalist-yellow px-4 py-5 font-display font-bold focus:ring-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-none border-[3px] border-brutalist-ink">
+                    <SelectItem value="Estagiário">Estagiário</SelectItem>
+                    <SelectItem value="Junior">Junior</SelectItem>
+                    <SelectItem value="Pleno">Pleno</SelectItem>
+                    <SelectItem value="Senior">Senior</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="tools" className="flex items-center gap-2 font-display font-bold text-xs uppercase">
+                  <span className="w-6 h-6 flex items-center justify-center bg-brutalist-ink text-brutalist-yellow border-[3px] border-brutalist-ink text-[11px]">
                     3
                   </span>
                   Tecnologias que você utiliza
@@ -260,17 +202,17 @@ const JobSearch = () => {
                   value={tools}
                   onChange={(e) => setTools(e.target.value)}
                   placeholder="Ex.: react, node, python, aws..."
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-green-400"
+                  className="rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 text-base placeholder:text-brutalist-ink/40 focus-visible:ring-0 focus-visible:border-brutalist-blue"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="avoid-tools" className="text-white flex items-center gap-2">
-                  <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
+                <Label htmlFor="avoid-tools" className="flex items-center gap-2 font-display font-bold text-xs uppercase">
+                  <span className="w-6 h-6 flex items-center justify-center bg-brutalist-pink text-brutalist-ink border-[3px] border-brutalist-ink text-[11px]">
                     4
                   </span>
                   Tecnologias que você NÃO utiliza
-                  <Badge variant="secondary" className="bg-white/10 text-gray-300">
+                  <Badge className="rounded-none border-[3px] border-brutalist-ink bg-brutalist-ink text-white text-[10px] font-display uppercase">
                     Opcional
                   </Badge>
                 </Label>
@@ -279,30 +221,29 @@ const JobSearch = () => {
                   value={toolsIdontUse}
                   onChange={(e) => setToolsIdontUse(e.target.value)}
                   placeholder="Ex.: php, ruby, .net..."
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-red-400"
+                  className="rounded-none border-[3px] border-brutalist-ink bg-white px-4 py-5 text-base placeholder:text-brutalist-ink/40 focus-visible:ring-0 focus-visible:border-brutalist-blue"
                 />
               </div>
 
               <Button
                 onClick={generateQuery}
                 disabled={!isFormValid || loading}
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 text-lg transition-all duration-200 disabled:opacity-50"
+                className="w-full rounded-none border-[3px] border-brutalist-ink bg-brutalist-ink text-brutalist-yellow shadow-brutal-md hover:bg-brutalist-ink/90 hover:shadow-brutal font-display font-bold uppercase text-lg py-6 transition-all disabled:opacity-40"
               >
                 {loading ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-brutalist-yellow/40 border-t-brutalist-yellow rounded-full animate-spin" />
                     Gerando consulta...
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
                     <SearchIcon className="w-5 h-5" />
                     Gerar Consulta
-                    <Sparkles className="w-5 h-5" />
                   </div>
                 )}
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </motion.div>
 
         {/* Results */}
@@ -314,95 +255,155 @@ const JobSearch = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.6 }}
-              className="mt-12"
+              className="mt-10"
             >
-              <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-white text-2xl flex items-center gap-2">
-                    <Zap className="w-6 h-6 text-yellow-400" />
-                    Sua consulta personalizada
-                  </CardTitle>
-                  <CardDescription className="text-gray-400">Clique para copiar e use no LinkedIn</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {generatedQuery
-                    .substring(generatedQuery.indexOf("1") + 0)
-                    .split("2.")
-                    .map((query, index) => {
-                      const cleanQuery = query.trim()
-                      if (!cleanQuery) return null
+              <div className="bg-white border-[3px] border-brutalist-ink shadow-brutal-md p-6 sm:p-10">
+                <h3 className="font-display text-xl font-bold uppercase flex items-center gap-2 mb-1">
+                  <Zap className="w-5 h-5" />
+                  Sua consulta personalizada
+                </h3>
+                <p className="text-sm text-brutalist-ink/60 mb-6">Clique para copiar e use no LinkedIn</p>
 
-                      return (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.4, delay: index * 0.1 }}
+                {generatedQuery
+                  .substring(generatedQuery.indexOf("1") + 0)
+                  .split("2.")
+                  .map((query, index) => {
+                    const cleanQuery = query.trim()
+                    if (!cleanQuery) return null
+
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                      >
+                        <div
+                          className="border-[3px] border-brutalist-ink bg-brutalist-paper cursor-pointer hover:bg-brutalist-yellow/25 transition-colors group p-4"
+                          onClick={() => copyToClipboard(cleanQuery)}
                         >
-                          <Card
-                            className="bg-white/10 border-white/20 cursor-pointer hover:bg-white/15 transition-all duration-200 group"
-                            onClick={() => copyToClipboard(cleanQuery)}
-                          >
-                            <CardContent className="p-4">
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="flex-1">
-                                  <p className="text-gray-400 text-sm mb-2 group-hover:text-gray-300">
-                                    Clique para copiar
-                                  </p>
-                                  <p className="text-white font-mono text-sm leading-relaxed">{cleanQuery}</p>
-                                </div>
-                                <Copy className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-                              </div>
-                            </CardContent>
-                          </Card>
-                          {index === 0 && (
-                            <div className="flex items-center justify-center my-4">
-                              <Separator className="flex-1 bg-white/10" />
-                              <span className="px-4 text-gray-400 text-sm">ou</span>
-                              <Separator className="flex-1 bg-white/10" />
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <p className="text-xs font-display font-bold uppercase text-brutalist-ink/50 mb-2">
+                                Clique para copiar
+                              </p>
+                              <p className="font-mono text-sm leading-relaxed">{cleanQuery}</p>
                             </div>
-                          )}
-                        </motion.div>
-                      )
-                    })}
+                            <Copy className="w-5 h-5 text-brutalist-ink/40 group-hover:text-brutalist-ink transition-colors shrink-0" />
+                          </div>
+                        </div>
+                        {index === 0 && (
+                          <div className="flex items-center justify-center my-4 gap-4">
+                            <div className="flex-1 h-[3px] bg-brutalist-ink" />
+                            <span className="font-display text-xs font-bold uppercase">ou</span>
+                            <div className="flex-1 h-[3px] bg-brutalist-ink" />
+                          </div>
+                        )}
+                      </motion.div>
+                    )
+                  })}
 
-                  <div className="mt-6">
-                    <HeadlessModal
-                      query={generatedQuery}
-                      text="Consultar vagas no LinkedIn 🚀"
-                      btnTwdClass="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-3 rounded-lg transition-all duration-200"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+                <div className="mt-6 space-y-4">
+                  <HeadlessModal
+                    query={generatedQuery}
+                    text="Consultar vagas no LinkedIn"
+                    btnTwdClass="w-full rounded-none border-[3px] border-brutalist-ink bg-brutalist-blue text-white shadow-brutal hover:bg-brutalist-blue/90 font-display font-bold uppercase py-3 transition-all"
+                  />
+                  <ExpandedSearch key={generatedQuery} query={generatedQuery} />
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Partner Companies */}
+        {/* Quick facts (plain, no billboard) */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-brutalist-ink/70 mt-10 text-center"
         >
-          <p className="text-gray-400 mb-8">Empresas que apoiam o projeto e a recolocação profissional</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            {/* Placeholder for partner company logos */}
-            <div className="w-24 h-12 bg-white/10 rounded-lg flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-gray-400" />
+          <span>
+            <strong className="text-brutalist-ink">{counter.toLocaleString()}+</strong> consultas geradas
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>
+            <strong className="text-brutalist-ink">15 mil+</strong> usuários ativos
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>
+            <strong className="text-brutalist-ink">100% gratuito</strong>, sempre
+          </span>
+        </motion.div>
+
+        {/* How it works */}
+        <section id="como-funciona" className="border-t-[3px] border-brutalist-ink mt-14 pt-10">
+          <div className="font-display text-xs font-bold uppercase text-brutalist-ink/50 mb-6">Como funciona</div>
+          <div className="grid sm:grid-cols-3 gap-6">
+            <div className="flex gap-3">
+              <div className="font-display text-xl font-bold text-brutalist-blue">01</div>
+              <div>
+                <div className="font-display font-bold text-sm mb-1">Acesse o formulário</div>
+                <p className="text-sm text-brutalist-ink/60">Preencha as informações do seu perfil.</p>
+              </div>
             </div>
-            <div className="w-24 h-12 bg-white/10 rounded-lg flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-gray-400" />
+            <div className="flex gap-3">
+              <div className="font-display text-xl font-bold text-brutalist-blue">02</div>
+              <div>
+                <div className="font-display font-bold text-sm mb-1">Faça a consulta</div>
+                <p className="text-sm text-brutalist-ink/60">A IA monta a query booleana pra você.</p>
+              </div>
             </div>
-            <div className="w-24 h-12 bg-white/10 rounded-lg flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-gray-400" />
-            </div>
-            <div className="w-24 h-12 bg-white/10 rounded-lg flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-gray-400" />
+            <div className="flex gap-3">
+              <div className="font-display text-xl font-bold text-brutalist-blue">03</div>
+              <div>
+                <div className="font-display font-bold text-sm mb-1">Vá pro LinkedIn</div>
+                <p className="text-sm text-brutalist-ink/60">Cole a consulta e envie as candidaturas.</p>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </section>
+
+        {/* Mission */}
+        <section id="missao" className="border-t-[3px] border-brutalist-ink pt-10 mt-10">
+          <div className="font-display text-xs font-bold uppercase text-brutalist-ink/50 mb-4">Por que existe</div>
+          <p className="text-base sm:text-lg leading-relaxed max-w-xl mb-5">
+            Acreditamos que a tecnologia pode ajudar na busca por uma oportunidade. O Manda Jobs usa IA pra montar a
+            consulta certa a partir do seu perfil, sem armazenar dado pessoal e sem precisar de login no LinkedIn.
+          </p>
+          <div className="flex flex-wrap gap-3 text-xs font-display font-bold uppercase">
+            <span className="border-[3px] border-brutalist-ink px-3 py-1.5">IA preditiva</span>
+            <span className="border-[3px] border-brutalist-ink px-3 py-1.5">Dados criptografados</span>
+            <span className="border-[3px] border-brutalist-ink px-3 py-1.5">Sem login no LinkedIn</span>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="duvidas" className="border-t-[3px] border-brutalist-ink pt-10 mt-10">
+          <div className="font-display text-xs font-bold uppercase text-brutalist-ink/50 mb-6">
+            Perguntas frequentes
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div>
+              <div className="font-display font-bold text-sm mb-1.5">Quanto eu preciso pagar?</div>
+              <p className="text-sm text-brutalist-ink/60">Nada. O serviço é totalmente gratuito.</p>
+            </div>
+            <div>
+              <div className="font-display font-bold text-sm mb-1.5">E os meus dados?</div>
+              <p className="text-sm text-brutalist-ink/60">Criptografados e nunca vinculados à sua identidade.</p>
+            </div>
+            <div>
+              <div className="font-display font-bold text-sm mb-1.5">Quantas consultas posso fazer?</div>
+              <p className="text-sm text-brutalist-ink/60">Sem limite, quando quiser.</p>
+            </div>
+            <div>
+              <div className="font-display font-bold text-sm mb-1.5">Vou garantir uma vaga?</div>
+              <p className="text-sm text-brutalist-ink/60">
+                Não garantimos emprego, só o acesso às vagas certas pro seu perfil.
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Toaster
@@ -411,14 +412,16 @@ const JobSearch = () => {
         toastOptions={{
           duration: 3000,
           style: {
-            background: "rgba(0, 0, 0, 0.8)",
-            color: "white",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            background: "#131313",
+            color: "#fdf500",
+            border: "3px solid #131313",
+            borderRadius: "0",
+            fontWeight: "700",
           },
         }}
       />
       <Analytics />
-      <FooterExperimental />
+      <Footer />
     </div>
   )
 }
