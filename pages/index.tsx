@@ -17,6 +17,7 @@ import { QueryCountWithTooltip } from "../components/QueryCountWithTooltip"
 import { TagInput } from "../components/TagInput"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
+import Title from "../components/Title"
 import { useQueriesCount } from "../hooks/useQueriesCount"
 import { useFormPersistence } from "../hooks/useFormPersistence"
 import { JOB_PRESETS, type LanguagePref, type LevelType, type WorkMode } from "@/lib/job-presets"
@@ -171,6 +172,7 @@ const JobSearch = () => {
 
   return (
     <div className="min-h-screen bg-brutalist-paper font-body text-brutalist-ink">
+      <Title title="Manda Jobs — Filtro inteligente de vagas no LinkedIn e na web" />
       <motion.div
         aria-hidden="true"
         className="fixed inset-0 z-[100] bg-brutalist-ink"

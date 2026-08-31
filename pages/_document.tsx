@@ -1,14 +1,20 @@
 import Document, { Head, Html, Main, NextScript } from "next/document"
 
+const SITE_URL = "https://mandajobs.vercel.app"
+const SITE_TITLE = "Manda Jobs — Filtro inteligente de vagas no LinkedIn e na web"
 const SITE_DESCRIPTION =
   "Gere consultas booleanas otimizadas para LinkedIn e amplie a busca de vagas na web com IA. Gratuito, sem login."
+const OG_IMAGE_URL = `${SITE_URL}/og.png`
+const OG_IMAGE_ALT =
+  "Manda Jobs: gere consultas booleanas para o LinkedIn e busque vagas na web com IA. Gratuito, sem login."
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "Manda Jobs",
-  url: "https://mandajobs.vercel.app",
+  url: SITE_URL,
   description: SITE_DESCRIPTION,
+  image: OG_IMAGE_URL,
   applicationCategory: "BusinessApplication",
   operatingSystem: "Any",
   offers: {
@@ -40,38 +46,36 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <link rel="icon" href="/favicon.ico" />
-          <meta name="title" content="Manda Jobs" />
+          <meta name="title" content={SITE_TITLE} />
           <meta name="description" content={SITE_DESCRIPTION} />
           <meta
             name="keywords"
-            content="linkedin, busca booleana, vagas, emprego remoto, tecnologia, consulta linkedin, manda jobs"
+            content="linkedin, busca na web, busca booleana, vagas, emprego remoto, tecnologia, consulta linkedin, manda jobs"
           />
           <meta name="robots" content="index, follow" />
-          <meta property="og:url" content="https://mandajobs.vercel.app" />
-          <meta property="og:title" content="Manda Jobs" />
+          <meta property="og:url" content={SITE_URL} />
+          <meta property="og:title" content={SITE_TITLE} />
           <meta property="og:description" content={SITE_DESCRIPTION} />
-          <meta
-            property="og:image"
-            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs_v1dot5.png"
-          />
+          <meta property="og:image" content={OG_IMAGE_URL} />
+          <meta property="og:image:secure_url" content={OG_IMAGE_URL} />
+          <meta property="og:image:type" content="image/png" />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={OG_IMAGE_ALT} />
           <meta property="og:type" content="website" />
           <meta property="og:locale" content="pt_BR" />
           <meta property="og:site_name" content="Manda Jobs" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="mandajobs.vercel.app" />
-          <meta property="twitter:url" content="https://mandajobs.vercel.app" />
-          <meta name="twitter:title" content="Manda Jobs" />
+          <meta property="twitter:url" content={SITE_URL} />
+          <meta name="twitter:title" content={SITE_TITLE} />
           <meta name="twitter:description" content={SITE_DESCRIPTION} />
-          <meta
-            name="twitter:image"
-            content="https://raw.githubusercontent.com/jjgouveia/sturdy-doodle/main/mandajobs/manda_jobs_v1dot5.png"
-          />
+          <meta name="twitter:image" content={OG_IMAGE_URL} />
+          <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
           <meta name="twitter:creator" content="@outrogouveia" />
           <meta name="apple-mobile-web-app-title" content="Manda Jobs" />
           <meta name="application-name" content="Manda Jobs" />
-          <meta name="theme-color" content="#131313" />
+          <meta name="theme-color" content="#fdf500" />
           <meta name="mobile-web-app-capable" content="yes" />
           <script
             type="application/ld+json"
