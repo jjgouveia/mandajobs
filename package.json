@@ -37,6 +37,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/forms": "^0.5.3",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/functions": "^3.9.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.0",
