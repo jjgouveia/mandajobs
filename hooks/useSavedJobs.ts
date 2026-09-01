@@ -1,68 +1,60 @@
 import { useCallback, useEffect, useState } from "react"
 import type { ExpandedSearchItem } from "@/lib/expanded-search"
 import { trackJobSaved, trackJobUnsaved } from "@/lib/analytics-events"
+import {
+  isJobSaved,
+  notifySavedJobsChanged,
+  readSavedJobs,
+  removeSavedJob,
+  SAVED_JOBS_EVENT,
+  SAVED_JOBS_KEY,
+  toggleSavedJob,
+  writeSavedJobs,
+  type SavedJob,
+} from "@/lib/saved-jobs"
 
-export const SAVED_JOBS_KEY = "mandajobs:saved-jobs-v1"
-
-export interface SavedJob extends ExpandedSearchItem {
-  savedAt: string
-}
-
-function readSavedJobs(): SavedJob[] {
-  if (typeof window === "undefined") return []
-  try {
-    const raw = localStorage.getItem(SAVED_JOBS_KEY)
-    if (!raw) return []
-    const parsed = JSON.parse(raw) as SavedJob[]
-    if (!Array.isArray(parsed)) return []
-    return parsed.filter((item) => item && typeof item.url === "string")
-  } catch {
-    return []
-  }
-}
-
-function writeSavedJobs(jobs: SavedJob[]) {
-  try {
-    localStorage.setItem(SAVED_JOBS_KEY, JSON.stringify(jobs))
-  } catch {
-    // ignore
-  }
-}
+export { SAVED_JOBS_KEY }
+export type { SavedJob }
 
 export function useSavedJobs() {
   const [savedJobs, setSavedJobs] = useState<SavedJob[]>([])
 
   useEffect(() => {
-    setSavedJobs(readSavedJobs())
+    const refresh = () => setSavedJobs(readSavedJobs())
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === SAVED_JOBS_KEY) refresh()
+    }
+
+    refresh()
+    window.addEventListener(SAVED_JOBS_EVENT, refresh)
+    window.addEventListener("storage", onStorage)
+
+    return () => {
+      window.removeEventListener(SAVED_JOBS_EVENT, refresh)
+      window.removeEventListener("storage", onStorage)
+    }
   }, [])
 
-  const isSaved = useCallback(
-    (url: string) => savedJobs.some((job) => job.url === url),
-    [savedJobs]
-  )
+  const isSaved = useCallback((url: string) => isJobSaved(savedJobs, url), [savedJobs])
 
   const toggleSave = useCallback((item: ExpandedSearchItem) => {
-    setSavedJobs((prev) => {
-      const exists = prev.some((job) => job.url === item.url)
-      const next = exists
-        ? prev.filter((job) => job.url !== item.url)
-        : [{ ...item, savedAt: new Date().toISOString() }, ...prev]
+    const prev = readSavedJobs()
+    const exists = isJobSaved(prev, item.url)
+    const next = toggleSavedJob(prev, item, new Date().toISOString())
 
-      if (exists) trackJobUnsaved()
-      else trackJobSaved()
-
-      writeSavedJobs(next)
-      return next
-    })
+    writeSavedJobs(next)
+    setSavedJobs(next)
+    if (exists) trackJobUnsaved()
+    else trackJobSaved()
+    notifySavedJobsChanged()
   }, [])
 
   const removeSaved = useCallback((url: string) => {
-    setSavedJobs((prev) => {
-      const next = prev.filter((job) => job.url !== url)
-      writeSavedJobs(next)
-      trackJobUnsaved()
-      return next
-    })
+    const next = removeSavedJob(readSavedJobs(), url)
+    writeSavedJobs(next)
+    setSavedJobs(next)
+    notifySavedJobsChanged()
+    trackJobUnsaved()
   }, [])
 
   return { savedJobs, isSaved, toggleSave, removeSaved }

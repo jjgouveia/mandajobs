@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SavedJobsNavLink } from "./SavedJobsNavLink";
 
 export default function Header() {
   return (
@@ -10,17 +11,18 @@ export default function Header() {
         >
           MANDA JOBS
         </Link>
-        <nav className="hidden sm:flex items-center gap-8 font-display font-bold text-sm uppercase tracking-tight">
-          <Link href="/#missao" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+        <nav className="flex items-center gap-4 sm:gap-8 font-display font-bold text-sm uppercase tracking-tight">
+          <SavedJobsNavLink />
+          <Link href="/#missao" className="hidden sm:inline no-underline text-brutalist-ink hover:text-brutalist-blue">
             Missão
           </Link>
-          <Link href="/#duvidas" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+          <Link href="/#duvidas" className="hidden sm:inline no-underline text-brutalist-ink hover:text-brutalist-blue">
             Dúvidas
           </Link>
-          <Link href="/quem-faz" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+          <Link href="/quem-faz" className="hidden sm:inline no-underline text-brutalist-ink hover:text-brutalist-blue">
             Quem faz
           </Link>
-          <Link href="/termos-de-uso" className="no-underline text-brutalist-ink hover:text-brutalist-blue">
+          <Link href="/termos-de-uso" className="hidden sm:inline no-underline text-brutalist-ink hover:text-brutalist-blue">
             Termos de Uso
           </Link>
         </nav>

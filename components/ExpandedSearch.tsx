@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState, type ReactNode } from "react"
 import { toast } from "react-hot-toast"
-import { Bookmark, BookmarkCheck, CalendarDays, ChevronDown, ExternalLink, Globe2, SearchIcon } from "lucide-react"
+import { Bookmark, BookmarkCheck, CalendarDays, ExternalLink, Globe2, SearchIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import type { ExpandedSearchItem, SearchRegion, SearchWindowDays } from "@/lib/expanded-search"
@@ -50,9 +50,8 @@ export function ExpandedSearch({ query }: ExpandedSearchProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
   const [items, setItems] = useState<ExpandedSearchItem[]>([])
-  const [showSaved, setShowSaved] = useState(false)
   const requestIdRef = useRef(0)
-  const { savedJobs, isSaved, toggleSave, removeSaved } = useSavedJobs()
+  const { isSaved, toggleSave } = useSavedJobs()
 
   const expandSearch = useCallback(async () => {
     const requestId = ++requestIdRef.current
@@ -196,45 +195,6 @@ export function ExpandedSearch({ query }: ExpandedSearchProps) {
         </ul>
       )}
 
-      {savedJobs.length > 0 && (
-        <div className="border-t-[3px] border-brutalist-ink pt-4">
-          <button
-            type="button"
-            onClick={() => setShowSaved((v) => !v)}
-            className="w-full flex items-center justify-between font-display text-xs font-bold uppercase"
-          >
-            Vagas salvas ({savedJobs.length})
-            <ChevronDown className={`w-4 h-4 transition-transform ${showSaved ? "rotate-180" : ""}`} />
-          </button>
-          {showSaved && (
-            <ul className="mt-3 space-y-2">
-              {savedJobs.map((job) => (
-                <li
-                  key={job.url}
-                  className="flex items-start justify-between gap-2 border-[2px] border-brutalist-ink bg-white p-3"
-                >
-                  <a
-                    href={job.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium hover:underline min-w-0"
-                  >
-                    {job.title}
-                  </a>
-                  <button
-                    type="button"
-                    aria-label="Remover"
-                    onClick={() => removeSaved(job.url)}
-                    className="text-xs font-display font-bold uppercase text-brutalist-ink/50 hover:text-brutalist-ink shrink-0"
-                  >
-                    Remover
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
     </div>
   )
 }

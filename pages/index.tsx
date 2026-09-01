@@ -16,6 +16,7 @@ import { RankingHighlight, SearchRankings } from "../components/SearchRankings"
 import { QueryCountWithTooltip } from "../components/QueryCountWithTooltip"
 import { TagInput } from "../components/TagInput"
 import Header from "../components/Header"
+import { SavedJobsSection } from "../components/SavedJobsSection"
 import Footer from "../components/Footer"
 import Title from "../components/Title"
 import { useQueriesCount } from "../hooks/useQueriesCount"
@@ -467,6 +468,8 @@ const JobSearch = () => {
         </motion.div>
 
         <SearchRankings />
+
+        <SavedJobsSection />
 
         <section id="como-funciona" className="border-t-[3px] border-brutalist-ink mt-14 pt-10">
           <div className="font-display text-xs font-bold uppercase text-brutalist-ink/50 mb-6">Como funciona</div>
